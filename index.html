@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Europe Salary Calculator — compare net pay & employment cost</title>
+  <meta name="description" content="Compare take-home pay and total employer cost of a salary across 36 European countries and 6 US cities." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1>🇪🇺 Europe Salary Calculator</h1>
+      <p class="tagline">
+        Compare take-home pay and the real cost of employment across
+        <strong>36 European countries</strong> and <strong>6 US cities</strong>.
+      </p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="panel controls" aria-label="Calculator inputs">
+      <div class="field field--mode">
+        <label class="field-label">I want to fix the…</label>
+        <div class="segmented" role="radiogroup" aria-label="Input mode">
+          <button class="seg" data-mode="cost" role="radio" aria-checked="true">
+            <span class="seg-title">Employer budget</span>
+            <span class="seg-sub">total cost to company</span>
+          </button>
+          <button class="seg" data-mode="gross" role="radio" aria-checked="false">
+            <span class="seg-title">Gross salary</span>
+            <span class="seg-sub">on the contract</span>
+          </button>
+          <button class="seg" data-mode="net" role="radio" aria-checked="false">
+            <span class="seg-title">Net pay</span>
+            <span class="seg-sub">take-home target</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="field field--amount">
+        <label class="field-label" for="amount" id="amountLabel">Total employer budget (per year)</label>
+        <div class="amount-input">
+          <span class="cur">€</span>
+          <input id="amount" type="text" inputmode="numeric" autocomplete="off" value="100,000" />
+          <span class="per">/ year</span>
+        </div>
+        <div class="chips" id="presets" aria-label="Quick amounts"></div>
+      </div>
+
+      <div class="field field--options">
+        <div class="source" role="radiogroup" aria-label="Data source" title="Which dataset to use">
+          <span class="source-label">Data:</span>
+          <button class="src" data-source="consensus" role="radio" aria-checked="true">Consensus</button>
+          <button class="src" data-source="ebook" role="radio" aria-checked="false">2025 eBook</button>
+          <button class="src" data-source="skuad" role="radio" aria-checked="false">Skuad</button>
+          <button class="src" data-source="deel" role="radio" aria-checked="false">Deel</button>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="euOnly" />
+          <span>EU members only</span>
+        </label>
+        <label class="toggle">
+          <input type="checkbox" id="showMonthly" />
+          <span>Show monthly</span>
+        </label>
+        <input id="search" class="search" type="search" placeholder="Filter country…" autocomplete="off" />
+      </div>
+    </section>
+
+    <section class="summary" id="summary" aria-live="polite"></section>
+
+    <section class="panel table-panel">
+      <div class="table-scroll">
+        <table id="resultsTable">
+          <thead>
+            <tr>
+              <th class="rank" data-sort="rank">#</th>
+              <th class="country" data-sort="name">Location</th>
+              <th class="num" data-sort="cost" title="Total cost to the employer (gross + employer contributions)">Employer<br>cost</th>
+              <th class="num" data-sort="gross" title="Gross salary on the contract">Gross</th>
+              <th class="num sorted-desc" data-sort="net" title="Employee take-home after taxes & contributions">Net<br>(take-home)</th>
+              <th class="num" data-sort="netRatio" title="Share of total employer cost the employee actually takes home">You<br>keep</th>
+              <th class="num" data-sort="costPerNet" title="Total the employer pays for every €1 the employee takes home (Boundless 'Cost-to-Net Pay Ratio')">Cost per<br>€1 net</th>
+              <th class="num" data-sort="surplus" title="Net pay minus estimated local cost of living (single person, capital)">After<br>living costs</th>
+            </tr>
+          </thead>
+          <tbody id="resultsBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="notes">
+      <p>
+        <strong>How it works.</strong> For each location the data gives total
+        employer cost and net pay at a few gross-salary points; the tool
+        interpolates linearly between them and inverts the relationship, so you
+        can fix the employer budget, the gross, or the target net and solve for
+        the rest.
+      </p>
+      <p>
+        <strong>Four data sources</strong> (switch with the <em>Data</em> toggle):
+        <strong>Consensus</strong> (default) — per location and metric, the median
+        of the sources after discarding any value &gt;10% from the median of the
+        others; the most-aligned, outlier-resistant estimate. Employer cost also
+        folds in <a href="https://www.rippling.com/en-GB/employee-cost-calculator">Rippling</a>
+        (a cost-only source, accurate where the others drift).
+        <strong>2025 eBook</strong> — Boundless'
+        <em>“Understanding Employment Costs in Europe in 2025”</em>, a fixed
+        snapshot at €32k/€60k/€150k.
+        <strong>Skuad</strong> — the engine behind Boundless'
+        <a href="https://boundlesshq.com/cost-calculator/">online calculator</a>.
+        <strong>Deel</strong> — Deel's
+        <a href="https://www.deel.com/employee-cost-calculator/">employee-cost</a>
+        and <a href="https://www.deel.com/take-home-pay-calculator/">take-home</a>
+        calculators (its EOR management fee removed from the cost). The three use
+        different methodologies and can disagree — comparing them is the point.
+        Skuad and Deel are <strong>live</strong> snapshots, fetched on the date
+        shown under the headline. (Two other calculators were evaluated and
+        <strong>not used</strong>: <em>Remote.com</em> — employer cost wildly off
+        for ~14 countries; and <em>Papaya Global</em> — its data is stale, from
+        tax years 2021-2023.)
+      </p>
+      <p>
+        <strong>US cities</strong> (🇺🇸) are state-level (Seattle→WA, San
+        Francisco→CA, New York→NY, Austin→TX, Atlanta→GA, Miami→FL).
+        <strong>Consensus</strong> uses a <strong>direct statutory calculation</strong>
+        — 2025 federal brackets, FICA (with the Social Security cap), and state tax
+        incl. NYC local tax — with <em>no EOR vendor involved</em>. It's validated
+        against Deel's independent per-state figures (agree to &lt;1% everywhere
+        except NYC, which differs only because we include the local tax Deel omits). <strong>Deel</strong> shows its
+        own per-state calc. <strong>2025 eBook</strong> and <strong>Skuad</strong>
+        fall back to a single-benchmark blog estimate (one USD point, flat rate),
+        marked <span class="approx">≈</span> and rougher. Employer cost for the US is
+        small (~8–10% on top of gross — mostly FICA) versus ~50%+ in much of Europe.
+        Cost of living stays city-specific.
+      </p>
+      <p class="disclaimer">
+        Figures are <strong>estimates for comparison only</strong> — they ignore
+        personal allowances, marital status, regional taxes, benefits and
+        bonuses, and currency fluctuations. Do not use them as precise payroll or
+        budgeting figures. “After living costs” subtracts the estimated annual cost
+        of living for a single person (capital city for countries, the city itself
+        for US entries).
+      </p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>Data: Boundless eBook (2025) · Cost of living: Numbeo · Dev salaries: TalentUp</span>
+    </div>
+  </footer>
+
+  <script src="data/cost_of_living.js"></script>
+  <script src="data/consensus.js"></script>
+  <script src="data/ebook.js"></script>
+  <script src="data/skuad.js"></script>
+  <script src="data/deel.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
