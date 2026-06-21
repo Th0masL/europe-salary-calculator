@@ -1,0 +1,652 @@
+{
+  "meta": {
+    "title": "Employer cost (Rippling calculator)",
+    "source": "Rippling employee-cost calculator API",
+    "endpoint": "https://app.rippling.com/api/global_expansion/api/get_employer_cost_breakdown/",
+    "currency": "EUR",
+    "fetched": "2026-06-21",
+    "provides": [
+      "gross",
+      "cost"
+    ],
+    "salaryPoints": [
+      30000,
+      60000,
+      100000,
+      150000
+    ],
+    "note": "Gross + total employer cost only (no net). Accurate where available (e.g. Estonia); Rippling's backend errors for some countries (France, UK) which are omitted. Estimates for comparison only."
+  },
+  "countries": [
+    {
+      "name": "Austria",
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 38946
+        },
+        {
+          "gross": 60000,
+          "cost": 77892
+        },
+        {
+          "gross": 100000,
+          "cost": 129204
+        },
+        {
+          "gross": 150000,
+          "cost": 183499
+        }
+      ]
+    },
+    {
+      "name": "Belgium",
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 43761
+        },
+        {
+          "gross": 60000,
+          "cost": 86668
+        },
+        {
+          "gross": 100000,
+          "cost": 143877
+        },
+        {
+          "gross": 150000,
+          "cost": 215389
+        }
+      ]
+    },
+    {
+      "name": "Bulgaria",
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 35135
+        },
+        {
+          "gross": 60000,
+          "cost": 65135
+        },
+        {
+          "gross": 100000,
+          "cost": 105135
+        },
+        {
+          "gross": 150000,
+          "cost": 155135
+        }
+      ]
+    },
+    {
+      "name": "Croatia",
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 35274
+        },
+        {
+          "gross": 60000,
+          "cost": 70224
+        },
+        {
+          "gross": 100000,
+          "cost": 116824
+        },
+        {
+          "gross": 150000,
+          "cost": 175074
+        }
+      ]
+    },
+    {
+      "name": "Cyprus",
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 34944
+        },
+        {
+          "gross": 60000,
+          "cost": 69564
+        },
+        {
+          "gross": 100000,
+          "cost": 112459
+        },
+        {
+          "gross": 150000,
+          "cost": 164909
+        }
+      ]
+    },
+    {
+      "name": "Czech Republic",
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 41706
+        },
+        {
+          "gross": 60000,
+          "cost": 81846
+        },
+        {
+          "gross": 100000,
+          "cost": 134647
+        },
+        {
+          "gross": 150000,
+          "cost": 189147
+        }
+      ]
+    },
+    {
+      "name": "Denmark",
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 31516
+        },
+        {
+          "gross": 60000,
+          "cost": 61816
+        },
+        {
+          "gross": 100000,
+          "cost": 102216
+        },
+        {
+          "gross": 150000,
+          "cost": 152716
+        }
+      ]
+    },
+    {
+      "name": "Estonia",
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 40464
+        },
+        {
+          "gross": 60000,
+          "cost": 80604
+        },
+        {
+          "gross": 100000,
+          "cost": 134124
+        },
+        {
+          "gross": 150000,
+          "cost": 201024
+        }
+      ]
+    },
+    {
+      "name": "Finland",
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 36432
+        },
+        {
+          "gross": 60000,
+          "cost": 72861
+        },
+        {
+          "gross": 100000,
+          "cost": 121433
+        },
+        {
+          "gross": 150000,
+          "cost": 182148
+        }
+      ]
+    },
+    {
+      "name": "Germany",
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 37395
+        },
+        {
+          "gross": 60000,
+          "cost": 74790
+        },
+        {
+          "gross": 100000,
+          "cost": 121927
+        },
+        {
+          "gross": 150000,
+          "cost": 174601
+        }
+      ]
+    },
+    {
+      "name": "Greece",
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 36557
+        },
+        {
+          "gross": 60000,
+          "cost": 73094
+        },
+        {
+          "gross": 100000,
+          "cost": 121810
+        },
+        {
+          "gross": 150000,
+          "cost": 173698
+        }
+      ]
+    },
+    {
+      "name": "Hungary",
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 34250
+        },
+        {
+          "gross": 60000,
+          "cost": 68150
+        },
+        {
+          "gross": 100000,
+          "cost": 113350
+        },
+        {
+          "gross": 150000,
+          "cost": 169850
+        }
+      ]
+    },
+    {
+      "name": "Italy",
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 42981
+        },
+        {
+          "gross": 60000,
+          "cost": 85962
+        },
+        {
+          "gross": 100000,
+          "cost": 143270
+        },
+        {
+          "gross": 150000,
+          "cost": 214905
+        }
+      ]
+    },
+    {
+      "name": "Latvia",
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 37405
+        },
+        {
+          "gross": 60000,
+          "cost": 74482
+        },
+        {
+          "gross": 100000,
+          "cost": 123918
+        },
+        {
+          "gross": 150000,
+          "cost": 185713
+        }
+      ]
+    },
+    {
+      "name": "Lithuania",
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 31200
+        },
+        {
+          "gross": 60000,
+          "cost": 62076
+        },
+        {
+          "gross": 100000,
+          "cost": 103244
+        },
+        {
+          "gross": 150000,
+          "cost": 154704
+        }
+      ]
+    },
+    {
+      "name": "Luxembourg",
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 34674
+        },
+        {
+          "gross": 60000,
+          "cost": 69024
+        },
+        {
+          "gross": 100000,
+          "cost": 114824
+        },
+        {
+          "gross": 150000,
+          "cost": 172074
+        }
+      ]
+    },
+    {
+      "name": "Malta",
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 33832
+        },
+        {
+          "gross": 60000,
+          "cost": 63832
+        },
+        {
+          "gross": 100000,
+          "cost": 103832
+        },
+        {
+          "gross": 150000,
+          "cost": 153832
+        }
+      ]
+    },
+    {
+      "name": "Netherlands",
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 44386
+        },
+        {
+          "gross": 60000,
+          "cost": 88772
+        },
+        {
+          "gross": 100000,
+          "cost": 147953
+        },
+        {
+          "gross": 150000,
+          "cost": 221930
+        }
+      ]
+    },
+    {
+      "name": "Norway",
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 43923
+        },
+        {
+          "gross": 60000,
+          "cost": 82430
+        },
+        {
+          "gross": 100000,
+          "cost": 133772
+        },
+        {
+          "gross": 150000,
+          "cost": 198602
+        }
+      ]
+    },
+    {
+      "name": "Poland",
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 36594
+        },
+        {
+          "gross": 60000,
+          "cost": 73188
+        },
+        {
+          "gross": 100000,
+          "cost": 116504
+        },
+        {
+          "gross": 150000,
+          "cost": 169364
+        }
+      ]
+    },
+    {
+      "name": "Portugal",
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 37609
+        },
+        {
+          "gross": 60000,
+          "cost": 74957
+        },
+        {
+          "gross": 100000,
+          "cost": 124753
+        },
+        {
+          "gross": 150000,
+          "cost": 186999
+        }
+      ]
+    },
+    {
+      "name": "Romania",
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 31046
+        },
+        {
+          "gross": 60000,
+          "cost": 61721
+        },
+        {
+          "gross": 100000,
+          "cost": 102621
+        },
+        {
+          "gross": 150000,
+          "cost": 153746
+        }
+      ]
+    },
+    {
+      "name": "Serbia",
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 36227
+        },
+        {
+          "gross": 60000,
+          "cost": 70772
+        },
+        {
+          "gross": 100000,
+          "cost": 113030
+        },
+        {
+          "gross": 150000,
+          "cost": 163030
+        }
+      ]
+    },
+    {
+      "name": "Slovakia",
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 46074
+        },
+        {
+          "gross": 60000,
+          "cost": 91734
+        },
+        {
+          "gross": 100000,
+          "cost": 152614
+        },
+        {
+          "gross": 150000,
+          "cost": 228714
+        }
+      ]
+    },
+    {
+      "name": "Slovenia",
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 34830
+        },
+        {
+          "gross": 60000,
+          "cost": 69660
+        },
+        {
+          "gross": 100000,
+          "cost": 116100
+        },
+        {
+          "gross": 150000,
+          "cost": 174150
+        }
+      ]
+    },
+    {
+      "name": "Spain",
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 39825
+        },
+        {
+          "gross": 60000,
+          "cost": 79191
+        },
+        {
+          "gross": 100000,
+          "cost": 122946
+        },
+        {
+          "gross": 150000,
+          "cost": 177336
+        }
+      ]
+    },
+    {
+      "name": "Sweden",
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 39426
+        },
+        {
+          "gross": 60000,
+          "cost": 78852
+        },
+        {
+          "gross": 100000,
+          "cost": 131420
+        },
+        {
+          "gross": 150000,
+          "cost": 197130
+        }
+      ]
+    },
+    {
+      "name": "Switzerland",
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 36513
+        },
+        {
+          "gross": 60000,
+          "cost": 71989
+        },
+        {
+          "gross": 100000,
+          "cost": 119290
+        },
+        {
+          "gross": 150000,
+          "cost": 178418
+        }
+      ]
+    },
+    {
+      "name": "Turkey",
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 37125
+        },
+        {
+          "gross": 60000,
+          "cost": 74250
+        },
+        {
+          "gross": 100000,
+          "cost": 115893
+        },
+        {
+          "gross": 150000,
+          "cost": 165893
+        }
+      ]
+    },
+    {
+      "name": "Ukraine",
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 42874
+        },
+        {
+          "gross": 60000,
+          "cost": 81137
+        },
+        {
+          "gross": 100000,
+          "cost": 129137
+        },
+        {
+          "gross": 150000,
+          "cost": 189137
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1175 @@
+{
+  "meta": {
+    "title": "Employment costs & net pay across Europe (2025)",
+    "source": "Boundless - 'Understanding Employment Costs in Europe in 2025' (eBook)",
+    "usSource": "Boundless 'US vs Europe' 2025 study - https://boundlesshq.com/blog/us-vs-europe-employment-costs-salaries-net-pay-compared-2025-study/",
+    "currency": "EUR",
+    "fxUsdPerEur": 1.13,
+    "year": 2025,
+    "developerRole": "Mid-level Software Developer",
+    "benchmarks": [
+      32000,
+      60000,
+      150000
+    ],
+    "fields": {
+      "gross": "Annual gross salary (EUR)",
+      "cost": "Total employer cost = gross + mandatory employer contributions (EUR/yr)",
+      "net": "Employee net take-home pay after taxes & employee contributions (EUR/yr)",
+      "devSalary": "Average gross salary for a mid-level Software Developer (EUR/yr)",
+      "costOfLiving": "Estimated annual cost of living, single person, capital city (EUR/yr)"
+    },
+    "note": "European countries have data points at the three gross benchmarks plus the local developer average. US cities (marked approximate) come from a separate Boundless study with a single USD benchmark, converted to EUR at 1 EUR = 1.13 USD, and modelled at a flat effective rate. The calculator interpolates linearly between points. Figures are estimates for comparison only."
+  },
+  "countries": [
+    {
+      "name": "Albania",
+      "flag": "🇦🇱",
+      "eu": false,
+      "devSalary": 26300,
+      "costOfLiving": 14101,
+      "points": [
+        {
+          "gross": 26300,
+          "cost": 29965,
+          "net": 19846
+        },
+        {
+          "gross": 32000,
+          "cost": 35104,
+          "net": 25105
+        },
+        {
+          "gross": 60000,
+          "cost": 63580,
+          "net": 46882
+        },
+        {
+          "gross": 150000,
+          "cost": 155110,
+          "net": 116880
+        }
+      ]
+    },
+    {
+      "name": "Austria",
+      "flag": "🇦🇹",
+      "eu": true,
+      "devSalary": 61000,
+      "costOfLiving": 23387,
+      "points": [
+        {
+          "gross": 32000,
+          "cost": 42883,
+          "net": 23122
+        },
+        {
+          "gross": 60000,
+          "cost": 80406,
+          "net": 37647
+        },
+        {
+          "gross": 61000,
+          "cost": 81746,
+          "net": 38108
+        },
+        {
+          "gross": 150000,
+          "cost": 188711,
+          "net": 87014
+        }
+      ]
+    },
+    {
+      "name": "Belgium",
+      "flag": "🇧🇪",
+      "eu": true,
+      "devSalary": 55700,
+      "costOfLiving": 21526,
+      "points": [
+        {
+          "gross": 32000,
+          "cost": 39034,
+          "net": 22634
+        },
+        {
+          "gross": 55700,
+          "cost": 67944,
+          "net": 34738
+        },
+        {
+          "gross": 60000,
+          "cost": 73190,
+          "net": 36885
+        },
+        {
+          "gross": 150000,
+          "cost": 182974,
+          "net": 78646
+        }
+      ]
+    },
+    {
+      "name": "Bulgaria",
+      "flag": "🇧🇬",
+      "eu": true,
+      "devSalary": 27700,
+      "costOfLiving": 12307,
+      "points": [
+        {
+          "gross": 27700,
+          "cost": 32055,
+          "net": 22085
+        },
+        {
+          "gross": 32000,
+          "cost": 36354,
+          "net": 25948
+        },
+        {
+          "gross": 60000,
+          "cost": 64354,
+          "net": 51150
+        },
+        {
+          "gross": 150000,
+          "cost": 154355,
+          "net": 132155
+        }
+      ]
+    },
+    {
+      "name": "Croatia",
+      "flag": "🇭🇷",
+      "eu": true,
+      "devSalary": 45300,
+      "costOfLiving": 16840,
+      "points": [
+        {
+          "gross": 32000,
+          "cost": 38208,
+          "net": 21368
+        },
+        {
+          "gross": 45300,
+          "cost": 53702,
+          "net": 29562
+        },
+        {
+          "gross": 60000,
+          "cost": 70828,
+          "net": 38615
+        },
+        {
+          "gross": 150000,
+          "cost": 175678,
+          "net": 93825
+        }
+      ]
+    },
+    {
+      "name": "Cyprus",
+      "flag": "🇨🇾",
+      "eu": true,
+      "devSalary": 48200,
+      "costOfLiving": 21853,
+      "points": [
+        {
+          "gross": 32000,
+          "cost": 36928,
+          "net": 26552
+        },
+        {
+          "gross": 48200,
+          "cost": 55623,
+          "net": 36993
+        },
+        {
+          "gross": 60000,
+          "cost": 69240,
+          "net": 44305
+        },
+        {
+          "gross": 150000,
+          "cost": 165432,
+          "net": 101465
+        }
+      ]
+    },
+    {
+      "name": "Czech Republic",
+      "flag": "🇨🇿",
+      "eu": true,
+      "devSalary": 37700,
+      "costOfLiving": 17769,
+      "points": [
+        {
+          "gross": 32000,
+          "cost": 42408,
+          "net": 24501
+        },
+        {
+          "gross": 37700,
+          "cost": 50413,
+          "net": 28892
+        },
+        {
+          "gross": 60000,
+          "cost": 79514,
+          "net": 44869
+        },
+        {
+          "gross": 150000,
+          "cost": 178538,
+          "net": 110720
+        }
+      ]
+    },
+    {
+      "name": "Denmark",
+      "flag": "🇩🇰",
+      "eu": true,
+      "devSalary": 65500,
+      "costOfLiving": 25803,
+      "points": [
+        {
+          "gross": 32000,
+          "cost": 33636,
+          "net": 20518
+        },
+        {
+          "gross": 60000,
+          "cost": 61628,
+          "net": 36518
+        },
+        {
+          "gross": 65500,
+          "cost": 67142,
+          "net": 39679
+        },
+        {
+          "gross": 150000,
+          "cost": 151602,
+          "net": 80502
+        }
+      ]
+    },
+    {
+      "name": "Estonia",
+      "flag": "🇪🇪",
+      "eu": true,
+      "devSalary": 31900,
+      "costOfLiving": 18114,
+      "points": [
+        {
+          "gross": 31900,
+          "cost": 42832,
+          "net": 23987
+        },
+        {
+          "gross": 32000,
+          "cost": 42966,
+          "net": 24061
+        },
+        {
+          "gross": 60000,
+          "cost": 80430,
+          "net": 45114
+        },
+        {
+          "gross": 150000,
+          "cost": 200850,
+          "net": 112788
+        }
+      ]
+    },
+    {
+      "name": "Finland",
+      "flag": "🇫🇮",
+      "eu": true,
+      "devSalary": 59000,
+      "costOfLiving": 20472,
+      "points": [
+        {
+          "gross": 32000,
+          "cost": 38536,
+          "net": 21894
+        },
+        {
+          "gross": 59000,
+          "cost": 70950,
+          "net": 35981
+        },
+        {
+          "gross": 60000,
+          "cost": 72150,
+          "net": 36474
+        },
+        {
+          "gross": 150000,
+          "cost": 180195,
+          "net": 76126
+        }
+      ]
+    },
+    {
+      "name": "France",
+      "flag": "🇫🇷",
+      "eu": true,
+      "devSalary": 50400,
+      "costOfLiving": 20626,
+      "points": [
+        {
+          "gross": 32000,
+          "cost": 48986,
+          "net": 24059
+        },
+        {
+          "gross": 50400,
+          "cost": 80197,
+          "net": 33926
+        },
+        {
+          "gross": 60000,
+          "cost": 95303,
+          "net": 39501
+        },
+        {
+          "gross": 150000,
+          "cost": 239852,
+          "net": 83397
+        }
+      ]
+    },
+    {
+      "name": "Germany",
+      "flag": "🇩🇪",
+      "eu": true,
+      "devSalary": 65200,
+      "costOfLiving": 22558,
+      "points": [
+        {
+          "gross": 32000,
+          "cost": 39853,
+          "net": 24628
+        },
+        {
+          "gross": 60000,
+          "cost": 74724,
+          "net": 39679
+        },
+        {
+          "gross": 65200,
+          "cost": 81200,
+          "net": 42475
+        },
+        {
+          "gross": 150000,
+          "cost": 172471,
+          "net": 89365
+        }
+      ]
+    },
+    {
+      "name": "Greece",
+      "flag": "🇬🇷",
+      "eu": true,
+      "devSalary": 39200,
+      "costOfLiving": 15288,
+      "points": [
+        {
+          "gross": 32000,
+          "cost": 39405,
+          "net": 21139
+        },
+        {
+          "gross": 39200,
+          "cost": 48271,
+          "net": 25259
+        },
+        {
+          "gross": 60000,
+          "cost": 73884,
+          "net": 35675
+        },
+        {
+          "gross": 150000,
+          "cost": 169790,
+          "net": 83871
+        }
+      ]
+    },
+    {
+      "name": "Hungary",
+      "flag": "🇭🇺",
+      "eu": true,
+      "devSalary": 42200,
+      "costOfLiving": 13530,
+      "points": [
+        {
+          "gross": 32000,
+          "cost": 35611,
+          "net": 20993
+        },
+        {
+          "gross": 42200,
+          "cost": 47746,
+          "net": 28093
+        },
+        {
+          "gross": 60000,
+          "cost": 66769,
+          "net": 39372
+        },
+        {
+          "gross": 150000,
+          "cost": 166920,
+          "net": 98404
+        }
+      ]
+    },
+    {
+      "name": "Ireland",
+      "flag": "🇮🇪",
+      "eu": true,
+      "devSalary": 66500,
+      "costOfLiving": 31533,
+      "points": [
+        {
+          "gross": 32000,
+          "cost": 35568,
+          "net": 25828
+        },
+        {
+          "gross": 60000,
+          "cost": 66690,
+          "net": 43322
+        },
+        {
+          "gross": 66500,
+          "cost": 73915,
+          "net": 46825
+        },
+        {
+          "gross": 150000,
+          "cost": 166725,
+          "net": 86606
+        }
+      ]
+    },
+    {
+      "name": "Italy",
+      "flag": "🇮🇹",
+      "eu": true,
+      "devSalary": 44200,
+      "costOfLiving": 19513,
+      "points": [
+        {
+          "gross": 32000,
+          "cost": 47253,
+          "net": 21930
+        },
+        {
+          "gross": 44200,
+          "cost": 65149,
+          "net": 28393
+        },
+        {
+          "gross": 60000,
+          "cost": 88326,
+          "net": 35963
+        },
+        {
+          "gross": 150000,
+          "cost": 220347,
+          "net": 80934
+        }
+      ]
+    },
+    {
+      "name": "Latvia",
+      "flag": "🇱🇻",
+      "eu": true,
+      "devSalary": 35900,
+      "costOfLiving": 14635,
+      "points": [
+        {
+          "gross": 32000,
+          "cost": 39549,
+          "net": 21880
+        },
+        {
+          "gross": 35900,
+          "cost": 44369,
+          "net": 24476
+        },
+        {
+          "gross": 60000,
+          "cost": 74154,
+          "net": 40505
+        },
+        {
+          "gross": 150000,
+          "cost": 185385,
+          "net": 102147
+        }
+      ]
+    },
+    {
+      "name": "Lithuania",
+      "flag": "🇱🇹",
+      "eu": true,
+      "devSalary": 41900,
+      "costOfLiving": 16603,
+      "points": [
+        {
+          "gross": 32000,
+          "cost": 33251,
+          "net": 19367
+        },
+        {
+          "gross": 41900,
+          "cost": 43538,
+          "net": 25347
+        },
+        {
+          "gross": 60000,
+          "cost": 62346,
+          "net": 36306
+        },
+        {
+          "gross": 150000,
+          "cost": 155865,
+          "net": 91001
+        }
+      ]
+    },
+    {
+      "name": "Luxembourg",
+      "flag": "🇱🇺",
+      "eu": true,
+      "devSalary": 74900,
+      "costOfLiving": 33295,
+      "points": [
+        {
+          "gross": 32000,
+          "cost": 35997,
+          "net": 25382
+        },
+        {
+          "gross": 60000,
+          "cost": 67494,
+          "net": 40364
+        },
+        {
+          "gross": 74900,
+          "cost": 84255,
+          "net": 47806
+        },
+        {
+          "gross": 150000,
+          "cost": 168735,
+          "net": 87192
+        }
+      ]
+    },
+    {
+      "name": "Malta",
+      "flag": "🇲🇹",
+      "eu": true,
+      "devSalary": 60900,
+      "costOfLiving": 21054,
+      "points": [
+        {
+          "gross": 32000,
+          "cost": 34691,
+          "net": 24316
+        },
+        {
+          "gross": 60000,
+          "cost": 62691,
+          "net": 45319
+        },
+        {
+          "gross": 60900,
+          "cost": 63591,
+          "net": 45905
+        },
+        {
+          "gross": 150000,
+          "cost": 152691,
+          "net": 103816
+        }
+      ]
+    },
+    {
+      "name": "Moldova",
+      "flag": "🇲🇩",
+      "eu": false,
+      "devSalary": 26000,
+      "costOfLiving": 13002,
+      "points": [
+        {
+          "gross": 26000,
+          "cost": 32240,
+          "net": 20292
+        },
+        {
+          "gross": 32000,
+          "cost": 39680,
+          "net": 24947
+        },
+        {
+          "gross": 60000,
+          "cost": 74400,
+          "net": 46647
+        },
+        {
+          "gross": 150000,
+          "cost": 186000,
+          "net": 116397
+        }
+      ]
+    },
+    {
+      "name": "Montenegro",
+      "flag": "🇲🇪",
+      "eu": false,
+      "devSalary": 28000,
+      "costOfLiving": 14714,
+      "points": [
+        {
+          "gross": 28000,
+          "cost": 29868,
+          "net": 18760
+        },
+        {
+          "gross": 32000,
+          "cost": 34134,
+          "net": 21440
+        },
+        {
+          "gross": 60000,
+          "cost": 64002,
+          "net": 40200
+        },
+        {
+          "gross": 150000,
+          "cost": 160005,
+          "net": 100500
+        }
+      ]
+    },
+    {
+      "name": "Netherlands",
+      "flag": "🇳🇱",
+      "eu": true,
+      "devSalary": 62800,
+      "costOfLiving": 28590,
+      "points": [
+        {
+          "gross": 32000,
+          "cost": 40033,
+          "net": 28772
+        },
+        {
+          "gross": 60000,
+          "cost": 77004,
+          "net": 43678
+        },
+        {
+          "gross": 62800,
+          "cost": 80701,
+          "net": 45055
+        },
+        {
+          "gross": 150000,
+          "cost": 181377,
+          "net": 85622
+        }
+      ]
+    },
+    {
+      "name": "Norway",
+      "flag": "🇳🇴",
+      "eu": false,
+      "devSalary": 70700,
+      "costOfLiving": 26474,
+      "points": [
+        {
+          "gross": 32000,
+          "cost": 38466,
+          "net": 21976
+        },
+        {
+          "gross": 60000,
+          "cost": 72124,
+          "net": 37901
+        },
+        {
+          "gross": 70700,
+          "cost": 85222,
+          "net": 43122
+        },
+        {
+          "gross": 150000,
+          "cost": 163526,
+          "net": 80586
+        }
+      ]
+    },
+    {
+      "name": "Poland",
+      "flag": "🇵🇱",
+      "eu": true,
+      "devSalary": 30000,
+      "costOfLiving": 16551,
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 36669,
+          "net": 21282
+        },
+        {
+          "gross": 32000,
+          "cost": 38050,
+          "net": 22165
+        },
+        {
+          "gross": 60000,
+          "cost": 70889,
+          "net": 36309
+        },
+        {
+          "gross": 150000,
+          "cost": 170886,
+          "net": 86803
+        }
+      ]
+    },
+    {
+      "name": "Portugal",
+      "flag": "🇵🇹",
+      "eu": true,
+      "devSalary": 31200,
+      "costOfLiving": 19314,
+      "points": [
+        {
+          "gross": 31200,
+          "cost": 39206,
+          "net": 20716
+        },
+        {
+          "gross": 32000,
+          "cost": 40210,
+          "net": 21143
+        },
+        {
+          "gross": 60000,
+          "cost": 75350,
+          "net": 34425
+        },
+        {
+          "gross": 150000,
+          "cost": 188300,
+          "net": 72039
+        }
+      ]
+    },
+    {
+      "name": "Romania",
+      "flag": "🇷🇴",
+      "eu": true,
+      "devSalary": 24700,
+      "costOfLiving": 12567,
+      "points": [
+        {
+          "gross": 24700,
+          "cost": 25255,
+          "net": 14450
+        },
+        {
+          "gross": 32000,
+          "cost": 32724,
+          "net": 18723
+        },
+        {
+          "gross": 60000,
+          "cost": 61357,
+          "net": 35106
+        },
+        {
+          "gross": 150000,
+          "cost": 153393,
+          "net": 87764
+        }
+      ]
+    },
+    {
+      "name": "Serbia",
+      "flag": "🇷🇸",
+      "eu": false,
+      "devSalary": 25300,
+      "costOfLiving": 13495,
+      "points": [
+        {
+          "gross": 25300,
+          "cost": 29133,
+          "net": 18893
+        },
+        {
+          "gross": 32000,
+          "cost": 36848,
+          "net": 23891
+        },
+        {
+          "gross": 60000,
+          "cost": 69090,
+          "net": 44780
+        },
+        {
+          "gross": 150000,
+          "cost": 160165,
+          "net": 111924
+        }
+      ]
+    },
+    {
+      "name": "Slovakia",
+      "flag": "🇸🇰",
+      "eu": true,
+      "devSalary": 29000,
+      "costOfLiving": 16192,
+      "points": [
+        {
+          "gross": 29000,
+          "cost": 39208,
+          "net": 20444
+        },
+        {
+          "gross": 32000,
+          "cost": 43264,
+          "net": 22472
+        },
+        {
+          "gross": 60000,
+          "cost": 81120,
+          "net": 40113
+        },
+        {
+          "gross": 150000,
+          "cost": 202800,
+          "net": 95553
+        }
+      ]
+    },
+    {
+      "name": "Slovenia",
+      "flag": "🇸🇮",
+      "eu": true,
+      "devSalary": 51800,
+      "costOfLiving": 18117,
+      "points": [
+        {
+          "gross": 32000,
+          "cost": 37152,
+          "net": 16968
+        },
+        {
+          "gross": 51800,
+          "cost": 60140,
+          "net": 25751
+        },
+        {
+          "gross": 60000,
+          "cost": 69660,
+          "net": 28948
+        },
+        {
+          "gross": 150000,
+          "cost": 174150,
+          "net": 63950
+        }
+      ]
+    },
+    {
+      "name": "Spain",
+      "flag": "🇪🇸",
+      "eu": true,
+      "devSalary": 36800,
+      "costOfLiving": 19676,
+      "points": [
+        {
+          "gross": 32000,
+          "cost": 42662,
+          "net": 22978
+        },
+        {
+          "gross": 36800,
+          "cost": 49062,
+          "net": 25917
+        },
+        {
+          "gross": 60000,
+          "cost": 79637,
+          "net": 39026
+        },
+        {
+          "gross": 150000,
+          "cost": 170240,
+          "net": 87629
+        }
+      ]
+    },
+    {
+      "name": "Sweden",
+      "flag": "🇸🇪",
+      "eu": true,
+      "devSalary": 61400,
+      "costOfLiving": 21098,
+      "points": [
+        {
+          "gross": 32000,
+          "cost": 41396,
+          "net": 19024
+        },
+        {
+          "gross": 60000,
+          "cost": 77618,
+          "net": 35279
+        },
+        {
+          "gross": 61400,
+          "cost": 80609,
+          "net": 36173
+        },
+        {
+          "gross": 150000,
+          "cost": 194045,
+          "net": 77235
+        }
+      ]
+    },
+    {
+      "name": "Switzerland",
+      "flag": "🇨🇭",
+      "eu": false,
+      "devSalary": 59100,
+      "costOfLiving": 40071,
+      "points": [
+        {
+          "gross": 32000,
+          "cost": 36473,
+          "net": 28128
+        },
+        {
+          "gross": 59100,
+          "cost": 67362,
+          "net": 49415
+        },
+        {
+          "gross": 60000,
+          "cost": 68387,
+          "net": 50117
+        },
+        {
+          "gross": 150000,
+          "cost": 170969,
+          "net": 118201
+        }
+      ]
+    },
+    {
+      "name": "Turkey",
+      "flag": "🇹🇷",
+      "eu": false,
+      "devSalary": 26800,
+      "costOfLiving": 12302,
+      "points": [
+        {
+          "gross": 26800,
+          "cost": 31438,
+          "net": 16146
+        },
+        {
+          "gross": 32000,
+          "cost": 36853,
+          "net": 19265
+        },
+        {
+          "gross": 60000,
+          "cost": 64853,
+          "net": 36063
+        },
+        {
+          "gross": 150000,
+          "cost": 154853,
+          "net": 90056
+        }
+      ]
+    },
+    {
+      "name": "Ukraine",
+      "flag": "🇺🇦",
+      "eu": false,
+      "devSalary": 24100,
+      "costOfLiving": 8953,
+      "points": [
+        {
+          "gross": 24100,
+          "cost": 29402,
+          "net": 18557
+        },
+        {
+          "gross": 32000,
+          "cost": 37842,
+          "net": 24640
+        },
+        {
+          "gross": 60000,
+          "cost": 65842,
+          "net": 46205
+        },
+        {
+          "gross": 150000,
+          "cost": 155842,
+          "net": 115500
+        }
+      ]
+    },
+    {
+      "name": "United Kingdom",
+      "flag": "🇬🇧",
+      "eu": false,
+      "devSalary": 62100,
+      "costOfLiving": 26162,
+      "points": [
+        {
+          "gross": 32000,
+          "cost": 35133,
+          "net": 26586
+        },
+        {
+          "gross": 60000,
+          "cost": 66643,
+          "net": 46245
+        },
+        {
+          "gross": 62100,
+          "cost": 70873,
+          "net": 48340
+        },
+        {
+          "gross": 150000,
+          "cost": 167923,
+          "net": 91307
+        }
+      ]
+    },
+    {
+      "name": "Seattle, WA",
+      "flag": "🇺🇸",
+      "eu": false,
+      "us": true,
+      "approx": true,
+      "devSalary": 118325,
+      "costOfLiving": 40522,
+      "points": [
+        {
+          "gross": 0,
+          "cost": 0,
+          "net": 0
+        },
+        {
+          "gross": 118325,
+          "cost": 136582,
+          "net": 89612
+        }
+      ]
+    },
+    {
+      "name": "San Francisco, CA",
+      "flag": "🇺🇸",
+      "eu": false,
+      "us": true,
+      "approx": true,
+      "devSalary": 105489,
+      "costOfLiving": 50802,
+      "points": [
+        {
+          "gross": 0,
+          "cost": 0,
+          "net": 0
+        },
+        {
+          "gross": 105489,
+          "cost": 126994,
+          "net": 73427
+        }
+      ]
+    },
+    {
+      "name": "New York, NY",
+      "flag": "🇺🇸",
+      "eu": false,
+      "us": true,
+      "approx": true,
+      "devSalary": 97467,
+      "costOfLiving": 60046,
+      "points": [
+        {
+          "gross": 0,
+          "cost": 0,
+          "net": 0
+        },
+        {
+          "gross": 97467,
+          "cost": 113832,
+          "net": 70572
+        }
+      ]
+    },
+    {
+      "name": "Austin, TX",
+      "flag": "🇺🇸",
+      "eu": false,
+      "us": true,
+      "approx": true,
+      "devSalary": 100575,
+      "costOfLiving": 35197,
+      "points": [
+        {
+          "gross": 0,
+          "cost": 0,
+          "net": 0
+        },
+        {
+          "gross": 100575,
+          "cost": 111035,
+          "net": 78176
+        }
+      ]
+    },
+    {
+      "name": "Atlanta, GA",
+      "flag": "🇺🇸",
+      "eu": false,
+      "us": true,
+      "approx": true,
+      "devSalary": 100977,
+      "costOfLiving": 33187,
+      "points": [
+        {
+          "gross": 0,
+          "cost": 0,
+          "net": 0
+        },
+        {
+          "gross": 100977,
+          "cost": 110964,
+          "net": 73588
+        }
+      ]
+    }
+  ]
+}
