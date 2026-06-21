@@ -37,13 +37,8 @@ jobs:
           cp index.html styles.css app.js _site/
           cp data/*.js _site/data/
 
-      # enablement: true turns Pages on (build type = GitHub Actions) if it isn't
-      # already — avoids a first-run "failed to create deployment (500)" when the
-      # repo's Pages source hasn't been set to "GitHub Actions" in Settings.
       - name: Setup Pages
         uses: actions/configure-pages@v5
-        with:
-          enablement: true
 
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v3
