@@ -1,0 +1,50 @@
+name: Deploy site to GitHub Pages
+
+# Publish only when you cut a release (or trigger it by hand from the Actions tab).
+on:
+  release:
+    types: [published]
+  workflow_dispatch: {}
+
+# Permissions the GitHub Pages deploy action needs.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never run two deploys at once; let an in-flight one finish.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # "Build": this is a static site, so we just gather what the page actually
+      # loads into _site/ (keeps the .json sources, tools/, README, .git out of it).
+      # The page references styles.css, app.js and the data/*.js wrappers; the
+      # canonical data/*.json and tools/ are build inputs and not served.
+      - name: Assemble site
+        run: |
+          mkdir -p _site/data
+          cp index.html styles.css app.js _site/
+          cp data/*.js _site/data/
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload site artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
