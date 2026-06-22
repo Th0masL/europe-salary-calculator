@@ -18,7 +18,7 @@ Deel exposes two complementary tools, and we take the strength of each:
 Two gotchas handled here:
   * employment_cost expects a MONTHLY salary and the full country NAME (not ISO2).
   * Deel's `totalCosts` bakes in Deel's own EOR management fee (a flat ~EUR 522/mo);
-    we subtract it so `cost` is the statutory employer cost, comparable to the
+    we subtract it so `cost` is the mandatory employer cost, comparable to the
     other sources. (We do NOT use employment_cost's own net field — it's
     inconsistent with the dedicated take-home calculator.)
 

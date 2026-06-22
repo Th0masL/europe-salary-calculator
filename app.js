@@ -14,8 +14,9 @@
     ebook: { label: "2025 eBook", data: window.SALARY_DATA_EBOOK },
     skuad: { label: "Skuad (live)", data: window.SALARY_DATA_SKUAD },
     deel: { label: "Deel (live)", data: window.SALARY_DATA_DEEL },
+    formula: { label: "Formula", data: window.SALARY_DATA_FORMULA },
   };
-  var DEFAULT_SOURCE = ["consensus", "ebook", "skuad", "deel"]
+  var DEFAULT_SOURCE = ["consensus", "ebook", "skuad", "deel", "formula"]
     .find(function (s) { return SOURCES[s].data; });
   if (!DEFAULT_SOURCE) {
     document.getElementById("resultsBody").innerHTML =
@@ -40,6 +41,20 @@
       if (!META[c.name]) META[c.name] = c;
     });
   });
+
+  // Canonical, ordered list of every location across all sources. The table
+  // always shows this full list; a source that lacks a location renders it with
+  // "—" (so e.g. the Formula source shows only Estonia + US filled in).
+  var MASTER = [];
+  (function () {
+    var seen = {};
+    ["consensus", "ebook", "skuad", "deel", "formula"].forEach(function (s) {
+      if (!SOURCES[s].data) return;
+      SOURCES[s].data.countries.forEach(function (c) {
+        if (!seen[c.name]) { seen[c.name] = 1; MASTER.push(c.name); }
+      });
+    });
+  })();
 
   var MODES = {
     cost: { label: "Total employer budget (per year)", noun: "employer budget", best: "highest take-home" },
@@ -136,35 +151,44 @@
   // ---- computation for the whole table ------------------------------------
 
   function compute() {
-    var rows = currentData().countries
-      .filter(function (c) {
-        var eu = c.eu != null ? c.eu : (META[c.name] || {}).eu;
+    var byName = {};
+    currentData().countries.forEach(function (c) { byName[c.name] = c; });
+
+    var rows = MASTER
+      .filter(function (name) {
+        var eu = (META[name] || {}).eu;
         return !state.euOnly || eu;
       })
-      .filter(function (c) {
-        return !state.search || c.name.toLowerCase().indexOf(state.search.toLowerCase()) !== -1;
+      .filter(function (name) {
+        return !state.search || name.toLowerCase().indexOf(state.search.toLowerCase()) !== -1;
       })
-      .map(function (c) {
-        var s = solve(c, state.mode, state.amount);
-        if (!s) return null; // this source can't solve the chosen metric here
-        var m = META[c.name] || {};
-        var col = COL[c.name] != null ? COL[c.name]
+      .map(function (name) {
+        var c = byName[name] || {};
+        var m = META[name] || {};
+        var col = COL[name] != null ? COL[name]
           : (c.costOfLiving != null ? c.costOfLiving : m.costOfLiving);
-        var surplus = (s.net != null && col != null) ? s.net - col : null;
-        return {
-          name: c.name,
+        var base = {
+          name: name,
           flag: c.flag || m.flag || "🏳️",
           eu: c.eu != null ? c.eu : m.eu,
-          us: !!(c.us || m.us), approx: !!c.approx, // approx is per-source (eBook/Skuad blog only)
-          cost: s.cost, gross: s.gross, net: s.net,
-          netRatio: (s.cost > 0 && s.net != null) ? s.net / s.cost : null,
-          costPerNet: (s.net > 0 && s.cost != null) ? s.cost / s.net : null,
-          surplus: surplus,
+          us: !!(c.us || m.us), approx: !!c.approx,
           costOfLiving: col,
-          extrapolated: s.extrapolated,
         };
-      })
-      .filter(Boolean);
+        var s = byName[name] ? solve(c, state.mode, state.amount) : null;
+        if (!s) {
+          // this source has no data for this location → a "—" row
+          base.cost = base.gross = base.net = null;
+          base.netRatio = base.costPerNet = base.surplus = null;
+          base.extrapolated = false;
+          return base;
+        }
+        base.cost = s.cost; base.gross = s.gross; base.net = s.net;
+        base.netRatio = (s.cost > 0 && s.net != null) ? s.net / s.cost : null;
+        base.costPerNet = (s.net > 0 && s.cost != null) ? s.cost / s.net : null;
+        base.surplus = (s.net != null && col != null) ? s.net - col : null;
+        base.extrapolated = s.extrapolated;
+        return base;
+      });
 
     var key = state.sortKey, dir = state.sortDir;
     rows.sort(function (a, b) {
@@ -260,7 +284,7 @@
     var when = meta.fetched ? " · fetched " + meta.fetched : "";
     if (state.source === "consensus") {
       return "Source: Consensus — Europe: median of eBook + Skuad + Deel (outliers dropped); " +
-        "US: direct 2025 statutory calc (no EOR)" + when + ".";
+        "US: direct 2025 calc from published rates (no EOR)" + when + ".";
     }
     if (state.source === "skuad") {
       return "Source: Skuad live calculator" + when +
@@ -269,6 +293,10 @@
     if (state.source === "deel") {
       return "Source: Deel live calculators" + when +
         " · cost from employee-cost tool (EOR fee removed), net from take-home tool.";
+    }
+    if (state.source === "formula") {
+      return "Source: Formula — computed from each country's published tax rates (no vendor)" +
+        when + ". Coverage so far: Estonia + US; other rows are blank until added.";
     }
     return "Source: Boundless 2025 eBook · 36 European countries + 5 US cities.";
   }

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Compute US employment cost + net pay directly from published 2025 statutory
+Compute US employment cost + net pay directly from published 2025
 rates — NO reliance on EOR/payroll vendors. Writes data/us.json + data/us.js.
 
 Covers the 5 cities we track (state-level): Seattle/WA, San Francisco/CA,
@@ -8,7 +8,7 @@ New York/NY (incl. NYC local tax), Austin/TX, Atlanta/GA.
 
 Assumptions (the same simplifications every paycheck calculator makes):
   * single filer, standard deduction, no dependents/credits/itemizing
-  * employer cost = statutory payroll taxes only (employer FICA + FUTA + SUTA);
+  * employer cost = mandatory payroll taxes only (employer FICA + FUTA + SUTA);
     workers' comp / benefits are excluded (they're insurance, not a tax, and
     vary by occupation) — this is the pure "direct employer" tax burden
   * SUTA uses representative new-employer rates (varies by employer in reality)
@@ -202,7 +202,7 @@ def main():
 
     doc = {
         "meta": {
-            "title": "US employment cost + net (direct statutory calc)",
+            "title": "US employment cost + net (direct calc from published rates)",
             "source": "Computed from published 2025 US federal + state rates (no EOR vendor)",
             "currency": "EUR",
             "fetched": datetime.date.today().isoformat(),
@@ -210,7 +210,7 @@ def main():
             "provides": ["gross", "cost", "net"],
             "salaryPoints": SALARY_POINTS,
             "note": ("Single filer, standard deduction, no credits. Employer cost = "
-                     "statutory payroll taxes only (employer FICA + FUTA + SUTA); workers' "
+                     "mandatory payroll taxes only (employer FICA + FUTA + SUTA); workers' "
                      "comp/benefits excluded. NYC local tax included for New York. SUTA uses "
                      "representative new-employer rates. Estimates for comparison only."),
         },

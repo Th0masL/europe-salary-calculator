@@ -97,10 +97,10 @@ Austin→TX, Atlanta→GA, Miami→FL. (Miami/Florida, like Texas, has no state 
 tax — a strong high-take-home example.) Their numbers come from different places
 by source:
 
-- **Consensus** — a **direct statutory calculation** (`tools/calc_us.py`), with
+- **Consensus** — a **direct calculation from published rates** (`tools/calc_us.py`), with
   **no EOR vendor**: 2025 federal brackets + standard deduction, FICA (with the
   Social Security wage cap), and state income tax — including **NYC local tax** for
-  New York. Employer cost = statutory payroll taxes only (employer FICA + FUTA +
+  New York. Employer cost = mandatory payroll taxes only (employer FICA + FUTA +
   SUTA; workers' comp/benefits excluded). Single filer, standard deduction.
   **Validated against Deel** — net agrees to **<1%** for every state (Texas/Florida
   exact); only New York differs (~5% lower), and that's because we include the NYC
@@ -129,7 +129,7 @@ data/
   skuad.json / .js           # Skuad live-API snapshot
   deel.json  / .js           # Deel live-API snapshot (cost + net)
   rippling.json / .js        # Rippling live-API snapshot (employer cost only)
-  us.json    / .js           # US: direct statutory calc (6 cities, no EOR)
+  us.json    / .js           # US: direct calc from published rates (6 cities, no EOR)
   consensus.json / .js       # merged sources, used as the default
 tools/
   extract_data.py            # eBook dataset (PDF → EU countries, + US cities)
@@ -158,7 +158,7 @@ python3 tools/fetch_skuad.py      # → data/skuad.json + .js
 python3 tools/fetch_deel.py       # → data/deel.json  + .js
 python3 tools/fetch_rippling.py   # → data/rippling.json + .js  (employer cost)
 
-# 3. US direct statutory calc (no vendor; self-validates against Deel if present)
+# 3. US direct calc from published rates (no vendor; self-validates against Deel if present)
 python3 tools/calc_us.py          # → data/us.json + .js
 
 # 4. optional: refresh cost-of-living from current Numbeo (slow; rate-limited)

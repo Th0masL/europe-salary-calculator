@@ -12,7 +12,7 @@ so we fetch once and commit the result. Re-run to refresh.
 What it does
 ------------
 - European countries: query the API at several gross salaries (in EUR) and build
-  {gross, cost, net} points. This is a genuine per-country statutory calculation.
+  {gross, cost, net} points. This is a genuine per-country calculation from published rates.
 - US cities: the API's US *employee* income tax is unreliable (it falls back to a
   flat ~10% "state tax" for states it hasn't configured — wrong for no-income-tax
   states like WA and TX). So we DO NOT use the API for the US; we reuse the

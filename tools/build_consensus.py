@@ -19,7 +19,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-# 'us' = direct statutory calc (US only); 'rippling' = employer cost only (no net)
+# 'us' = direct calc from published rates (US only); 'rippling' = employer cost only (no net)
 SOURCES = ["ebook", "skuad", "deel", "us", "rippling"]
 GROSS_POINTS = [30000, 45000, 60000, 80000, 100000, 125000, 150000]
 OUTLIER_PCT = 0.10  # a source >10% from the median of the others is dropped
@@ -101,7 +101,7 @@ def main():
     out = []
     for name in names:
         base = meta_by_name[name]
-        # US is state-level. We use our own direct statutory calc ('us' source —
+        # US is state-level. We use our own direct calc from published rates ('us' source —
         # non-EOR, validated against Deel to <1% and more complete for NYC). Fall
         # back to Deel, then to the rest. European countries use all sources; the
         # US-only 'us' source never appears for them.

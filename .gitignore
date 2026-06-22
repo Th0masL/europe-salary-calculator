@@ -1,2 +1,4 @@
 *.pdf
 data/comparison_*.json
+__pycache__/
+*.pyc

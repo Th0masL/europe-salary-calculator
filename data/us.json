@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "US employment cost + net (direct statutory calc)",
+    "title": "US employment cost + net (direct calc from published rates)",
     "source": "Computed from published 2025 US federal + state rates (no EOR vendor)",
     "currency": "EUR",
     "fetched": "2026-06-21",
@@ -16,7 +16,7 @@
       100000,
       150000
     ],
-    "note": "Single filer, standard deduction, no credits. Employer cost = statutory payroll taxes only (employer FICA + FUTA + SUTA); workers' comp/benefits excluded. NYC local tax included for New York. SUTA uses representative new-employer rates. Estimates for comparison only."
+    "note": "Single filer, standard deduction, no credits. Employer cost = mandatory payroll taxes only (employer FICA + FUTA + SUTA); workers' comp/benefits excluded. NYC local tax included for New York. SUTA uses representative new-employer rates. Estimates for comparison only."
   },
   "countries": [
     {
