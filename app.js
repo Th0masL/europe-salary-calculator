@@ -296,7 +296,7 @@
     }
     if (state.source === "formula") {
       return "Source: Formula — computed from each country's published tax rates (no vendor)" +
-        when + ". Coverage so far: Estonia + US; other rows are blank until added.";
+        when + ". Countries not yet implemented show blank (—).";
     }
     return "Source: Boundless 2025 eBook · 36 European countries + 5 US cities.";
   }
