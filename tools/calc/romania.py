@@ -22,6 +22,7 @@ Sources: PwC Romania 2026 (CAS 25% / CASS 10% / CAM 2.25% / flat 10% PIT).
 NAME = "Romania"
 CURRENCY = "EUR"           # real currency RON — see note (calc is currency-invariant in range)
 YEAR = 2026
+EMPLOYER_BREAKDOWN = "Work insurance contribution (CAM) 2.25% only (pension/health are employee-side)"
 
 EMPLOYEE_SS = 0.25 + 0.10   # CAS + CASS = 35%
 INCOME_TAX = 0.10           # flat, on gross − contributions

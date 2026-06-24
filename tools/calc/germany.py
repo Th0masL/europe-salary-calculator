@@ -27,6 +27,7 @@ deductions; DRV/BMG 2026 rates + ceilings (€101,400 / €69,750); GFB €12,34
 NAME = "Germany"
 CURRENCY = "EUR"
 YEAR = 2026
+EMPLOYER_BREAKDOWN = "Pension+unemployment 10.6% + health+care 10.55% (both capped) + ~3% accident/U1-U2/insolvency levies"
 
 PENSION_CAP = 101400          # pension + unemployment ceiling
 HEALTH_CAP = 69750            # health + care ceiling

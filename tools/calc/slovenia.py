@@ -17,6 +17,7 @@ from engine import progressive
 NAME = "Slovenia"
 CURRENCY = "EUR"
 YEAR = 2026
+EMPLOYER_BREAKDOWN = "Social security 16.10% + long-term care 1.0%"
 INF = float("inf")
 
 EE_SS = 0.2210                 # social security — deductible from the PIT base

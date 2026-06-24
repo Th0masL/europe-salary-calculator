@@ -17,6 +17,7 @@ from engine import progressive
 NAME = "Latvia"
 CURRENCY = "EUR"
 YEAR = 2026
+EMPLOYER_BREAKDOWN = "Social insurance (NSIC) 23.59% (capped €105,300)"
 INF = float("inf")
 
 NSIC_CAP = 105300

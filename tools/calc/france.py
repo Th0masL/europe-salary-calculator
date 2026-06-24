@@ -38,6 +38,7 @@ from engine import progressive
 NAME = "France"
 CURRENCY = "EUR"
 YEAR = 2026
+EMPLOYER_BREAKDOWN = "URSSAF ~34% (health, pension incl. AGIRC-ARRCO, unemployment, family) + ~8% typical mutuelle/prevoyance/versement mobilite/CSE"
 INF = float("inf")
 
 PASS = 48060                  # plafond annuel de la sécurité sociale, 2026

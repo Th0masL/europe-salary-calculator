@@ -18,6 +18,7 @@ Sources:
 NAME = "Estonia"
 CURRENCY = "EUR"
 YEAR = 2026
+EMPLOYER_BREAKDOWN = "Social tax 33% + employer unemployment 0.8%"
 
 # --- employer pays ON TOP of gross ---
 SOCIAL_TAX = 0.33               # sotsiaalmaks: 20% pension + 13% health, uncapped

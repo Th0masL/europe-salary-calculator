@@ -18,6 +18,7 @@ from engine import progressive
 NAME = "Slovakia"
 CURRENCY = "EUR"
 YEAR = 2026
+EMPLOYER_BREAKDOWN = "Social insurance 24.4% (capped €201,168) + health 11% + accident 0.8%"
 INF = float("inf")
 
 SOCIAL_CAP = 16764 * 12             # €201,168/yr max assessment base

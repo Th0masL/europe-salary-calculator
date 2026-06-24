@@ -36,6 +36,7 @@ from engine import progressive
 NAME = "Spain"
 CURRENCY = "EUR"
 YEAR = 2026
+EMPLOYER_BREAKDOWN = "Common contingencies 23.6% + unemployment 5.5% + FOGASA 0.2% + training 0.6% + MEI 0.75% + accident ~1.5%, on base capped at €61,214"
 INF = float("inf")
 
 # Social Security contribution-base ceiling (2026).

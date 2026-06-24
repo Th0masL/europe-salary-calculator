@@ -27,6 +27,7 @@ from engine import progressive
 NAME = "Croatia"
 CURRENCY = "EUR"
 YEAR = 2026
+EMPLOYER_BREAKDOWN = "Health insurance 16.5%"
 INF = float("inf")
 
 # Employer, on top of gross: health insurance only (incl. unemployment +

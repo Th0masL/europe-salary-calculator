@@ -31,6 +31,7 @@ from engine import progressive
 NAME = "Netherlands"
 CURRENCY = "EUR"
 YEAR = 2026
+EMPLOYER_BREAKDOWN = "Statutory premiums (AOF+Awf+Whk+Zvw) ~16.7% (capped) + ~11.5% occupational pension (CBA-based)"
 INF = float("inf")
 
 BRACKETS = [(38883, 0.3575), (78426, 0.3756), (INF, 0.495)]

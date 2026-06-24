@@ -38,13 +38,25 @@ def load_country_modules():
 
 def fx_rates():
     with urllib.request.urlopen(FX_URL, timeout=30) as r:
-        return json.load(r)["rates"]  # EUR -> currency
+        return json.load(r)  # full response: "rates" (EUR -> currency) + update times
+
+
+def fx_as_of(fx):
+    """Clean date the FX rates were last published, e.g. '2026-06-24'."""
+    raw = fx.get("time_last_update_utc")
+    if not raw:
+        return None
+    try:
+        return datetime.datetime.strptime(raw, "%a, %d %b %Y %H:%M:%S %z").date().isoformat()
+    except ValueError:
+        return None
 
 
 def main():
     mods = load_country_modules()
     need_fx = any(getattr(m, "CURRENCY", "EUR") != "EUR" for m in mods)
-    rates = fx_rates() if need_fx else {}
+    fx = fx_rates() if need_fx else None
+    rates = fx["rates"] if fx else {}
 
     countries = []
     for m in mods:
@@ -57,19 +69,27 @@ def main():
             points.append({"gross": gross_eur,
                            "cost": round(cost_loc / rate),
                            "net": round(net_loc / rate)})
-        countries.append({"name": m.NAME, "year": getattr(m, "YEAR", None),
-                          "points": points})
+        entry = {"name": m.NAME, "year": getattr(m, "YEAR", None), "points": points}
+        breakdown = getattr(m, "EMPLOYER_BREAKDOWN", None)
+        if breakdown:
+            entry["costNote"] = breakdown
+        countries.append(entry)
         p60 = next(p for p in points if p["gross"] == 60000)
         print(f"  {m.NAME} ({cur}, {getattr(m, 'YEAR', '?')}): "
               f"cost@60k EUR {p60['cost']}, net@60k EUR {p60['net']}")
 
     # The US cities (tools/calc_us.py -> data/us.json) are also a from-published-rates
-    # calc, so they belong in this dataset too.
+    # calc, so they belong in this dataset too. They share one employer-cost shape.
+    us_cost_note = ("Employer FICA 7.65% (6.2% Social Security capped, 1.45% Medicare) + "
+                    "FUTA (federal unemployment) + SUTA (state unemployment)")
     us_path = ROOT / "data" / "us.json"
     if us_path.exists():
-        for c in json.loads(us_path.read_text(encoding="utf-8"))["countries"]:
-            countries.append({k: c[k] for k in ("name", "us", "flag", "costOfLiving", "points") if k in c})
-        print(f"  + {len(json.loads(us_path.read_text(encoding='utf-8'))['countries'])} US cities from calc_us.py")
+        us_cities = json.loads(us_path.read_text(encoding="utf-8"))["countries"]
+        for c in us_cities:
+            entry = {k: c[k] for k in ("name", "us", "flag", "costOfLiving", "points") if k in c}
+            entry["costNote"] = us_cost_note
+            countries.append(entry)
+        print(f"  + {len(us_cities)} US cities from calc_us.py")
 
     doc = {
         "meta": {
@@ -77,6 +97,7 @@ def main():
             "source": "Computed from each country's published tax rates (tools/calc/*.py)",
             "currency": "EUR",
             "fetched": datetime.date.today().isoformat(),
+            "fxAsOf": fx_as_of(fx) if fx else None,
             "provides": ["gross", "cost", "net"],
             "salaryPoints": SALARY_POINTS,
             "note": ("Independent ground truth from published rates. Single filer, no "

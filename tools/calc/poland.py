@@ -25,6 +25,7 @@ Sources: PwC Poland 2026; ZUS (rates + PLN 282,600 cap); Ministry of Finance (PI
 NAME = "Poland"
 CURRENCY = "PLN"
 YEAR = 2026
+EMPLOYER_BREAKDOWN = "Pension+disability 16.26% (capped) + accident 1.67% + Labour Fund 2.45% + FGS 0.1%"
 
 ZUS_CAP = 282600             # pension + disability annual ceiling
 PIT_THRESHOLD = 120000

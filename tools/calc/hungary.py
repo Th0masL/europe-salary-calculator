@@ -18,6 +18,7 @@ Sources: PwC Hungary 2026; NAV (13% szocho + 18.5% contribution + 15% flat PIT).
 NAME = "Hungary"
 CURRENCY = "EUR"            # real currency is HUF — see the currency note above
 YEAR = 2026
+EMPLOYER_BREAKDOWN = "Social contribution tax (szocho) 13%"
 
 EMPLOYEE_SS = 0.185
 INCOME_TAX = 0.15          # flat, charged on gross

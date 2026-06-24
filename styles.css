@@ -238,6 +238,7 @@ tbody tr.top-row:hover { background: #224030; }
 .approx { color: var(--warn); cursor: help; font-weight: 700; }
 
 .val-strong { font-weight: 680; color: #ffffff; }
+.has-note { border-bottom: 1px dotted var(--muted); cursor: help; }
 .val-net { font-weight: 700; color: var(--good); }
 .sub { color: var(--muted); font-size: 0.78rem; }
 .surplus-pos { color: var(--good); }

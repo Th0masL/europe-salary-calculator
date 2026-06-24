@@ -173,6 +173,7 @@
           eu: c.eu != null ? c.eu : m.eu,
           us: !!(c.us || m.us), approx: !!c.approx,
           costOfLiving: col,
+          costNote: c.costNote || null,   // employer-cost breakdown (Formula source only)
         };
         var s = byName[name] ? solve(c, state.mode, state.amount) : null;
         if (!s) {
@@ -221,12 +222,21 @@
           ? '<span class="approx" title="Single-benchmark estimate: one US data point, converted from USD (1 EUR = 1.13 USD) and modelled at a flat rate. Least precise away from ~€100k.">≈</span> ' : "";
         var tag = r.eu ? '<span class="eu-tag">EU</span>'
           : r.us ? '<span class="us-tag">US</span>' : "";
+        // Employer-cost cell: if this source carries a breakdown (Formula), show it
+        // on hover so the number is auditable line-by-line.
+        var costCell = money(r.cost);
+        if (r.costNote && r.cost != null) {
+          var t = r.costNote.replace(/&/g, "&amp;").replace(/"/g, "&quot;")
+            .replace(/</g, "&lt;").replace(/>/g, "&gt;")
+            .replace(/ \+ /g, "&#10;");   // each " + " component on its own line (&#10; = newline)
+          costCell = '<span class="has-note" title="Employer cost:&#10;' + t + '">' + costCell + "</span>";
+        }
         return (
           '<tr class="' + topCls + '">' +
             '<td class="rank">' + (idx + 1) + "</td>" +
             '<td class="country"><span class="country-cell"><span class="flag">' + r.flag +
               '</span><span class="cname">' + r.name + "</span>" + tag + "</span></td>" +
-            '<td class="val-strong">' + approx + money(r.cost) + warn + "</td>" +
+            '<td class="val-strong">' + approx + costCell + warn + "</td>" +
             "<td>" + money(r.gross) + "</td>" +
             '<td class="val-net">' + money(r.net) + "</td>" +
             "<td>" + (r.netRatio != null ? Math.round(r.netRatio * 100) + "%" : "—") + "</td>" +
@@ -295,8 +305,9 @@
         " · cost from employee-cost tool (EOR fee removed), net from take-home tool.";
     }
     if (state.source === "formula") {
+      var fx = meta.fxAsOf ? " · non-euro rows (PL/DK/SE/CZ) converted at FX rates from " + meta.fxAsOf : "";
       return "Source: Formula — computed from each country's published tax rates (no vendor)" +
-        when + ". Countries not yet implemented show blank (—).";
+        when + fx + ". Countries not yet implemented show blank (—).";
     }
     return "Source: Boundless 2025 eBook · 36 European countries + 5 US cities.";
   }

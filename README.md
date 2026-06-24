@@ -46,11 +46,12 @@ increase together. The calculator:
 Amounts outside the benchmark range are extrapolated from the nearest segment
 and flagged with a `*`.
 
-### Four data sources (toggle in the UI)
+### Five data sources (toggle in the UI)
 
 | Source | What | Provides | Locations |
 |---|---|---|---|
-| **Consensus** *(default)* | Median of the three below, dropping outliers | cost + net | superset (41) |
+| **Consensus** *(default)* | Median of the eBook/Skuad/Deel vendor sources, dropping outliers | cost + net | superset (41) |
+| **Formula** | Computed from each country's **published 2026 tax rates** (`tools/calc/*.py`, no vendor) | cost + net | 27 EU + Montenegro + 6 US |
 | **2025 eBook** | Boundless' *“Understanding Employment Costs in Europe in 2025”* (fixed study) | cost + net | 36 EU + 5 US |
 | **Skuad** | API behind Boundless' [online calculator](https://boundlesshq.com/cost-calculator/) | cost + net | 35 EU (no Slovenia) + 5 US |
 | **Deel** | Deel's [employee-cost](https://www.deel.com/employee-cost-calculator/) + [take-home](https://www.deel.com/take-home-pay-calculator/) calculators (EOR fee removed) | cost + net | 36 EU + 6 US (per-state) |
@@ -72,6 +73,31 @@ Albania, Moldova, Montenegro), which are simply omitted from its contribution.
 Skuad and Deel are **stored snapshots** of live APIs (they can change or
 disappear), fetched on the date shown in the app. US cities are handled
 separately per source — see [US cities](#us-cities-) below.
+
+### The Formula source — computed from published rates
+
+The other four sources are vendor calculators (or a blend of them). **Formula** is
+different: it computes employer cost and net pay **from each country's published
+2026 tax rates**, with no EOR vendor in the loop — one self-contained Python module
+per country under `tools/calc/`, sharing `tools/calc/engine.py`.
+
+Each module is written from official / authoritative figures (national tax
+authorities, PwC / KPMG tax cards), then **cross-checked against the vendor sources
+above** as a sanity check — and where a number was contested, verified against an
+official worked example. The per-module docstrings record the rates, the reasoning,
+and which figures are confirmed vs representative. Coverage: **all 27 EU members +
+Montenegro + 6 US cities** (the US from `tools/calc_us.py`).
+
+A recurring subtlety the formulas get right (and several vendor calculators get
+wrong) is **whether employee social contributions are deductible from the
+income-tax base** — it varies by country (e.g. Lithuania / Czechia *no*, Latvia /
+Greece / Slovenia *yes*), so neighbours can't be assumed to match.
+
+Non-euro countries (Poland, Denmark, Sweden, Czechia) compute in their local
+currency and convert to EUR at FX rates fetched at build time (the FX date is shown
+in the app); eurozone countries compute directly in EUR. Build with
+`python3 tools/build_formula.py` → `data/formula.json` + `.js`; drop a new
+`tools/calc/<country>.py` and it's picked up automatically.
 
 #### Sources evaluated but **not used**
 
@@ -131,7 +157,13 @@ data/
   rippling.json / .js        # Rippling live-API snapshot (employer cost only)
   us.json    / .js           # US: direct calc from published rates (6 cities, no EOR)
   consensus.json / .js       # merged sources, used as the default
+  formula.json   / .js       # per-country calc from published rates (build_formula.py)
 tools/
+  calc/                      # Formula source: one module per country + engine.py
+    engine.py                #   shared maths (progressive brackets, caps)
+    <country>.py             #   27 EU + montenegro.py — compute(gross) -> (cost, net)
+    country-data-prompt.md   #   reusable research prompt for gathering a country's rates
+  build_formula.py           # build data/formula.json/.js from tools/calc/* (+ FX, + US)
   extract_data.py            # eBook dataset (PDF → EU countries, + US cities)
   fetch_skuad.py             # Skuad dataset (live API)
   fetch_deel.py              # Deel dataset  (live API: cost + net, incl. US states)
@@ -160,6 +192,9 @@ python3 tools/fetch_rippling.py   # → data/rippling.json + .js  (employer cost
 
 # 3. US direct calc from published rates (no vendor; self-validates against Deel if present)
 python3 tools/calc_us.py          # → data/us.json + .js
+
+# 3b. Formula source — per-country calc from published rates (also pulls in US from step 3)
+python3 tools/build_formula.py    # → data/formula.json + .js  (fetches FX for non-euro)
 
 # 4. optional: refresh cost-of-living from current Numbeo (slow; rate-limited)
 python3 tools/fetch_numbeo.py     # → data/cost_of_living.json + .js

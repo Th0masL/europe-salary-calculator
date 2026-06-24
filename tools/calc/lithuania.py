@@ -21,6 +21,7 @@ from engine import progressive
 NAME = "Lithuania"
 CURRENCY = "EUR"
 YEAR = 2026
+EMPLOYER_BREAKDOWN = "Sodra 1.77% + Guarantee Fund 0.16% + Long-term Employment Fund 0.16% + accident ~0.4%"
 INF = float("inf")
 
 EE_RATE = 0.1252 + 0.0698                    # Sodra + health = 19.5%

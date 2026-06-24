@@ -13,6 +13,7 @@ from engine import progressive
 NAME = "Greece"
 CURRENCY = "EUR"
 YEAR = 2026
+EMPLOYER_BREAKDOWN = "EFKA social security 21.79% (capped €93,143/yr)"
 INF = float("inf")
 
 EFKA_CAP = 7761.94 * 12         # €93,143.28/yr

@@ -29,6 +29,7 @@ from engine import progressive
 NAME = "Austria"
 CURRENCY = "EUR"
 YEAR = 2026
+EMPLOYER_BREAKDOWN = "Social security 20.38% (capped) + DB 3.7% + Kommunalsteuer 3.0% + DZ 0.36% + MVK 1.53%"
 INF = float("inf")
 
 MONTHLY_CEIL = 6630          # Höchstbeitragsgrundlage 2026, monthly regular (estimate)

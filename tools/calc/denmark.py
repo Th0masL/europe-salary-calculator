@@ -27,6 +27,7 @@ ATP private-sector rates.
 NAME = "Denmark"
 CURRENCY = "DKK"
 YEAR = 2026
+EMPLOYER_BREAKDOWN = "ATP + AES/AUB/barsel funds (~DKK 12,000/yr, roughly fixed; no percentage employer payroll tax)"
 
 ATP_EE = 99 * 12            # DKK 1,188/yr employee
 ATP_ER = 198 * 12           # DKK 2,376/yr employer

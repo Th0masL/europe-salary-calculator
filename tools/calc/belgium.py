@@ -27,6 +27,7 @@ from engine import progressive
 NAME = "Belgium"
 CURRENCY = "EUR"
 YEAR = 2026
+EMPLOYER_BREAKDOWN = "Basic ONSS 25% + wage moderation 2.35% + sectoral ~2.5% (double-holiday-pay provisioning not added)"
 INF = float("inf")
 
 EE_SS = 0.1307

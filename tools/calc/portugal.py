@@ -28,6 +28,7 @@ from engine import progressive
 NAME = "Portugal"
 CURRENCY = "EUR"
 YEAR = 2026
+EMPLOYER_BREAKDOWN = "Social Security (TSU) 23.75% + Wage Guarantee Fund 1.0% + work-accident ~1.0%"
 INF = float("inf")
 
 EMPLOYEE_SS = 0.11

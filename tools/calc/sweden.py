@@ -20,6 +20,7 @@ Sources: Verksamt 2026 (employer 31.42%); SCB (municipal avg 32.38%); Skatteverk
 NAME = "Sweden"
 CURRENCY = "SEK"
 YEAR = 2026
+EMPLOYER_BREAKDOWN = "Arbetsgivaravgifter 31.42% + ~4.5% occupational pension (collective-agreement)"
 
 MUNICIPAL = 0.3238
 GRUNDAVDRAG = 16800              # basic allowance floor for higher incomes

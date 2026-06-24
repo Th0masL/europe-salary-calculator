@@ -27,6 +27,7 @@ from engine import progressive
 NAME = "Finland"
 CURRENCY = "EUR"
 YEAR = 2026
+EMPLOYER_BREAKDOWN = "TyEL pension 17.1% + health 1.91% + unemployment 0.31% + accident ~0.7% + group life 0.07%"
 INF = float("inf")
 
 EE_DEDUCTIBLE = 0.073 + 0.0089 + 0.0088    # pension + unemployment + daily allowance = 9.07%

@@ -27,6 +27,7 @@ from engine import progressive
 NAME = "Malta"
 CURRENCY = "EUR"
 YEAR = 2026
+EMPLOYER_BREAKDOWN = "Class 1 social security (capped ~€55.93/wk) + Maternity Fund 0.3%"
 INF = float("inf")
 WEEKS = 52
 

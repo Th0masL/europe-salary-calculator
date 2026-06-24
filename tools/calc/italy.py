@@ -24,6 +24,7 @@ from engine import progressive
 NAME = "Italy"
 CURRENCY = "EUR"
 YEAR = 2026
+EMPLOYER_BREAKDOWN = "INPS ~29.72% (capped) + TFR severance 6.91% + INAIL ~1% + ~5% 13th-month/CCNL"
 INF = float("inf")
 
 INPS_CAP = 122295

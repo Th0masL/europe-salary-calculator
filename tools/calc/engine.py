@@ -25,13 +25,3 @@ def progressive(taxable, brackets):
         tax += (min(taxable, upper) - lower) * rate
         lower = upper
     return tax
-
-
-def capped(base, rate, cap=None):
-    """A contribution: `rate` applied to `base`, but only up to `cap` of base."""
-    return min(base, cap) * rate if cap is not None else base * rate
-
-
-def employer_cost(gross, contributions):
-    """gross + employer contributions. contributions = [(name, rate, cap_or_None)]."""
-    return gross + sum(capped(gross, rate, cap) for _, rate, cap in contributions)

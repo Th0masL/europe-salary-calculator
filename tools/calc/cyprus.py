@@ -25,6 +25,7 @@ from engine import progressive
 NAME = "Cyprus"
 CURRENCY = "EUR"
 YEAR = 2026
+EMPLOYER_BREAKDOWN = "Social Insurance 8.8% + Redundancy 1.2% + HRDF 0.5% (capped €68,904) + Social Cohesion 2.0% + GESY 2.9%"
 INF = float("inf")
 
 # Ceilings: insurable earnings (SI / Redundancy / HRDF) and the higher GESY cap.

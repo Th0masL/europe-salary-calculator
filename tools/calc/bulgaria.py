@@ -22,6 +22,7 @@ Sources: PwC Bulgaria 2026 (rates + €2,111.64 max insurable income); NRA / NSS
 NAME = "Bulgaria"
 CURRENCY = "EUR"
 YEAR = 2026
+EMPLOYER_BREAKDOWN = "Social security 13.72% + health 4.8% + accident ~0.5%, on base capped at €25,340"
 
 CONTRIB_CAP = 2111.64 * 12          # €25,339.68 / yr — maximum insurable income
 EMPLOYEE_RATE = 0.1058 + 0.0320     # 13.78%

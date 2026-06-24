@@ -25,6 +25,7 @@ from engine import progressive
 NAME = "Montenegro"
 CURRENCY = "EUR"
 YEAR = 2026
+EMPLOYER_BREAKDOWN = "Unemployment insurance 0.5% only (pension/health are employee-side)"
 INF = float("inf")
 
 PENSION_RATE = 0.10

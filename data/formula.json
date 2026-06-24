@@ -4,6 +4,7 @@
     "source": "Computed from each country's published tax rates (tools/calc/*.py)",
     "currency": "EUR",
     "fetched": "2026-06-24",
+    "fxAsOf": "2026-06-24",
     "provides": [
       "gross",
       "cost",
@@ -42,7 +43,8 @@
           "cost": 181802,
           "net": 91852
         }
-      ]
+      ],
+      "costNote": "Social security 20.38% (capped) + DB 3.7% + Kommunalsteuer 3.0% + DZ 0.36% + MVK 1.53%"
     },
     {
       "name": "Belgium",
@@ -68,7 +70,8 @@
           "cost": 194775,
           "net": 72892
         }
-      ]
+      ],
+      "costNote": "Basic ONSS 25% + wage moderation 2.35% + sectoral ~2.5% (double-holiday-pay provisioning not added)"
     },
     {
       "name": "Bulgaria",
@@ -94,7 +97,8 @@
           "cost": 154820,
           "net": 131857
         }
-      ]
+      ],
+      "costNote": "Social security 13.72% + health 4.8% + accident ~0.5%, on base capped at €25,340"
     },
     {
       "name": "Croatia",
@@ -120,7 +124,8 @@
           "cost": 174750,
           "net": 89648
         }
-      ]
+      ],
+      "costNote": "Health insurance 16.5%"
     },
     {
       "name": "Cyprus",
@@ -146,7 +151,8 @@
           "cost": 164585,
           "net": 102675
         }
-      ]
+      ],
+      "costNote": "Social Insurance 8.8% + Redundancy 1.2% + HRDF 0.5% (capped €68,904) + Social Cohesion 2.0% + GESY 2.9%"
     },
     {
       "name": "Czech Republic",
@@ -172,7 +178,8 @@
           "cost": 187576,
           "net": 108956
         }
-      ]
+      ],
+      "costNote": "Social security 24.8% (capped) + health insurance 9.0%"
     },
     {
       "name": "Denmark",
@@ -198,7 +205,8 @@
           "cost": 151618,
           "net": 85274
         }
-      ]
+      ],
+      "costNote": "ATP + AES/AUB/barsel funds (~DKK 12,000/yr, roughly fixed; no percentage employer payroll tax)"
     },
     {
       "name": "Estonia",
@@ -224,7 +232,8 @@
           "cost": 200700,
           "net": 114636
         }
-      ]
+      ],
+      "costNote": "Social tax 33% + employer unemployment 0.8%"
     },
     {
       "name": "Finland",
@@ -250,7 +259,8 @@
           "cost": 180135,
           "net": 81880
         }
-      ]
+      ],
+      "costNote": "TyEL pension 17.1% + health 1.91% + unemployment 0.31% + accident ~0.7% + group life 0.07%"
     },
     {
       "name": "France",
@@ -276,7 +286,8 @@
           "cost": 227308,
           "net": 90157
         }
-      ]
+      ],
+      "costNote": "URSSAF ~34% (health, pension incl. AGIRC-ARRCO, unemployment, family) + ~8% typical mutuelle/prevoyance/versement mobilite/CSE"
     },
     {
       "name": "Germany",
@@ -302,7 +313,8 @@
           "cost": 171149,
           "net": 87369
         }
-      ]
+      ],
+      "costNote": "Pension+unemployment 10.6% + health+care 10.55% (both capped) + ~3% accident/U1-U2/insolvency levies"
     },
     {
       "name": "Greece",
@@ -328,7 +340,8 @@
           "cost": 170296,
           "net": 86726
         }
-      ]
+      ],
+      "costNote": "EFKA social security 21.79% (capped €93,143/yr)"
     },
     {
       "name": "Hungary",
@@ -354,7 +367,8 @@
           "cost": 169500,
           "net": 99750
         }
-      ]
+      ],
+      "costNote": "Social contribution tax (szocho) 13%"
     },
     {
       "name": "Ireland",
@@ -380,7 +394,8 @@
           "cost": 166875,
           "net": 88469
         }
-      ]
+      ],
+      "costNote": "Employer PRSI (Class A) 11.25%"
     },
     {
       "name": "Italy",
@@ -406,7 +421,8 @@
           "cost": 205711,
           "net": 82373
         }
-      ]
+      ],
+      "costNote": "INPS ~29.72% (capped) + TFR severance 6.91% + INAIL ~1% + ~5% 13th-month/CCNL"
     },
     {
       "name": "Latvia",
@@ -432,7 +448,8 @@
           "cost": 174840,
           "net": 100990
         }
-      ]
+      ],
+      "costNote": "Social insurance (NSIC) 23.59% (capped €105,300)"
     },
     {
       "name": "Lithuania",
@@ -458,7 +475,8 @@
           "cost": 153735,
           "net": 86577
         }
-      ]
+      ],
+      "costNote": "Sodra 1.77% + Guarantee Fund 0.16% + Long-term Employment Fund 0.16% + accident ~0.4%"
     },
     {
       "name": "Luxembourg",
@@ -484,7 +502,8 @@
           "cost": 169575,
           "net": 88483
         }
-      ]
+      ],
+      "costNote": "Pension 8.5% + health 3.05% + mutualite/accident ~1.5%"
     },
     {
       "name": "Malta",
@@ -510,7 +529,8 @@
           "cost": 152996,
           "net": 105010
         }
-      ]
+      ],
+      "costNote": "Class 1 social security (capped ~€55.93/wk) + Maternity Fund 0.3%"
     },
     {
       "name": "Montenegro",
@@ -536,7 +556,8 @@
           "cost": 150750,
           "net": 118196
         }
-      ]
+      ],
+      "costNote": "Unemployment insurance 0.5% only (pension/health are employee-side)"
     },
     {
       "name": "Netherlands",
@@ -562,7 +583,8 @@
           "cost": 173637,
           "net": 85818
         }
-      ]
+      ],
+      "costNote": "Statutory premiums (AOF+Awf+Whk+Zvw) ~16.7% (capped) + ~11.5% occupational pension (CBA-based)"
     },
     {
       "name": "Poland",
@@ -588,7 +610,8 @@
           "cost": 167060,
           "net": 88617
         }
-      ]
+      ],
+      "costNote": "Pension+disability 16.26% (capped) + accident 1.67% + Labour Fund 2.45% + FGS 0.1%"
     },
     {
       "name": "Portugal",
@@ -614,7 +637,8 @@
           "cost": 188625,
           "net": 79470
         }
-      ]
+      ],
+      "costNote": "Social Security (TSU) 23.75% + Wage Guarantee Fund 1.0% + work-accident ~1.0%"
     },
     {
       "name": "Romania",
@@ -640,7 +664,8 @@
           "cost": 153375,
           "net": 87750
         }
-      ]
+      ],
+      "costNote": "Work insurance contribution (CAM) 2.25% only (pension/health are employee-side)"
     },
     {
       "name": "Slovakia",
@@ -666,7 +691,8 @@
           "cost": 204300,
           "net": 92867
         }
-      ]
+      ],
+      "costNote": "Social insurance 24.4% (capped €201,168) + health 11% + accident 0.8%"
     },
     {
       "name": "Slovenia",
@@ -692,7 +718,8 @@
           "cost": 175650,
           "net": 74691
         }
-      ]
+      ],
+      "costNote": "Social security 16.10% + long-term care 1.0%"
     },
     {
       "name": "Spain",
@@ -718,7 +745,8 @@
           "cost": 169680,
           "net": 91365
         }
-      ]
+      ],
+      "costNote": "Common contingencies 23.6% + unemployment 5.5% + FOGASA 0.2% + training 0.6% + MEI 0.75% + accident ~1.5%, on base capped at €61,214"
     },
     {
       "name": "Sweden",
@@ -744,7 +772,8 @@
           "cost": 203880,
           "net": 84164
         }
-      ]
+      ],
+      "costNote": "Arbetsgivaravgifter 31.42% + ~4.5% occupational pension (collective-agreement)"
     },
     {
       "name": "Seattle, WA",
@@ -772,7 +801,8 @@
           "cost": 162305,
           "net": 111902
         }
-      ]
+      ],
+      "costNote": "Employer FICA 7.65% (6.2% Social Security capped, 1.45% Medicare) + FUTA (federal unemployment) + SUTA (state unemployment)"
     },
     {
       "name": "San Francisco, CA",
@@ -800,7 +830,8 @@
           "cost": 161719,
           "net": 99617
         }
-      ]
+      ],
+      "costNote": "Employer FICA 7.65% (6.2% Social Security capped, 1.45% Medicare) + FUTA (federal unemployment) + SUTA (state unemployment)"
     },
     {
       "name": "New York, NY",
@@ -828,7 +859,8 @@
           "cost": 161969,
           "net": 98111
         }
-      ]
+      ],
+      "costNote": "Employer FICA 7.65% (6.2% Social Security capped, 1.45% Medicare) + FUTA (federal unemployment) + SUTA (state unemployment)"
     },
     {
       "name": "Austin, TX",
@@ -856,7 +888,8 @@
           "cost": 161723,
           "net": 111902
         }
-      ]
+      ],
+      "costNote": "Employer FICA 7.65% (6.2% Social Security capped, 1.45% Medicare) + FUTA (federal unemployment) + SUTA (state unemployment)"
     },
     {
       "name": "Atlanta, GA",
@@ -884,7 +917,8 @@
           "cost": 161735,
           "net": 104381
         }
-      ]
+      ],
+      "costNote": "Employer FICA 7.65% (6.2% Social Security capped, 1.45% Medicare) + FUTA (federal unemployment) + SUTA (state unemployment)"
     },
     {
       "name": "Miami, FL",
@@ -912,7 +946,8 @@
           "cost": 161676,
           "net": 111902
         }
-      ]
+      ],
+      "costNote": "Employer FICA 7.65% (6.2% Social Security capped, 1.45% Medicare) + FUTA (federal unemployment) + SUTA (state unemployment)"
     }
   ]
 }

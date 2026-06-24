@@ -32,6 +32,7 @@ from engine import progressive
 NAME = "Ireland"
 CURRENCY = "EUR"
 YEAR = 2026
+EMPLOYER_BREAKDOWN = "Employer PRSI (Class A) 11.25%"
 INF = float("inf")
 
 # PRSI (Class A) on gross, no cap. Oct 2026: employee 4.35%, employer 11.40%.

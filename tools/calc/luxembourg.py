@@ -27,6 +27,7 @@ from engine import progressive
 NAME = "Luxembourg"
 CURRENCY = "EUR"
 YEAR = 2026
+EMPLOYER_BREAKDOWN = "Pension 8.5% + health 3.05% + mutualite/accident ~1.5%"
 INF = float("inf")
 
 EE_PENS_HEALTH = 0.085 + 0.0305     # deductible

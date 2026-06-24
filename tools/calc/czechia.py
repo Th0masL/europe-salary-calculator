@@ -16,6 +16,7 @@ from engine import progressive
 NAME = "Czech Republic"
 CURRENCY = "CZK"
 YEAR = 2026
+EMPLOYER_BREAKDOWN = "Social security 24.8% (capped) + health insurance 9.0%"
 INF = float("inf")
 
 SOCIAL_CAP = 2350416
