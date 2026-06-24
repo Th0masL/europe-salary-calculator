@@ -8,11 +8,14 @@
       "Austin, TX",
       "Austria",
       "Belgium",
+      "Boston, MA",
       "Bulgaria",
+      "Chicago, IL",
       "Croatia",
       "Cyprus",
       "Czech Republic",
       "Denmark",
+      "Denver, CO",
       "Estonia",
       "Finland",
       "France",
@@ -23,6 +26,7 @@
       "Italy",
       "Latvia",
       "Lithuania",
+      "Los Angeles, CA",
       "Luxembourg",
       "Malta",
       "Miami, FL",
@@ -44,7 +48,8 @@
       "Switzerland",
       "Turkey",
       "Ukraine",
-      "United Kingdom"
+      "United Kingdom",
+      "Washington, DC"
     ]
   },
   "costOfLiving": {
@@ -89,6 +94,11 @@
     "New York, NY": 54569,
     "Austin, TX": 29458,
     "Atlanta, GA": 31906,
-    "Miami, FL": 40772
+    "Miami, FL": 40772,
+    "Chicago, IL": 34980,
+    "Los Angeles, CA": 40615,
+    "Boston, MA": 47256,
+    "Washington, DC": 41708,
+    "Denver, CO": 33410
   }
 }

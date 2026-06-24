@@ -3,7 +3,7 @@
     "title": "Consensus (median of aligned sources)",
     "source": "Consensus of Boundless eBook + Skuad + Deel",
     "currency": "EUR",
-    "fetched": "2026-06-21",
+    "fetched": "2026-06-25",
     "combines": [
       "ebook",
       "skuad",
@@ -20,7 +20,7 @@
       125000,
       150000
     ],
-    "note": "Per location and salary, the median of the available sources (eBook, Skuad, Deel) for cost and net, after dropping any value >15% from the median of the others. Remote is excluded. Estimates for comparison only."
+    "note": "Per location and salary, the median of the available sources for cost and net, after dropping any value >10% from the median of the others. Europe: eBook/Skuad/Deel; US cities: our own direct calc; Rippling contributes employer cost only. Estimates for comparison only."
   },
   "countries": [
     {
@@ -1655,37 +1655,37 @@
         {
           "gross": 30000,
           "cost": 32707,
-          "net": 25883
+          "net": 25903
         },
         {
           "gross": 45000,
           "cost": 49042,
-          "net": 37703
+          "net": 37754
         },
         {
           "gross": 60000,
-          "cost": 65376,
-          "net": 49523
+          "cost": 65377,
+          "net": 49605
         },
         {
           "gross": 80000,
-          "cost": 86928,
-          "net": 63593
+          "cost": 86933,
+          "net": 63675
         },
         {
           "gross": 100000,
-          "cost": 108480,
-          "net": 77663
+          "cost": 108489,
+          "net": 77745
         },
         {
           "gross": 125000,
-          "cost": 135392,
-          "net": 94782
+          "cost": 135402,
+          "net": 94876
         },
         {
           "gross": 150000,
-          "cost": 162305,
-          "net": 111902
+          "cost": 162315,
+          "net": 112007
         }
       ]
     },
@@ -1700,38 +1700,38 @@
       "points": [
         {
           "gross": 30000,
-          "cost": 32539,
-          "net": 25055
+          "cost": 32542,
+          "net": 25083
         },
         {
           "gross": 45000,
-          "cost": 48686,
-          "net": 35830
+          "cost": 48690,
+          "net": 35899
         },
         {
           "gross": 60000,
-          "cost": 64834,
-          "net": 46604
+          "cost": 64837,
+          "net": 46715
         },
         {
           "gross": 80000,
-          "cost": 86364,
-          "net": 58616
+          "cost": 86367,
+          "net": 58732
         },
         {
           "gross": 100000,
-          "cost": 107894,
-          "net": 70628
+          "cost": 107897,
+          "net": 70749
         },
         {
           "gross": 125000,
-          "cost": 134806,
-          "net": 85122
+          "cost": 134810,
+          "net": 85255
         },
         {
           "gross": 150000,
-          "cost": 161719,
-          "net": 99617
+          "cost": 161722,
+          "net": 99761
         }
       ]
     },
@@ -1746,38 +1746,38 @@
       "points": [
         {
           "gross": 30000,
-          "cost": 32789,
-          "net": 23698
+          "cost": 32795,
+          "net": 23726
         },
         {
           "gross": 45000,
-          "cost": 48936,
-          "net": 34116
+          "cost": 48942,
+          "net": 34174
         },
         {
           "gross": 60000,
-          "cost": 65084,
-          "net": 44534
+          "cost": 65090,
+          "net": 44623
         },
         {
           "gross": 80000,
-          "cost": 86614,
-          "net": 56672
+          "cost": 86620,
+          "net": 56764
         },
         {
           "gross": 100000,
-          "cost": 108144,
-          "net": 68810
+          "cost": 108150,
+          "net": 68904
         },
         {
           "gross": 125000,
-          "cost": 135056,
-          "net": 83460
+          "cost": 135062,
+          "net": 83566
         },
         {
           "gross": 150000,
-          "cost": 161969,
-          "net": 98111
+          "cost": 161974,
+          "net": 98228
         }
       ]
     },
@@ -1792,38 +1792,38 @@
       "points": [
         {
           "gross": 30000,
-          "cost": 32544,
-          "net": 25883
+          "cost": 32547,
+          "net": 25903
         },
         {
           "gross": 45000,
-          "cost": 48691,
-          "net": 37703
+          "cost": 48694,
+          "net": 37754
         },
         {
           "gross": 60000,
-          "cost": 64838,
-          "net": 49523
+          "cost": 64841,
+          "net": 49605
         },
         {
           "gross": 80000,
-          "cost": 86368,
-          "net": 63593
+          "cost": 86371,
+          "net": 63675
         },
         {
           "gross": 100000,
-          "cost": 107898,
-          "net": 77663
+          "cost": 107901,
+          "net": 77745
         },
         {
           "gross": 125000,
-          "cost": 134810,
-          "net": 94782
+          "cost": 134814,
+          "net": 94876
         },
         {
           "gross": 150000,
-          "cost": 161723,
-          "net": 111902
+          "cost": 161727,
+          "net": 112007
         }
       ]
     },
@@ -1838,38 +1838,38 @@
       "points": [
         {
           "gross": 30000,
-          "cost": 32555,
-          "net": 24830
+          "cost": 32558,
+          "net": 24856
         },
         {
           "gross": 45000,
-          "cost": 48702,
-          "net": 35842
+          "cost": 48706,
+          "net": 35899
         },
         {
           "gross": 60000,
-          "cost": 64850,
-          "net": 46854
+          "cost": 64854,
+          "net": 46942
         },
         {
           "gross": 80000,
-          "cost": 86380,
-          "net": 59846
+          "cost": 86384,
+          "net": 59934
         },
         {
           "gross": 100000,
-          "cost": 107911,
-          "net": 72837
+          "cost": 107914,
+          "net": 72925
         },
         {
           "gross": 125000,
-          "cost": 134823,
-          "net": 88609
+          "cost": 134826,
+          "net": 88709
         },
         {
           "gross": 150000,
-          "cost": 161735,
-          "net": 104381
+          "cost": 161738,
+          "net": 104493
         }
       ]
     },
@@ -1882,38 +1882,258 @@
       "points": [
         {
           "gross": 30000,
-          "cost": 32497,
-          "net": 25883
+          "cost": 32499,
+          "net": 25903
         },
         {
           "gross": 45000,
-          "cost": 48644,
-          "net": 37703
+          "cost": 48646,
+          "net": 37754
         },
         {
           "gross": 60000,
-          "cost": 64791,
-          "net": 49523
+          "cost": 64794,
+          "net": 49605
         },
         {
           "gross": 80000,
-          "cost": 86321,
-          "net": 63593
+          "cost": 86324,
+          "net": 63675
         },
         {
           "gross": 100000,
-          "cost": 107851,
-          "net": 77663
+          "cost": 107854,
+          "net": 77745
         },
         {
           "gross": 125000,
-          "cost": 134764,
-          "net": 94782
+          "cost": 134766,
+          "net": 94876
         },
         {
           "gross": 150000,
-          "cost": 161676,
-          "net": 111902
+          "cost": 161679,
+          "net": 112007
+        }
+      ]
+    },
+    {
+      "name": "Chicago, IL",
+      "flag": "🇺🇸",
+      "us": true,
+      "costOfLiving": 34980,
+      "sources": 1,
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 32817,
+          "net": 24539
+        },
+        {
+          "gross": 45000,
+          "cost": 48964,
+          "net": 35648
+        },
+        {
+          "gross": 60000,
+          "cost": 65112,
+          "net": 46757
+        },
+        {
+          "gross": 80000,
+          "cost": 86642,
+          "net": 59836
+        },
+        {
+          "gross": 100000,
+          "cost": 108172,
+          "net": 72916
+        },
+        {
+          "gross": 125000,
+          "cost": 135084,
+          "net": 88810
+        },
+        {
+          "gross": 150000,
+          "cost": 161996,
+          "net": 104704
+        }
+      ]
+    },
+    {
+      "name": "Los Angeles, CA",
+      "flag": "🇺🇸",
+      "us": true,
+      "costOfLiving": 40615,
+      "sources": 1,
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 32542,
+          "net": 25083
+        },
+        {
+          "gross": 45000,
+          "cost": 48690,
+          "net": 35899
+        },
+        {
+          "gross": 60000,
+          "cost": 64837,
+          "net": 46715
+        },
+        {
+          "gross": 80000,
+          "cost": 86367,
+          "net": 58732
+        },
+        {
+          "gross": 100000,
+          "cost": 107897,
+          "net": 70749
+        },
+        {
+          "gross": 125000,
+          "cost": 134810,
+          "net": 85255
+        },
+        {
+          "gross": 150000,
+          "cost": 161722,
+          "net": 99761
+        }
+      ]
+    },
+    {
+      "name": "Boston, MA",
+      "flag": "🇺🇸",
+      "us": true,
+      "costOfLiving": 47256,
+      "sources": 1,
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 32579,
+          "net": 24459
+        },
+        {
+          "gross": 45000,
+          "cost": 48727,
+          "net": 35491
+        },
+        {
+          "gross": 60000,
+          "cost": 64875,
+          "net": 46523
+        },
+        {
+          "gross": 80000,
+          "cost": 86405,
+          "net": 59501
+        },
+        {
+          "gross": 100000,
+          "cost": 107935,
+          "net": 72479
+        },
+        {
+          "gross": 125000,
+          "cost": 134847,
+          "net": 88245
+        },
+        {
+          "gross": 150000,
+          "cost": 161759,
+          "net": 104011
+        }
+      ]
+    },
+    {
+      "name": "Washington, DC",
+      "flag": "🇺🇸",
+      "us": true,
+      "costOfLiving": 41708,
+      "sources": 1,
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 32547,
+          "net": 25072
+        },
+        {
+          "gross": 45000,
+          "cost": 48694,
+          "net": 35995
+        },
+        {
+          "gross": 60000,
+          "cost": 64841,
+          "net": 46918
+        },
+        {
+          "gross": 80000,
+          "cost": 86371,
+          "net": 59349
+        },
+        {
+          "gross": 100000,
+          "cost": 107901,
+          "net": 71780
+        },
+        {
+          "gross": 125000,
+          "cost": 134814,
+          "net": 86786
+        },
+        {
+          "gross": 150000,
+          "cost": 161727,
+          "net": 101793
+        }
+      ]
+    },
+    {
+      "name": "Denver, CO",
+      "flag": "🇺🇸",
+      "us": true,
+      "costOfLiving": 33410,
+      "sources": 1,
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 33106,
+          "net": 24969
+        },
+        {
+          "gross": 45000,
+          "cost": 49254,
+          "net": 36092
+        },
+        {
+          "gross": 60000,
+          "cost": 65401,
+          "net": 47216
+        },
+        {
+          "gross": 80000,
+          "cost": 86931,
+          "net": 60316
+        },
+        {
+          "gross": 100000,
+          "cost": 108461,
+          "net": 73416
+        },
+        {
+          "gross": 125000,
+          "cost": 135374,
+          "net": 89334
+        },
+        {
+          "gross": 150000,
+          "cost": 162286,
+          "net": 105253
         }
       ]
     }

@@ -37,8 +37,12 @@ def load_country_modules():
 
 
 def fx_rates():
-    with urllib.request.urlopen(FX_URL, timeout=30) as r:
-        return json.load(r)  # full response: "rates" (EUR -> currency) + update times
+    try:
+        with urllib.request.urlopen(FX_URL, timeout=30) as r:
+            return json.load(r)  # full response: "rates" (EUR -> currency) + update times
+    except Exception as e:  # network error, timeout, non-JSON body, ...
+        print(f"  ! FX fetch failed: {e}", file=sys.stderr)
+        return None
 
 
 def fx_as_of(fx):
@@ -56,7 +60,15 @@ def main():
     mods = load_country_modules()
     need_fx = any(getattr(m, "CURRENCY", "EUR") != "EUR" for m in mods)
     fx = fx_rates() if need_fx else None
+    if need_fx and fx is None:
+        sys.exit("  Aborting: FX rates unavailable — data/formula.json left unchanged.")
     rates = fx["rates"] if fx else {}
+    # Fail before writing if any currency we need is missing, rather than crashing
+    # mid-loop with a KeyError or emitting a partial dataset.
+    missing = sorted({getattr(m, "CURRENCY", "EUR") for m in mods
+                      if getattr(m, "CURRENCY", "EUR") != "EUR"} - set(rates))
+    if missing:
+        sys.exit(f"  Aborting: FX response missing {missing} — data/formula.json left unchanged.")
 
     countries = []
     for m in mods:

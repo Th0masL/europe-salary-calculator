@@ -4,12 +4,12 @@ Build a consensus dataset by combining the aligned sources, and write
 data/consensus.json + data/consensus.js.
 
 For every location and a fixed set of gross-salary points we interpolate each
-source, drop any value that sits >15% from the median of the others (an
+source, drop any value that sits >10% from the median of the others (an
 outlier), and take the median of what's left — separately for cost and net.
 Metadata (flag, EU/US, cost of living, dev salary) comes from the eBook entry.
 
-Sources used: ebook, skuad, deel  (remote is excluded — its employer cost is
-unreliable). Run the per-source fetchers first.
+Sources: ebook, skuad, deel for European rows; US cities use our own 'us' direct
+calc, and rippling contributes employer cost only. Run the per-source fetchers first.
 
 Usage:
     python3 tools/build_consensus.py
@@ -146,8 +146,9 @@ def main():
             "combines": list(idx.keys()),
             "grossPoints": GROSS_POINTS,
             "note": ("Per location and salary, the median of the available sources "
-                     "(eBook, Skuad, Deel) for cost and net, after dropping any value "
-                     ">15% from the median of the others. Remote is excluded. "
+                     "for cost and net, after dropping any value >10% from the median "
+                     "of the others. Europe: eBook/Skuad/Deel; US cities: our own direct "
+                     "calc; Rippling contributes employer cost only. "
                      "Estimates for comparison only."),
         },
         "countries": out,

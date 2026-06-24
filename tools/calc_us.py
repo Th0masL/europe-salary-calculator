@@ -81,6 +81,30 @@ STATES = {
         "income": None,                       # no state income tax
         "suta": (0.027, 7000),                # new-employer 2.7%, base $7,000
     },
+    "Illinois": {
+        "income": ("flat", 0.0495, 2775),     # 4.95% flat; IL personal exemption (no std ded)
+        "suta": (0.0395, 13916),              # new-employer ~3.95%, 2025 base $13,916
+        # Chicago: no city income tax
+    },
+    "Massachusetts": {
+        "income": ("flat", 0.05, 4400),       # 5% flat earned income; $4,400 personal exemption
+        "sdi": 0.0046, "sdi_capped": True,    # MA PFML employee share ~0.46% (2025), SS-capped
+        "suta": (0.0187, 15000),              # new-employer ~1.87%, base $15,000
+        # Boston: no local income tax; 4% surtax >$1.083M not reached in our range
+    },
+    "Colorado": {
+        "income": ("flat", 0.044, 15000),     # 4.40% flat on federal taxable income (fed $15k std)
+        "sdi": 0.0045, "sdi_capped": True,    # CO FAMLI employee share 0.45% (2025), SS-capped
+        "head_tax": (69.0, 48.0),             # Denver OPT: employee $5.75/mo, employer $4/mo
+        "suta": (0.0305, 27200),              # new-employer ~3.05%, 2025 base $27,200
+    },
+    "District of Columbia": {
+        "income": ("brackets", 15000, [       # DC 2025 single, $15,000 standard deduction
+            (10000, 0.04), (40000, 0.06), (60000, 0.065), (250000, 0.085),
+            (500000, 0.0925), (1000000, 0.0975), (float("inf"), 0.1075)]),
+        "suta": (0.027, 9000),                # new-employer 2.7%, base $9,000
+        # DC Paid Family Leave is employer-paid (0.75%) — excluded like WA's (see note)
+    },
 }
 
 # our city labels -> (state, annual cost of living EUR for a single person =
@@ -94,6 +118,14 @@ CITIES = [
     ("Austin, TX", "Texas", 35197),
     ("Atlanta, GA", "Georgia", 33187),
     ("Miami, FL", "Florida", 44800),
+    # These five from fetch_numbeo.py (single + avg city-centre/outside rent). The
+    # live cost_of_living.json map is what the app actually displays; these are the
+    # baked fallback.
+    ("Chicago, IL", "Illinois", 34980),
+    ("Los Angeles, CA", "California", 40615),
+    ("Boston, MA", "Massachusetts", 47256),
+    ("Washington, DC", "District of Columbia", 41708),
+    ("Denver, CO", "Colorado", 33410),
 ]
 
 
@@ -150,10 +182,12 @@ def compute(gross_usd, cfg):
     fed = progressive(max(0.0, gross_usd - FED_STD_DEDUCTION), FED_BRACKETS)
     state = state_income_tax(gross_usd, cfg)
     local = local_tax(gross_usd, cfg)
-    sdi = gross_usd * cfg.get("sdi", 0.0)
+    sdi_base = min(gross_usd, SS_WAGE_BASE) if cfg.get("sdi_capped") else gross_usd
+    sdi = sdi_base * cfg.get("sdi", 0.0)             # CA SDI (uncapped) / MA PFML, CO FAMLI (SS-capped)
+    head_ee, head_er = cfg.get("head_tax", (0.0, 0.0))  # fixed local head tax (Denver OPT)
     emp_fica = employee_fica(gross_usd)
-    net = gross_usd - fed - state - local - sdi - emp_fica
-    cost = gross_usd + employer_payroll(gross_usd, cfg)
+    net = gross_usd - fed - state - local - sdi - emp_fica - head_ee
+    cost = gross_usd + employer_payroll(gross_usd, cfg) + head_er
     return round(cost), round(net)
 
 
@@ -210,9 +244,12 @@ def main():
             "provides": ["gross", "cost", "net"],
             "salaryPoints": SALARY_POINTS,
             "note": ("Single filer, standard deduction, no credits. Employer cost = "
-                     "mandatory payroll taxes only (employer FICA + FUTA + SUTA); workers' "
-                     "comp/benefits excluded. NYC local tax included for New York. SUTA uses "
-                     "representative new-employer rates. Estimates for comparison only."),
+                     "mandatory payroll taxes only (employer FICA + FUTA + SUTA + Denver "
+                     "OPT); workers' comp/benefits and employer paid-leave premiums (DC/WA) "
+                     "excluded. NYC local tax included for New York. Employee disability/"
+                     "paid-leave levies included where they exist (CA SDI, MA PFML, CO "
+                     "FAMLI). SUTA uses representative new-employer rates. Estimates "
+                     "for comparison only."),
         },
         "countries": out,
     }

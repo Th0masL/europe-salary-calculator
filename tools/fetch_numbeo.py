@@ -72,6 +72,9 @@ LOCATIONS = {
     "Seattle, WA": ("Seattle", "USD"), "San Francisco, CA": ("San-Francisco", "USD"),
     "New York, NY": ("New-York", "USD"), "Austin, TX": ("Austin", "USD"),
     "Atlanta, GA": ("Atlanta", "USD"), "Miami, FL": ("Miami", "USD"),
+    "Chicago, IL": ("Chicago", "USD"), "Los Angeles, CA": ("Los-Angeles", "USD"),
+    "Boston, MA": ("Boston", "USD"), "Washington, DC": ("Washington", "USD"),
+    "Denver, CO": ("Denver", "USD"),
 }
 
 
@@ -90,7 +93,9 @@ def num(s):
 
 
 def _rent(page, label):
-    m = re.search(label + r".*?first_currency\">\D*?([\d,]+(?:\.\d+)?)", page, re.S)
+    # Bound the search to the label's own table row (tempered `</tr>`) so a missing
+    # value can't make `.*?` leak into the next row and grab a wrong number.
+    m = re.search(label + r"(?:(?!</tr>).)*?first_currency\">\D*?([\d,]+(?:\.\d+)?)", page, re.S)
     return num(m.group(1)) if m else None
 
 

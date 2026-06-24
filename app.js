@@ -32,10 +32,16 @@
   // Takes precedence over the values embedded in the salary datasets.
   var COL = window.COST_OF_LIVING || {};
 
+  // Escape data-derived strings before they go into innerHTML / a title attribute.
+  function esc(s) {
+    return String(s).replace(/&/g, "&amp;").replace(/"/g, "&quot;")
+      .replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+
   // Metadata (flag, EU/US, cost of living) by country name, from the richest
   // source. Lean fetchers (Deel) only carry {name, points}, so we backfill.
   var META = {};
-  ["ebook", "consensus", "skuad"].forEach(function (s) {
+  ["ebook", "consensus", "skuad", "deel", "formula"].forEach(function (s) {
     if (!SOURCES[s].data) return;
     SOURCES[s].data.countries.forEach(function (c) {
       if (!META[c.name]) META[c.name] = c;
@@ -226,16 +232,15 @@
         // on hover so the number is auditable line-by-line.
         var costCell = money(r.cost);
         if (r.costNote && r.cost != null) {
-          var t = r.costNote.replace(/&/g, "&amp;").replace(/"/g, "&quot;")
-            .replace(/</g, "&lt;").replace(/>/g, "&gt;")
-            .replace(/ \+ /g, "&#10;");   // each " + " component on its own line (&#10; = newline)
+          // each " + " component on its own line (&#10; = newline)
+          var t = esc(r.costNote).replace(/ \+ /g, "&#10;");
           costCell = '<span class="has-note" title="Employer cost:&#10;' + t + '">' + costCell + "</span>";
         }
         return (
           '<tr class="' + topCls + '">' +
             '<td class="rank">' + (idx + 1) + "</td>" +
-            '<td class="country"><span class="country-cell"><span class="flag">' + r.flag +
-              '</span><span class="cname">' + r.name + "</span>" + tag + "</span></td>" +
+            '<td class="country"><span class="country-cell"><span class="flag">' + esc(r.flag) +
+              '</span><span class="cname">' + esc(r.name) + "</span>" + tag + "</span></td>" +
             '<td class="val-strong">' + approx + costCell + warn + "</td>" +
             "<td>" + money(r.gross) + "</td>" +
             '<td class="val-net">' + money(r.net) + "</td>" +
@@ -305,7 +310,7 @@
         " · cost from employee-cost tool (EOR fee removed), net from take-home tool.";
     }
     if (state.source === "formula") {
-      var fx = meta.fxAsOf ? " · non-euro rows (PL/DK/SE/CZ) converted at FX rates from " + meta.fxAsOf : "";
+      var fx = meta.fxAsOf ? " · non-euro rows converted at FX rates from " + meta.fxAsOf : "";
       return "Source: Formula — computed from each country's published tax rates (no vendor)" +
         when + fx + ". Countries not yet implemented show blank (—).";
     }

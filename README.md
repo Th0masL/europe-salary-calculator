@@ -1,7 +1,7 @@
 # 🇪🇺 Europe Salary Calculator
 
 A simple static web page to compare **take-home pay** and the **real cost of
-employment** for a salary across **36 European countries** and **6 US cities**.
+employment** for a salary across **36 European countries** and **11 US cities**.
 
 It answers questions like:
 
@@ -50,8 +50,8 @@ and flagged with a `*`.
 
 | Source | What | Provides | Locations |
 |---|---|---|---|
-| **Consensus** *(default)* | Median of the eBook/Skuad/Deel vendor sources, dropping outliers | cost + net | superset (41) |
-| **Formula** | Computed from each country's **published 2026 tax rates** (`tools/calc/*.py`, no vendor) | cost + net | 27 EU + Montenegro + 6 US |
+| **Consensus** *(default)* | Median of the eBook/Skuad/Deel vendor sources, dropping outliers | cost + net | superset (47) |
+| **Formula** | Computed from each country's **published 2026 tax rates** (`tools/calc/*.py`, no vendor) | cost + net | 36 European + 11 US |
 | **2025 eBook** | Boundless' *“Understanding Employment Costs in Europe in 2025”* (fixed study) | cost + net | 36 EU + 5 US |
 | **Skuad** | API behind Boundless' [online calculator](https://boundlesshq.com/cost-calculator/) | cost + net | 35 EU (no Slovenia) + 5 US |
 | **Deel** | Deel's [employee-cost](https://www.deel.com/employee-cost-calculator/) + [take-home](https://www.deel.com/take-home-pay-calculator/) calculators (EOR fee removed) | cost + net | 36 EU + 6 US (per-state) |
@@ -85,8 +85,9 @@ Each module is written from official / authoritative figures (national tax
 authorities, PwC / KPMG tax cards), then **cross-checked against the vendor sources
 above** as a sanity check — and where a number was contested, verified against an
 official worked example. The per-module docstrings record the rates, the reasoning,
-and which figures are confirmed vs representative. Coverage: **all 27 EU members +
-Montenegro + 6 US cities** (the US from `tools/calc_us.py`).
+and which figures are confirmed vs representative. Coverage: **all 36 European
+entries (27 EU + Montenegro + Albania, Moldova, Norway, Serbia, Switzerland, Turkey,
+Ukraine, UK) + 11 US cities** = 47 total (the US from `tools/calc_us.py`).
 
 A recurring subtlety the formulas get right (and several vendor calculators get
 wrong) is **whether employee social contributions are deductible from the
@@ -118,10 +119,12 @@ entries) — a rough proxy for purchasing power.
 
 ### US cities (🇺🇸)
 
-The 6 US cities are state-level: Seattle→WA, San Francisco→CA, New York→NY,
-Austin→TX, Atlanta→GA, Miami→FL. (Miami/Florida, like Texas, has no state income
-tax — a strong high-take-home example.) Their numbers come from different places
-by source:
+The 11 US cities are state-level: Seattle→WA, San Francisco→CA, New York→NY,
+Austin→TX, Atlanta→GA, Miami→FL, Chicago→IL, Los Angeles→CA, Boston→MA,
+Washington→DC, Denver→CO. (Miami/Florida, like Texas and Washington, has no state
+income tax — a strong high-take-home example.) Their numbers come from different
+places by source — note the five newest cities (Chicago, LA, Boston, DC, Denver)
+have only the Formula/direct-calc figures; the vendor sources don't track them:
 
 - **Consensus** — a **direct calculation from published rates** (`tools/calc_us.py`), with
   **no EOR vendor**: 2025 federal brackets + standard deduction, FICA (with the
@@ -155,13 +158,13 @@ data/
   skuad.json / .js           # Skuad live-API snapshot
   deel.json  / .js           # Deel live-API snapshot (cost + net)
   rippling.json / .js        # Rippling live-API snapshot (employer cost only)
-  us.json    / .js           # US: direct calc from published rates (6 cities, no EOR)
+  us.json    / .js           # US: direct calc from published rates (11 cities, no EOR)
   consensus.json / .js       # merged sources, used as the default
   formula.json   / .js       # per-country calc from published rates (build_formula.py)
 tools/
   calc/                      # Formula source: one module per country + engine.py
     engine.py                #   shared maths (progressive brackets, caps)
-    <country>.py             #   27 EU + montenegro.py — compute(gross) -> (cost, net)
+    <country>.py             #   36 European modules — compute(gross) -> (cost, net)
     country-data-prompt.md   #   reusable research prompt for gathering a country's rates
   build_formula.py           # build data/formula.json/.js from tools/calc/* (+ FX, + US)
   extract_data.py            # eBook dataset (PDF → EU countries, + US cities)

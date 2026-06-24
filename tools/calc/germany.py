@@ -27,7 +27,7 @@ deductions; DRV/BMG 2026 rates + ceilings (€101,400 / €69,750); GFB €12,34
 NAME = "Germany"
 CURRENCY = "EUR"
 YEAR = 2026
-EMPLOYER_BREAKDOWN = "Pension+unemployment 10.6% + health+care 10.55% (both capped) + ~3% accident/U1-U2/insolvency levies"
+EMPLOYER_BREAKDOWN = "Pension+unemployment 10.6% + health+care 10.55% (both capped) + accident ~1.0% (BG, on gross) + U2/insolvency 0.59% (capped)"
 
 PENSION_CAP = 101400          # pension + unemployment ceiling
 HEALTH_CAP = 69750            # health + care ceiling
@@ -36,10 +36,17 @@ EMPLOYEE_PENS_UNEMP = 0.093 + 0.013      # 10.6%
 EMPLOYEE_HEALTH_CARE = 0.0875 + 0.024    # 11.15% (health 8.75 + childless care 2.4)
 EMPLOYER_PENS_UNEMP = 0.093 + 0.013      # 10.6%
 EMPLOYER_HEALTH_CARE = 0.0875 + 0.018    # 10.55% (health 8.75 + care 1.8)
-# Employer-only extras beyond the four branches: accident insurance
-# (Berufsgenossenschaft ~1.3%) + U1/U2 Umlagen + insolvency levy ≈ 3%. Variable
-# by sector/size; representative figure that matches the eBook/Rippling cluster.
-EMPLOYER_EXTRAS = 0.03
+# Employer-only extras beyond the four branches (verified vs TK 2026 / PwC):
+#  - U2 (maternity) 0.44% + Insolvenzgeldumlage 0.15% are levied on the RV base, so
+#    they're capped at €101,400 like pension/unemployment.
+#  - BG accident insurance ~1.0% is on FULL gross (no RV cap); the rate is tariff/
+#    sector-specific — this is a representative office figure.
+#  - U1 (sick-pay reimbursement) is excluded: it applies only to small employers
+#    (<30 staff), not the standard large employer modelled here.
+# Total ≈ 1.0–1.5% for a standard office employer — not the ~3% the vendor calcs
+# assume (they bake in U1 and/or a high BG tariff).
+EMPLOYER_U2_INSOLV = 0.0044 + 0.0015     # capped at the RV ceiling (pu_base)
+EMPLOYER_ACCIDENT = 0.010                # representative BG tariff, on full gross
 
 DEDUCTIBLE_HEALTH_CARE = 0.0875 + 0.024  # Vorsorge: health + care (not unemployment)
 LUMP_SUMS = 1230 + 36        # Werbungskostenpauschale + Sonderausgabenpauschbetrag
@@ -73,5 +80,5 @@ def compute(gross):
 
     net = gross - employee - income_tax
     employer_cost = (gross + pu_base * EMPLOYER_PENS_UNEMP + hc_base * EMPLOYER_HEALTH_CARE
-                     + pu_base * EMPLOYER_EXTRAS)
+                     + pu_base * EMPLOYER_U2_INSOLV + gross * EMPLOYER_ACCIDENT)
     return employer_cost, net

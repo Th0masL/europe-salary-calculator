@@ -3,7 +3,7 @@
     "title": "Formula salary calc (per-country, no vendor)",
     "source": "Computed from each country's published tax rates (tools/calc/*.py)",
     "currency": "EUR",
-    "fetched": "2026-06-24",
+    "fetched": "2026-06-25",
     "fxAsOf": "2026-06-24",
     "provides": [
       "gross",
@@ -19,6 +19,33 @@
     "note": "Independent ground truth from published rates. Single filer, no personal deductions beyond the mandatory ones. Estimates for comparison."
   },
   "countries": [
+    {
+      "name": "Albania",
+      "year": 2026,
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 34065,
+          "net": 22741
+        },
+        {
+          "gross": 60000,
+          "cost": 64575,
+          "net": 45331
+        },
+        {
+          "gross": 100000,
+          "cost": 105255,
+          "net": 75451
+        },
+        {
+          "gross": 150000,
+          "cost": 156105,
+          "net": 113101
+        }
+      ],
+      "costNote": "Social security 15.0% (capped at ALL 186,416/mo) + health 1.7%"
+    },
     {
       "name": "Austria",
       "year": 2026,
@@ -295,26 +322,26 @@
       "points": [
         {
           "gross": 30000,
-          "cost": 37245,
+          "cost": 36822,
           "net": 21250
         },
         {
           "gross": 60000,
-          "cost": 74490,
+          "cost": 73644,
           "net": 37622
         },
         {
           "gross": 100000,
-          "cost": 120959,
+          "cost": 119549,
           "net": 58463
         },
         {
           "gross": 150000,
-          "cost": 171149,
+          "cost": 170205,
           "net": 87369
         }
       ],
-      "costNote": "Pension+unemployment 10.6% + health+care 10.55% (both capped) + ~3% accident/U1-U2/insolvency levies"
+      "costNote": "Pension+unemployment 10.6% + health+care 10.55% (both capped) + accident ~1.0% (BG, on gross) + U2/insolvency 0.59% (capped)"
     },
     {
       "name": "Greece",
@@ -533,6 +560,33 @@
       "costNote": "Class 1 social security (capped ~€55.93/wk) + Maternity Fund 0.3%"
     },
     {
+      "name": "Moldova",
+      "year": 2026,
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 37200,
+          "net": 22440
+        },
+        {
+          "gross": 60000,
+          "cost": 74400,
+          "net": 44880
+        },
+        {
+          "gross": 100000,
+          "cost": 124000,
+          "net": 74800
+        },
+        {
+          "gross": 150000,
+          "cost": 186000,
+          "net": 112200
+        }
+      ],
+      "costNote": "Social security (CNAS) 24%"
+    },
+    {
       "name": "Montenegro",
       "year": 2026,
       "points": [
@@ -585,6 +639,33 @@
         }
       ],
       "costNote": "Statutory premiums (AOF+Awf+Whk+Zvw) ~16.7% (capped) + ~11.5% occupational pension (CBA-based)"
+    },
+    {
+      "name": "Norway",
+      "year": 2026,
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 34607,
+          "net": 25404
+        },
+        {
+          "gross": 60000,
+          "cost": 69437,
+          "net": 45324
+        },
+        {
+          "gross": 100000,
+          "cost": 115877,
+          "net": 68122
+        },
+        {
+          "gross": 150000,
+          "cost": 173598,
+          "net": 94739
+        }
+      ],
+      "costNote": "Employer contribution (arbeidsgiveravgift) 14.1% + occupational pension (OTP, min 2%)"
     },
     {
       "name": "Poland",
@@ -666,6 +747,33 @@
         }
       ],
       "costNote": "Work insurance contribution (CAM) 2.25% only (pension/health are employee-side)"
+    },
+    {
+      "name": "Serbia",
+      "year": 2026,
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 34545,
+          "net": 21380
+        },
+        {
+          "gross": 60000,
+          "cost": 69090,
+          "net": 42410
+        },
+        {
+          "gross": 100000,
+          "cost": 110843,
+          "net": 76108
+        },
+        {
+          "gross": 150000,
+          "cost": 160843,
+          "net": 121108
+        }
+      ],
+      "costNote": "Pension (PIO) 10% + health 5.15% (capped at the monthly max base)"
     },
     {
       "name": "Slovakia",
@@ -776,6 +884,114 @@
       "costNote": "Arbetsgivaravgifter 31.42% + ~4.5% occupational pension (collective-agreement)"
     },
     {
+      "name": "Switzerland",
+      "year": 2026,
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 33469,
+          "net": 27196
+        },
+        {
+          "gross": 60000,
+          "cost": 68145,
+          "net": 50864
+        },
+        {
+          "gross": 100000,
+          "cost": 114288,
+          "net": 80466
+        },
+        {
+          "gross": 150000,
+          "cost": 169738,
+          "net": 116783
+        }
+      ],
+      "costNote": "AHV/IV/EO 5.3% + ALV 1.1% + BVG pension (age-banded) + accident & family-allowance funds"
+    },
+    {
+      "name": "Turkey",
+      "year": 2026,
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 36825,
+          "net": 20247
+        },
+        {
+          "gross": 60000,
+          "cost": 73650,
+          "net": 36823
+        },
+        {
+          "gross": 100000,
+          "cost": 115340,
+          "net": 61795
+        },
+        {
+          "gross": 150000,
+          "cost": 165340,
+          "net": 91930
+        }
+      ],
+      "costNote": "Social security (SGK) 20.75% + unemployment 2% (capped at TRY 297,270/mo)"
+    },
+    {
+      "name": "United Kingdom",
+      "year": 2026,
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 33630,
+          "net": 25681
+        },
+        {
+          "gross": 60000,
+          "cost": 68130,
+          "net": 47042
+        },
+        {
+          "gross": 100000,
+          "cost": 114130,
+          "net": 70242
+        },
+        {
+          "gross": 150000,
+          "cost": 171630,
+          "net": 93167
+        }
+      ],
+      "costNote": "Employer NIC (Class 1) 15% above £5,000"
+    },
+    {
+      "name": "Ukraine",
+      "year": 2026,
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 36600,
+          "net": 23100
+        },
+        {
+          "gross": 60000,
+          "cost": 66679,
+          "net": 46200
+        },
+        {
+          "gross": 100000,
+          "cost": 106679,
+          "net": 77000
+        },
+        {
+          "gross": 150000,
+          "cost": 156679,
+          "net": 115500
+        }
+      ],
+      "costNote": "Unified social contribution (USC) 22% (capped at 15× min wage)"
+    },
+    {
       "name": "Seattle, WA",
       "us": true,
       "flag": "🇺🇸",
@@ -784,22 +1000,22 @@
         {
           "gross": 30000,
           "cost": 32707,
-          "net": 25883
+          "net": 25903
         },
         {
           "gross": 60000,
-          "cost": 65376,
-          "net": 49523
+          "cost": 65377,
+          "net": 49605
         },
         {
           "gross": 100000,
-          "cost": 108480,
-          "net": 77663
+          "cost": 108489,
+          "net": 77745
         },
         {
           "gross": 150000,
-          "cost": 162305,
-          "net": 111902
+          "cost": 162315,
+          "net": 112007
         }
       ],
       "costNote": "Employer FICA 7.65% (6.2% Social Security capped, 1.45% Medicare) + FUTA (federal unemployment) + SUTA (state unemployment)"
@@ -812,23 +1028,23 @@
       "points": [
         {
           "gross": 30000,
-          "cost": 32539,
-          "net": 25055
+          "cost": 32542,
+          "net": 25083
         },
         {
           "gross": 60000,
-          "cost": 64834,
-          "net": 46604
+          "cost": 64837,
+          "net": 46715
         },
         {
           "gross": 100000,
-          "cost": 107894,
-          "net": 70628
+          "cost": 107897,
+          "net": 70749
         },
         {
           "gross": 150000,
-          "cost": 161719,
-          "net": 99617
+          "cost": 161722,
+          "net": 99761
         }
       ],
       "costNote": "Employer FICA 7.65% (6.2% Social Security capped, 1.45% Medicare) + FUTA (federal unemployment) + SUTA (state unemployment)"
@@ -841,23 +1057,23 @@
       "points": [
         {
           "gross": 30000,
-          "cost": 32789,
-          "net": 23698
+          "cost": 32795,
+          "net": 23726
         },
         {
           "gross": 60000,
-          "cost": 65084,
-          "net": 44534
+          "cost": 65090,
+          "net": 44623
         },
         {
           "gross": 100000,
-          "cost": 108144,
-          "net": 68810
+          "cost": 108150,
+          "net": 68904
         },
         {
           "gross": 150000,
-          "cost": 161969,
-          "net": 98111
+          "cost": 161974,
+          "net": 98228
         }
       ],
       "costNote": "Employer FICA 7.65% (6.2% Social Security capped, 1.45% Medicare) + FUTA (federal unemployment) + SUTA (state unemployment)"
@@ -870,23 +1086,23 @@
       "points": [
         {
           "gross": 30000,
-          "cost": 32544,
-          "net": 25883
+          "cost": 32547,
+          "net": 25903
         },
         {
           "gross": 60000,
-          "cost": 64838,
-          "net": 49523
+          "cost": 64841,
+          "net": 49605
         },
         {
           "gross": 100000,
-          "cost": 107898,
-          "net": 77663
+          "cost": 107901,
+          "net": 77745
         },
         {
           "gross": 150000,
-          "cost": 161723,
-          "net": 111902
+          "cost": 161727,
+          "net": 112007
         }
       ],
       "costNote": "Employer FICA 7.65% (6.2% Social Security capped, 1.45% Medicare) + FUTA (federal unemployment) + SUTA (state unemployment)"
@@ -899,23 +1115,23 @@
       "points": [
         {
           "gross": 30000,
-          "cost": 32555,
-          "net": 24830
+          "cost": 32558,
+          "net": 24856
         },
         {
           "gross": 60000,
-          "cost": 64850,
-          "net": 46854
+          "cost": 64854,
+          "net": 46942
         },
         {
           "gross": 100000,
-          "cost": 107911,
-          "net": 72837
+          "cost": 107914,
+          "net": 72925
         },
         {
           "gross": 150000,
-          "cost": 161735,
-          "net": 104381
+          "cost": 161738,
+          "net": 104493
         }
       ],
       "costNote": "Employer FICA 7.65% (6.2% Social Security capped, 1.45% Medicare) + FUTA (federal unemployment) + SUTA (state unemployment)"
@@ -928,23 +1144,168 @@
       "points": [
         {
           "gross": 30000,
-          "cost": 32497,
-          "net": 25883
+          "cost": 32499,
+          "net": 25903
         },
         {
           "gross": 60000,
-          "cost": 64791,
-          "net": 49523
+          "cost": 64794,
+          "net": 49605
         },
         {
           "gross": 100000,
-          "cost": 107851,
-          "net": 77663
+          "cost": 107854,
+          "net": 77745
         },
         {
           "gross": 150000,
-          "cost": 161676,
-          "net": 111902
+          "cost": 161679,
+          "net": 112007
+        }
+      ],
+      "costNote": "Employer FICA 7.65% (6.2% Social Security capped, 1.45% Medicare) + FUTA (federal unemployment) + SUTA (state unemployment)"
+    },
+    {
+      "name": "Chicago, IL",
+      "us": true,
+      "flag": "🇺🇸",
+      "costOfLiving": 34980,
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 32817,
+          "net": 24539
+        },
+        {
+          "gross": 60000,
+          "cost": 65112,
+          "net": 46757
+        },
+        {
+          "gross": 100000,
+          "cost": 108172,
+          "net": 72916
+        },
+        {
+          "gross": 150000,
+          "cost": 161996,
+          "net": 104704
+        }
+      ],
+      "costNote": "Employer FICA 7.65% (6.2% Social Security capped, 1.45% Medicare) + FUTA (federal unemployment) + SUTA (state unemployment)"
+    },
+    {
+      "name": "Los Angeles, CA",
+      "us": true,
+      "flag": "🇺🇸",
+      "costOfLiving": 40615,
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 32542,
+          "net": 25083
+        },
+        {
+          "gross": 60000,
+          "cost": 64837,
+          "net": 46715
+        },
+        {
+          "gross": 100000,
+          "cost": 107897,
+          "net": 70749
+        },
+        {
+          "gross": 150000,
+          "cost": 161722,
+          "net": 99761
+        }
+      ],
+      "costNote": "Employer FICA 7.65% (6.2% Social Security capped, 1.45% Medicare) + FUTA (federal unemployment) + SUTA (state unemployment)"
+    },
+    {
+      "name": "Boston, MA",
+      "us": true,
+      "flag": "🇺🇸",
+      "costOfLiving": 47256,
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 32579,
+          "net": 24459
+        },
+        {
+          "gross": 60000,
+          "cost": 64875,
+          "net": 46523
+        },
+        {
+          "gross": 100000,
+          "cost": 107935,
+          "net": 72479
+        },
+        {
+          "gross": 150000,
+          "cost": 161759,
+          "net": 104011
+        }
+      ],
+      "costNote": "Employer FICA 7.65% (6.2% Social Security capped, 1.45% Medicare) + FUTA (federal unemployment) + SUTA (state unemployment)"
+    },
+    {
+      "name": "Washington, DC",
+      "us": true,
+      "flag": "🇺🇸",
+      "costOfLiving": 41708,
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 32547,
+          "net": 25072
+        },
+        {
+          "gross": 60000,
+          "cost": 64841,
+          "net": 46918
+        },
+        {
+          "gross": 100000,
+          "cost": 107901,
+          "net": 71780
+        },
+        {
+          "gross": 150000,
+          "cost": 161727,
+          "net": 101793
+        }
+      ],
+      "costNote": "Employer FICA 7.65% (6.2% Social Security capped, 1.45% Medicare) + FUTA (federal unemployment) + SUTA (state unemployment)"
+    },
+    {
+      "name": "Denver, CO",
+      "us": true,
+      "flag": "🇺🇸",
+      "costOfLiving": 33410,
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 33106,
+          "net": 24969
+        },
+        {
+          "gross": 60000,
+          "cost": 65401,
+          "net": 47216
+        },
+        {
+          "gross": 100000,
+          "cost": 108461,
+          "net": 73416
+        },
+        {
+          "gross": 150000,
+          "cost": 162286,
+          "net": 105253
         }
       ],
       "costNote": "Employer FICA 7.65% (6.2% Social Security capped, 1.45% Medicare) + FUTA (federal unemployment) + SUTA (state unemployment)"
