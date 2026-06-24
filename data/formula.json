@@ -3,7 +3,7 @@
     "title": "Formula salary calc (per-country, no vendor)",
     "source": "Computed from each country's published tax rates (tools/calc/*.py)",
     "currency": "EUR",
-    "fetched": "2026-06-23",
+    "fetched": "2026-06-24",
     "provides": [
       "gross",
       "cost",
@@ -18,6 +18,84 @@
     "note": "Independent ground truth from published rates. Single filer, no personal deductions beyond the mandatory ones. Estimates for comparison."
   },
   "countries": [
+    {
+      "name": "Austria",
+      "year": 2026,
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 38691,
+          "net": 23448
+        },
+        {
+          "gross": 60000,
+          "cost": 77382,
+          "net": 41020
+        },
+        {
+          "gross": 100000,
+          "cost": 127507,
+          "net": 63039
+        },
+        {
+          "gross": 150000,
+          "cost": 181802,
+          "net": 91852
+        }
+      ]
+    },
+    {
+      "name": "Belgium",
+      "year": 2026,
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 38955,
+          "net": 22249
+        },
+        {
+          "gross": 60000,
+          "cost": 77910,
+          "net": 36262
+        },
+        {
+          "gross": 100000,
+          "cost": 129850,
+          "net": 52681
+        },
+        {
+          "gross": 150000,
+          "cost": 194775,
+          "net": 72892
+        }
+      ]
+    },
+    {
+      "name": "Bulgaria",
+      "year": 2026,
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 34820,
+          "net": 23857
+        },
+        {
+          "gross": 60000,
+          "cost": 64820,
+          "net": 50857
+        },
+        {
+          "gross": 100000,
+          "cost": 104820,
+          "net": 86857
+        },
+        {
+          "gross": 150000,
+          "cost": 154820,
+          "net": 131857
+        }
+      ]
+    },
     {
       "name": "Croatia",
       "year": 2026,
@@ -71,6 +149,58 @@
       ]
     },
     {
+      "name": "Czech Republic",
+      "year": 2026,
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 40140,
+          "net": 23294
+        },
+        {
+          "gross": 60000,
+          "cost": 80280,
+          "net": 45314
+        },
+        {
+          "gross": 100000,
+          "cost": 133076,
+          "net": 72706
+        },
+        {
+          "gross": 150000,
+          "cost": 187576,
+          "net": 108956
+        }
+      ]
+    },
+    {
+      "name": "Denmark",
+      "year": 2026,
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 31618,
+          "net": 21144
+        },
+        {
+          "gross": 60000,
+          "cost": 61618,
+          "net": 39577
+        },
+        {
+          "gross": 100000,
+          "cost": 101618,
+          "net": 62293
+        },
+        {
+          "gross": 150000,
+          "cost": 151618,
+          "net": 85274
+        }
+      ]
+    },
+    {
       "name": "Estonia",
       "year": 2026,
       "points": [
@@ -93,6 +223,32 @@
           "gross": 150000,
           "cost": 200700,
           "net": 114636
+        }
+      ]
+    },
+    {
+      "name": "Finland",
+      "year": 2026,
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 36027,
+          "net": 24014
+        },
+        {
+          "gross": 60000,
+          "cost": 72054,
+          "net": 39496
+        },
+        {
+          "gross": 100000,
+          "cost": 120090,
+          "net": 57456
+        },
+        {
+          "gross": 150000,
+          "cost": 180135,
+          "net": 81880
         }
       ]
     },
@@ -123,6 +279,84 @@
       ]
     },
     {
+      "name": "Germany",
+      "year": 2026,
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 37245,
+          "net": 21250
+        },
+        {
+          "gross": 60000,
+          "cost": 74490,
+          "net": 37622
+        },
+        {
+          "gross": 100000,
+          "cost": 120959,
+          "net": 58463
+        },
+        {
+          "gross": 150000,
+          "cost": 171149,
+          "net": 87369
+        }
+      ]
+    },
+    {
+      "name": "Greece",
+      "year": 2026,
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 36537,
+          "net": 21532
+        },
+        {
+          "gross": 60000,
+          "cost": 73074,
+          "net": 38407
+        },
+        {
+          "gross": 100000,
+          "cost": 120296,
+          "net": 58726
+        },
+        {
+          "gross": 150000,
+          "cost": 170296,
+          "net": 86726
+        }
+      ]
+    },
+    {
+      "name": "Hungary",
+      "year": 2026,
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 33900,
+          "net": 19950
+        },
+        {
+          "gross": 60000,
+          "cost": 67800,
+          "net": 39900
+        },
+        {
+          "gross": 100000,
+          "cost": 113000,
+          "net": 66500
+        },
+        {
+          "gross": 150000,
+          "cost": 169500,
+          "net": 99750
+        }
+      ]
+    },
+    {
       "name": "Ireland",
       "year": 2026,
       "points": [
@@ -145,6 +379,110 @@
           "gross": 150000,
           "cost": 166875,
           "net": 88469
+        }
+      ]
+    },
+    {
+      "name": "Italy",
+      "year": 2026,
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 42789,
+          "net": 20160
+        },
+        {
+          "gross": 60000,
+          "cost": 85578,
+          "net": 37201
+        },
+        {
+          "gross": 100000,
+          "cost": 142630,
+          "net": 56600
+        },
+        {
+          "gross": 150000,
+          "cost": 205711,
+          "net": 82373
+        }
+      ]
+    },
+    {
+      "name": "Latvia",
+      "year": 2026,
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 37077,
+          "net": 20003
+        },
+        {
+          "gross": 60000,
+          "cost": 74154,
+          "net": 40006
+        },
+        {
+          "gross": 100000,
+          "cost": 123590,
+          "net": 66678
+        },
+        {
+          "gross": 150000,
+          "cost": 174840,
+          "net": 100990
+        }
+      ]
+    },
+    {
+      "name": "Lithuania",
+      "year": 2026,
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 30747,
+          "net": 18150
+        },
+        {
+          "gross": 60000,
+          "cost": 61494,
+          "net": 36300
+        },
+        {
+          "gross": 100000,
+          "cost": 102490,
+          "net": 59648
+        },
+        {
+          "gross": 150000,
+          "cost": 153735,
+          "net": 86577
+        }
+      ]
+    },
+    {
+      "name": "Luxembourg",
+      "year": 2026,
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 33915,
+          "net": 25388
+        },
+        {
+          "gross": 60000,
+          "cost": 67830,
+          "net": 43798
+        },
+        {
+          "gross": 100000,
+          "cost": 113050,
+          "net": 63571
+        },
+        {
+          "gross": 150000,
+          "cost": 169575,
+          "net": 88483
         }
       ]
     },
@@ -201,6 +539,58 @@
       ]
     },
     {
+      "name": "Netherlands",
+      "year": 2026,
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 38472,
+          "net": 27613
+        },
+        {
+          "gross": 60000,
+          "cost": 76944,
+          "net": 43300
+        },
+        {
+          "gross": 100000,
+          "cost": 123637,
+          "net": 62258
+        },
+        {
+          "gross": 150000,
+          "cost": 173637,
+          "net": 85818
+        }
+      ]
+    },
+    {
+      "name": "Poland",
+      "year": 2026,
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 36144,
+          "net": 21375
+        },
+        {
+          "gross": 60000,
+          "cost": 72288,
+          "net": 37216
+        },
+        {
+          "gross": 100000,
+          "cost": 114950,
+          "net": 59840
+        },
+        {
+          "gross": 150000,
+          "cost": 167060,
+          "net": 88617
+        }
+      ]
+    },
+    {
       "name": "Portugal",
       "year": 2026,
       "points": [
@@ -227,6 +617,84 @@
       ]
     },
     {
+      "name": "Romania",
+      "year": 2026,
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 30675,
+          "net": 17550
+        },
+        {
+          "gross": 60000,
+          "cost": 61350,
+          "net": 35100
+        },
+        {
+          "gross": 100000,
+          "cost": 102250,
+          "net": 58500
+        },
+        {
+          "gross": 150000,
+          "cost": 153375,
+          "net": 87750
+        }
+      ]
+    },
+    {
+      "name": "Slovakia",
+      "year": 2026,
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 40860,
+          "net": 20801
+        },
+        {
+          "gross": 60000,
+          "cost": 81720,
+          "net": 41159
+        },
+        {
+          "gross": 100000,
+          "cost": 136200,
+          "net": 65047
+        },
+        {
+          "gross": 150000,
+          "cost": 204300,
+          "net": 92867
+        }
+      ]
+    },
+    {
+      "name": "Slovenia",
+      "year": 2026,
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 35130,
+          "net": 18937
+        },
+        {
+          "gross": 60000,
+          "cost": 70260,
+          "net": 35049
+        },
+        {
+          "gross": 100000,
+          "cost": 117100,
+          "net": 54617
+        },
+        {
+          "gross": 150000,
+          "cost": 175650,
+          "net": 74691
+        }
+      ]
+    },
+    {
       "name": "Spain",
       "year": 2026,
       "points": [
@@ -249,6 +717,32 @@
           "gross": 150000,
           "cost": 169680,
           "net": 91365
+        }
+      ]
+    },
+    {
+      "name": "Sweden",
+      "year": 2026,
+      "points": [
+        {
+          "gross": 30000,
+          "cost": 40776,
+          "net": 23486
+        },
+        {
+          "gross": 60000,
+          "cost": 81552,
+          "net": 43687
+        },
+        {
+          "gross": 100000,
+          "cost": 135920,
+          "net": 61854
+        },
+        {
+          "gross": 150000,
+          "cost": 203880,
+          "net": 84164
         }
       ]
     },
