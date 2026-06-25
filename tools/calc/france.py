@@ -16,6 +16,10 @@ Structure:
    the rest (2.4% CSG + 0.5% CRDS) is not.
  - Income tax: revenu net imposable = gross − deductible contributions, then a 10%
    work-expense abattement (capped), then the progressive barème (1 part).
+ - CEHR (high-income surtax): 3% of RFR between €250k and €500k, 4% above. Base is
+   the revenu fiscal de référence ≈ the taxable income (well below gross), so it
+   only starts biting around €310k gross. The CDHR 20%-minimum top-up never binds
+   for a pure salary (ordinary IR is already ~35–40%).
  - Employer health (7%→13%) and family allowances (3.45%→5.25%) step up with
    salary (SMIC-based thresholds). No "réduction générale" at these salaries (it
    phases out by ~1.6×SMIC). Work-accident (AT) is at a representative 2%.
@@ -86,14 +90,21 @@ def _employer(gross):
     )
 
 
+def _cehr(rfr):
+    """Contribution exceptionnelle sur les hauts revenus (1 part): 3% €250k–500k, 4% above.
+    Base = revenu fiscal de référence ≈ the taxable income for a pure-salary earner."""
+    return 0.03 * max(0.0, min(rfr, 500000) - 250000) + 0.04 * max(0.0, rfr - 500000)
+
+
 def compute(gross):
     """Return (employer_cost, net) for an annual gross salary, in EUR."""
     contributions, non_deductible = _employee(gross)
     deductible = contributions - non_deductible
     net_imposable = gross - deductible
     abattement = min(0.10 * net_imposable, ABATTEMENT_CAP)
-    income_tax = progressive(max(0.0, net_imposable - abattement), BAREME)
+    taxable = max(0.0, net_imposable - abattement)
+    income_tax = progressive(taxable, BAREME)
 
-    net = gross - contributions - income_tax
+    net = gross - contributions - income_tax - _cehr(taxable)
     employer_cost = gross + _employer(gross) + gross * EMPLOYER_EXTRAS
     return employer_cost, net

@@ -18,7 +18,9 @@ they are transcription errors. The tax base deducts the Vorsorgeaufwendungen
 (pension + health + care; unemployment is effectively non-deductible, sitting in
 the used-up €1,900 cap) plus the €1,230 Werbungskostenpauschale — a slight
 simplification (it deducts full health rather than the ~96% basic share), so net
-may be marginally high. Solidaritätszuschlag is ~0 for single filers here.
+may be marginally high. Solidaritätszuschlag (5.5% of income tax, above a Freigrenze
+with an 11.9% phase-in) IS modelled: €0 up to ~€100k income, then ~€1.1k at €100k,
+~€2.6k at €150k, ~€5.9k at €300k. (2026 Freigrenze €20,350 single — confirmed vs TK.)
 
 Sources: BMF §32a 2026 (verified coefficients + continuity); PwC Germany 2026
 deductions; DRV/BMG 2026 rates + ceilings (€101,400 / €69,750); GFB €12,348.
@@ -67,6 +69,17 @@ def _est(zve):
     return 0.45 * zve - 19470.65
 
 
+SOLI_FREIGRENZE = 20350       # 2026 single; below this assessed income tax, no Soli
+SOLI_RATE = 0.055
+SOLI_PHASEIN = 0.119          # Milderungszone slope above the Freigrenze
+
+
+def _soli(income_tax):
+    """Solidaritätszuschlag: 5.5% of income tax, above a Freigrenze with a phase-in."""
+    return min(SOLI_RATE * income_tax,
+               max(0.0, SOLI_PHASEIN * (income_tax - SOLI_FREIGRENZE)))
+
+
 def compute(gross):
     """Return (employer_cost, net) for an annual gross salary, in EUR."""
     pu_base = min(gross, PENSION_CAP)
@@ -78,7 +91,7 @@ def compute(gross):
     zve = max(0.0, gross - vorsorge - LUMP_SUMS)
     income_tax = _est(zve)
 
-    net = gross - employee - income_tax
+    net = gross - employee - income_tax - _soli(income_tax)
     employer_cost = (gross + pu_base * EMPLOYER_PENS_UNEMP + hc_base * EMPLOYER_HEALTH_CARE
                      + pu_base * EMPLOYER_U2_INSOLV + gross * EMPLOYER_ACCIDENT)
     return employer_cost, net

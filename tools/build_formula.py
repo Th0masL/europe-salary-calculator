@@ -23,7 +23,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 CALC_DIR = ROOT / "tools" / "calc"
 FX_URL = "https://open.er-api.com/v6/latest/EUR"
-SALARY_POINTS = [30000, 60000, 100000, 150000]  # annual EUR
+SALARY_POINTS = list(range(20000, 400001, 10000))  # 20k..400k EUR, 10k step (39 points)
 
 
 def load_country_modules():

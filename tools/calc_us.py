@@ -28,7 +28,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 FX_URL = "https://api.frankfurter.app/latest?from=EUR&to=USD"
 UA = "Mozilla/5.0 (salary-calculator)"
-SALARY_POINTS = [30000, 60000, 100000, 150000]  # annual EUR
+SALARY_POINTS = list(range(20000, 400001, 10000))  # 20k..400k EUR, 10k step (39 points)
 
 # ---- 2025 federal -----------------------------------------------------------
 FED_STD_DEDUCTION = 15000

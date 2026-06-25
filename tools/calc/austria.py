@@ -39,7 +39,9 @@ ER_SS = 0.2038
 ER_LEVIES = 0.037 + 0.0036 + 0.03 + 0.0153   # DB + DZ + Kommunalsteuer + MVK ≈ 8.59%
 TAX_CREDIT = 548             # Verkehrsabsetzbetrag etc. (calibrated to PwC examples)
 SPECIAL_EXEMPT = 620
-SPECIAL_RATE = 0.06
+# Sonderzahlung (13th/14th) fixed rates: 6% / 27% / 35.75% / 50%. Only the 6% band
+# binds below ~€175k gross; the higher bands matter for high earners.
+SPECIAL_BANDS = [(25000, 0.06), (50000, 0.27), (83333, 0.3575), (INF, 0.50)]
 
 BRACKETS = [(13539, 0.0), (21992, 0.20), (36458, 0.30), (70365, 0.40),
             (104859, 0.48), (1000000, 0.50), (INF, 0.55)]
@@ -55,7 +57,7 @@ def compute(gross):
     spec_ss = min(special_annual, SPECIAL_CEIL) * EE_SS
 
     reg_tax = max(0.0, progressive(regular_annual - reg_ss, BRACKETS) - TAX_CREDIT)
-    spec_tax = max(0.0, special_annual - spec_ss - SPECIAL_EXEMPT) * SPECIAL_RATE
+    spec_tax = progressive(max(0.0, special_annual - spec_ss - SPECIAL_EXEMPT), SPECIAL_BANDS)
 
     net = gross - reg_ss - spec_ss - reg_tax - spec_tax
 
