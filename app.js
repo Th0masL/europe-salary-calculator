@@ -1,10 +1,10 @@
 /* Europe Salary Calculator — vanilla JS, no dependencies.
  *
- * Each country exposes 4 data points {gross, cost, net}, all monotonically
+ * Each country exposes data points {gross, cost, net}, all monotonically
  * increasing together. Given any one of the three values we interpolate the
  * other two: find the bracketing segment on the chosen axis, compute the
- * fraction t, and linearly interpolate every field. Outside the known range we
- * extrapolate from the nearest segment (and flag it).
+ * fraction t, and linearly interpolate every field. Outside a source's measured
+ * range we return null (the row shows "—") rather than extrapolating.
  */
 (function () {
   "use strict";
@@ -114,12 +114,15 @@
     var n = pts.length;
     if (n < 2) return null;
     var lo = pts[0][axis], hi = pts[n - 1][axis];
-    var i, t, extrapolated = false;
+    // Don't extrapolate beyond what this source actually measured — return null so the
+    // row shows "—" (e.g. vendor sources stop ~€150k; only the Formula goes higher).
+    if (value < lo || value > hi) return null;
+    var i, t;
 
     if (value <= lo) {
-      i = 0; extrapolated = value < lo;
+      i = 0;
     } else if (value >= hi) {
-      i = n - 2; extrapolated = value > hi;
+      i = n - 2;
     } else {
       for (i = 0; i < n - 1; i++) {
         if (value >= pts[i][axis] && value <= pts[i + 1][axis]) break;
@@ -136,7 +139,6 @@
       gross: lerpKey("gross"),
       cost: lerpKey("cost"),
       net: lerpKey("net"),
-      extrapolated: extrapolated,
     };
     res[axis] = value; // keep the input exact
     if (res.net != null && res.net < 0) res.net = 0;
@@ -186,14 +188,12 @@
           // this source has no data for this location → a "—" row
           base.cost = base.gross = base.net = null;
           base.netRatio = base.costPerNet = base.surplus = null;
-          base.extrapolated = false;
           return base;
         }
         base.cost = s.cost; base.gross = s.gross; base.net = s.net;
         base.netRatio = (s.cost > 0 && s.net != null) ? s.net / s.cost : null;
         base.costPerNet = (s.net > 0 && s.cost != null) ? s.cost / s.net : null;
         base.surplus = (s.net != null && col != null) ? s.net - col : null;
-        base.extrapolated = s.extrapolated;
         return base;
       });
 
@@ -222,8 +222,6 @@
         var hasSurplus = r.surplus != null;
         var surplusCls = !hasSurplus ? "" : r.surplus >= 0 ? "surplus-pos" : "surplus-neg";
         var topCls = idx === 0 && (state.sortKey === "net" || state.sortKey === "surplus") && state.sortDir === -1 ? "top-row" : "";
-        var warn = r.extrapolated
-          ? ' <span class="extrap" title="Outside the benchmark range — extrapolated, less reliable">*</span>' : "";
         var approx = r.approx
           ? '<span class="approx" title="Single-benchmark estimate: one US data point, converted from USD (1 EUR = 1.13 USD) and modelled at a flat rate. Least precise away from ~€100k.">≈</span> ' : "";
         var tag = r.eu ? '<span class="eu-tag">EU</span>'
@@ -241,7 +239,7 @@
             '<td class="rank">' + (idx + 1) + "</td>" +
             '<td class="country"><span class="country-cell"><span class="flag">' + esc(r.flag) +
               '</span><span class="cname">' + esc(r.name) + "</span>" + tag + "</span></td>" +
-            '<td class="val-strong">' + approx + costCell + warn + "</td>" +
+            '<td class="val-strong">' + approx + costCell + "</td>" +
             "<td>" + money(r.gross) + "</td>" +
             '<td class="val-net">' + money(r.net) + "</td>" +
             "<td>" + (r.netRatio != null ? Math.round(r.netRatio * 100) + "%" : "—") + "</td>" +
@@ -258,8 +256,30 @@
     writeURL();
   }
 
+  // Largest value of the current axis this source actually measured (annual).
+  function sourceMax() {
+    var m = 0;
+    currentData().countries.forEach(function (c) {
+      c.points.forEach(function (p) {
+        if (p[state.mode] != null && p[state.mode] > m) m = p[state.mode];
+      });
+    });
+    return m;
+  }
+
   function renderSummary(rows) {
     var el = document.getElementById("summary");
+    var srcMax = sourceMax();
+    if (srcMax && state.amount > srcMax) {
+      var per0 = state.monthly ? " / month" : " / year";
+      var more = state.source !== "formula"
+        ? ' Switch to the <strong>Formula</strong> source for higher salaries.'
+        : "";
+      el.innerHTML = '<div class="card"><span class="lead">' + SOURCES[state.source].label +
+        " only covers up to <b>" + money(srcMax) + "</b>" + per0 + ", so there's no data at <b>" +
+        money(state.amount) + "</b>." + more + "</span></div>";
+      return;
+    }
     if (!rows.length) { el.innerHTML = ""; return; }
     var mode = MODES[state.mode];
     // best = best for the user given the mode (ignoring rows missing that metric)

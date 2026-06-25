@@ -36,7 +36,7 @@ UA = "Mozilla/5.0 (salary-calculator data fetch)"
 
 # Gross salary points (EUR) to sample per country. More points than the eBook's
 # three benchmarks => smoother interpolation.
-SALARY_POINTS = [30000, 50000, 75000, 100000, 125000, 150000, 200000]
+SALARY_POINTS = list(range(20000, 150001, 10000))  # 20k..150k EUR, 10k step (14 points)
 
 # Our 36 European country names -> Skuad 3-letter country codes.
 # Slovenia is intentionally absent: the API does not list it.

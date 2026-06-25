@@ -243,7 +243,6 @@ tbody tr.top-row:hover { background: #224030; }
 .sub { color: var(--muted); font-size: 0.78rem; }
 .surplus-pos { color: var(--good); }
 .surplus-neg { color: #ff8a8a; }
-.extrap { color: var(--warn); cursor: help; }
 
 .notes { color: var(--muted); font-size: 0.9rem; margin-top: 26px; }
 .notes p { margin: 0 0 12px; }

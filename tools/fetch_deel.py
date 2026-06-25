@@ -36,7 +36,7 @@ ROOT = Path(__file__).resolve().parent.parent
 GUEST = "https://api-prod.letsdeel.com/guest/take_home_calculator"
 EMPCOST = "https://api-prod.letsdeel.com/employment_cost"
 UA = "Mozilla/5.0 (salary-calculator data fetch)"
-SALARY_POINTS = [30000, 60000, 100000, 150000]  # annual EUR
+SALARY_POINTS = list(range(20000, 150001, 10000))  # 20k..150k EUR, 10k step (14 points)
 
 EU_NAMES = [
     "Albania", "Austria", "Belgium", "Bulgaria", "Croatia", "Cyprus",

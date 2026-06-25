@@ -21,7 +21,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 # 'us' = direct calc from published rates (US only); 'rippling' = employer cost only (no net)
 SOURCES = ["ebook", "skuad", "deel", "us", "rippling"]
-GROSS_POINTS = [30000, 45000, 60000, 80000, 100000, 125000, 150000]
+GROSS_POINTS = list(range(20000, 150001, 10000))  # 20k..150k EUR, 10k step (14 points)
 OUTLIER_PCT = 0.10  # a source >10% from the median of the others is dropped
 
 
