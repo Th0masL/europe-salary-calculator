@@ -14,6 +14,7 @@ Usage:
     python3 tools/build_formula.py
 """
 import datetime
+import argparse
 import importlib
 import json
 import sys
@@ -56,7 +57,50 @@ def fx_as_of(fx):
         return None
 
 
+def us_entries():
+    """Return browser dataset entries for the direct US calculator."""
+    us_cost_note = ("Employer FICA 7.65% (6.2% Social Security capped, 1.45% Medicare) + "
+                    "FUTA (federal unemployment) + SUTA (state unemployment)")
+    us_path = ROOT / "data" / "us.json"
+    if not us_path.exists():
+        return []
+    us_doc = json.loads(us_path.read_text(encoding="utf-8"))
+    year = us_doc.get("meta", {}).get("year")
+    entries = []
+    for c in us_doc["countries"]:
+        entry = {k: c[k] for k in ("name", "us", "flag", "costOfLiving", "points") if k in c}
+        entry["costNote"] = us_cost_note
+        if year:
+            entry["year"] = year
+        entries.append(entry)
+    return entries
+
+
+def write_doc(doc):
+    (ROOT / "data").mkdir(exist_ok=True)
+    with open(ROOT / "data" / "formula.json", "w", encoding="utf-8") as f:
+        json.dump(doc, f, indent=2, ensure_ascii=False)
+    with open(ROOT / "data" / "formula.js", "w", encoding="utf-8") as f:
+        f.write("// AUTO-GENERATED from data/formula.json by tools/build_formula.py - do not edit.\n")
+        f.write("window.SALARY_DATA_FORMULA = " + json.dumps(doc, ensure_ascii=False) + ";\n")
+
+
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--us-only", action="store_true",
+                        help="refresh US entries without rebuilding European FX conversions")
+    args = parser.parse_args()
+    if args.us_only:
+        path = ROOT / "data" / "formula.json"
+        doc = json.loads(path.read_text(encoding="utf-8"))
+        entries = us_entries()
+        doc["countries"] = [c for c in doc["countries"] if not c.get("us")] + entries
+        doc["meta"]["usYear"] = entries[0].get("year") if entries else None
+        doc["meta"]["usUpdated"] = datetime.date.today().isoformat()
+        write_doc(doc)
+        print(f"Wrote data/formula.json + .js with {len(entries)} refreshed US cities.")
+        return
+
     mods = load_country_modules()
     need_fx = any(getattr(m, "CURRENCY", "EUR") != "EUR" for m in mods)
     fx = fx_rates() if need_fx else None
@@ -92,15 +136,9 @@ def main():
 
     # The US cities (tools/calc_us.py -> data/us.json) are also a from-published-rates
     # calc, so they belong in this dataset too. They share one employer-cost shape.
-    us_cost_note = ("Employer FICA 7.65% (6.2% Social Security capped, 1.45% Medicare) + "
-                    "FUTA (federal unemployment) + SUTA (state unemployment)")
-    us_path = ROOT / "data" / "us.json"
-    if us_path.exists():
-        us_cities = json.loads(us_path.read_text(encoding="utf-8"))["countries"]
-        for c in us_cities:
-            entry = {k: c[k] for k in ("name", "us", "flag", "costOfLiving", "points") if k in c}
-            entry["costNote"] = us_cost_note
-            countries.append(entry)
+    us_cities = us_entries()
+    countries.extend(us_cities)
+    if us_cities:
         print(f"  + {len(us_cities)} US cities from calc_us.py")
 
     doc = {
@@ -110,6 +148,7 @@ def main():
             "currency": "EUR",
             "fetched": datetime.date.today().isoformat(),
             "fxAsOf": fx_as_of(fx) if fx else None,
+            "usYear": us_cities[0].get("year") if us_cities else None,
             "provides": ["gross", "cost", "net"],
             "salaryPoints": SALARY_POINTS,
             "note": ("Independent ground truth from published rates. Single filer, no "
@@ -117,12 +156,7 @@ def main():
         },
         "countries": countries,
     }
-    (ROOT / "data").mkdir(exist_ok=True)
-    with open(ROOT / "data" / "formula.json", "w", encoding="utf-8") as f:
-        json.dump(doc, f, indent=2, ensure_ascii=False)
-    with open(ROOT / "data" / "formula.js", "w", encoding="utf-8") as f:
-        f.write("// AUTO-GENERATED from data/formula.json by tools/build_formula.py - do not edit.\n")
-        f.write("window.SALARY_DATA_FORMULA = " + json.dumps(doc, ensure_ascii=False) + ";\n")
+    write_doc(doc)
     print(f"\nWrote data/formula.json + .js with {len(countries)} country(ies).")
 
 

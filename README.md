@@ -43,8 +43,8 @@ increase together. The calculator:
 2. **Inverts** the relationship, so you can fix the employer cost, the gross, or
    the target net and solve for the other two.
 
-Amounts outside the benchmark range are extrapolated from the nearest segment
-and flagged with a `*`.
+Amounts outside a source's benchmark range are not extrapolated; the affected
+row shows `—`. The Formula source extends to €400,000 gross.
 
 ### Five data sources (toggle in the UI)
 
@@ -64,6 +64,8 @@ combines them robustly.
 sources for cost and for net, after discarding any value &gt;**10%** from the median
 of the others. So a single bad number can't skew it — e.g. Skuad overstates
 Estonia's employer cost by ~49%, and that value is dropped rather than blended in.
+If changing source agreement creates a decreasing step, adjacent values are pooled
+with isotonic regression so target-net inversion remains mathematically valid.
 
 Employer cost also draws on a fifth source, **[Rippling](https://www.rippling.com/en-GB/employee-cost-calculator)**
 (cost only, no net), which is accurate where others drift (it's correct for
@@ -77,9 +79,10 @@ separately per source — see [US cities](#us-cities-) below.
 ### The Formula source — computed from published rates
 
 The other four sources are vendor calculators (or a blend of them). **Formula** is
-different: it computes employer cost and net pay **from each country's published
-2026 tax rates**, with no EOR vendor in the loop — one self-contained Python module
-per country under `tools/calc/`, sharing `tools/calc/engine.py`.
+different: it computes employer cost and net pay **from published tax rates**,
+with no EOR vendor in the loop — one self-contained Python module per country
+under `tools/calc/`, sharing `tools/calc/engine.py`. European modules use 2026
+rules; the US city calculator currently uses 2025 federal and state rules.
 
 Each module is written from official / authoritative figures (national tax
 authorities, PwC / KPMG tax cards), then **cross-checked against the vendor sources
@@ -205,6 +208,7 @@ python3 tools/fetch_numbeo.py     # → data/cost_of_living.json + .js
 # 5. inspect alignment, then build the consensus the website uses
 python3 tools/compare_sources.py 60000   # report at €60k (writes data/comparison_<n>.json)
 python3 tools/build_consensus.py         # → data/consensus.json + .js
+python3 tools/validate_data.py           # verify interpolation/data invariants
 ```
 
 For the eBook source, the European countries are parsed from the PDF; the US

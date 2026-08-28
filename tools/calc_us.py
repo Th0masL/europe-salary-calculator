@@ -20,6 +20,7 @@ Usage:
     python3 tools/calc_us.py
 """
 import datetime
+import argparse
 import json
 import sys
 import urllib.request
@@ -31,7 +32,7 @@ UA = "Mozilla/5.0 (salary-calculator)"
 SALARY_POINTS = list(range(20000, 400001, 10000))  # 20k..400k EUR, 10k step (39 points)
 
 # ---- 2025 federal -----------------------------------------------------------
-FED_STD_DEDUCTION = 15000
+FED_STD_DEDUCTION = 15750  # finalized 2025 amount after P.L. 119-21
 FED_BRACKETS = [  # (upper bound of taxable income, marginal rate)
     (11925, 0.10), (48475, 0.12), (103350, 0.22), (197300, 0.24),
     (250525, 0.32), (626350, 0.35), (float("inf"), 0.37),
@@ -198,11 +199,18 @@ def get_fx():
 
 
 def main():
-    try:
-        fx = get_fx()
-    except Exception as e:  # noqa: BLE001
-        fx = 1.15
-        print(f"  ! FX fetch failed ({e}); using EUR->USD = {fx}", file=sys.stderr)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--fx", type=float,
+                        help="fixed EUR->USD rate (useful for reproducible rebuilds)")
+    args = parser.parse_args()
+    if args.fx:
+        fx = args.fx
+    else:
+        try:
+            fx = get_fx()
+        except Exception as e:  # noqa: BLE001
+            fx = 1.15
+            print(f"  ! FX fetch failed ({e}); using EUR->USD = {fx}", file=sys.stderr)
     print(f"  EUR->USD = {fx:.4f}")
 
     out = []
@@ -239,6 +247,7 @@ def main():
             "title": "US employment cost + net (direct calc from published rates)",
             "source": "Computed from published 2025 US federal + state rates (no EOR vendor)",
             "currency": "EUR",
+            "year": 2025,
             "fetched": datetime.date.today().isoformat(),
             "fxEurUsd": round(fx, 4),
             "provides": ["gross", "cost", "net"],

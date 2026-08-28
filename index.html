@@ -101,7 +101,7 @@
         the rest.
       </p>
       <p>
-        <strong>Four data sources</strong> (switch with the <em>Data</em> toggle):
+        <strong>Five data sources</strong> (switch with the <em>Data</em> toggle):
         <strong>Consensus</strong> (default) — per location and metric, the median
         of the sources after discarding any value &gt;10% from the median of the
         others; the most-aligned, outlier-resistant estimate. Employer cost also
@@ -115,9 +115,11 @@
         <strong>Deel</strong> — Deel's
         <a href="https://www.deel.com/employee-cost-calculator/">employee-cost</a>
         and <a href="https://www.deel.com/take-home-pay-calculator/">take-home</a>
-        calculators (its EOR management fee removed from the cost). The three use
+        calculators (its EOR management fee removed from the cost).
+        <strong>Formula</strong> — direct estimates from published tax rates in
+        the country modules under <code>tools/calc/</code>. These sources use
         different methodologies and can disagree — comparing them is the point.
-        Skuad and Deel are <strong>live</strong> snapshots, fetched on the date
+        Skuad and Deel are stored snapshots of live calculators, fetched on the date
         shown under the headline. (Two other calculators were evaluated and
         <strong>not used</strong>: <em>Remote.com</em> — employer cost wildly off
         for ~14 countries; and <em>Papaya Global</em> — its data is stale, from
@@ -141,8 +143,9 @@
       <p class="disclaimer">
         Figures are <strong>estimates for comparison only</strong> — they ignore
         personal allowances, marital status, regional taxes, benefits and
-        bonuses, and currency fluctuations. Do not use them as precise payroll or
-        budgeting figures. “After living costs” subtracts the estimated annual cost
+        bonuses, and currency fluctuations. European Formula rows use 2026 rules;
+        US Formula/Consensus rows currently use 2025 rules. Do not use them as
+        precise payroll or budgeting figures. “After living costs” subtracts the estimated annual cost
         of living for a single person (capital city for countries, the city itself
         for US entries).
       </p>

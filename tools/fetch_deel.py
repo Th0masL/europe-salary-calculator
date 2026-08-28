@@ -116,6 +116,21 @@ def build_points(net_call, cost_call, label):
         if len(p) > 1:
             points.append(p)
         time.sleep(0.2)
+    # The vendor API occasionally returns an isolated take-home value from the
+    # wrong bracket/currency (seen for NL and LT). Such a decrease cannot be a
+    # valid salary curve and breaks inversion by target net. Keep the gross/cost
+    # point but mark the suspect net unavailable instead of inventing a value.
+    previous_net = None
+    for point in points:
+        net = point.get("net")
+        if net is None:
+            continue
+        if previous_net is not None and net < previous_net:
+            print(f"  ! {label} net {point['gross']}: non-monotonic {net} < "
+                  f"{previous_net}; dropping value", file=sys.stderr)
+            del point["net"]
+        else:
+            previous_net = net
     return points
 
 

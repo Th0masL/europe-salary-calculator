@@ -53,17 +53,16 @@ def median(xs):
 
 
 def consensus_value(values):
-    """values: list of numbers. Drop outliers vs median-of-others, return median."""
+    """Drop outliers vs median-of-others and return the remaining median."""
     vals = [v for v in values if v is not None]
     if not vals:
         return None, []
-    # Dedupe near-identical values: some sources aren't independent (e.g. the US
-    # blog estimate appears verbatim in both eBook and Skuad), and counting it
-    # twice would let it outvote a real source like Deel's per-state figures.
+    # Some vendor values are demonstrably derived from the same upstream table.
+    # Do not let identical copies outvote a genuinely independent estimate.
     uniq = []
-    for v in vals:
-        if not any(abs(v - u) <= 1 for u in uniq):
-            uniq.append(v)
+    for value in vals:
+        if not any(abs(value - other) <= 1 for other in uniq):
+            uniq.append(value)
     vals = uniq
     if len(vals) >= 3:
         kept = []
@@ -74,6 +73,33 @@ def consensus_value(values):
                 kept.append(v)
         vals = kept or vals
     return round(median(vals)), vals
+
+
+def enforce_monotonic(points, key):
+    """Apply least-squares isotonic regression to one interpolation axis.
+
+    A per-point outlier decision can otherwise create a small downward step when
+    the contributing source set changes. Pool-adjacent-violators makes the
+    smallest squared adjustment that restores the browser solver's invariant.
+    """
+    present = [point for point in points if point.get(key) is not None]
+    blocks = []
+    for point in present:
+        blocks.append([float(point[key]), 1])  # sum, count
+        while len(blocks) > 1:
+            left, right = blocks[-2], blocks[-1]
+            if left[0] / left[1] <= right[0] / right[1]:
+                break
+            blocks[-2:] = [[left[0] + right[0], left[1] + right[1]]]
+    fitted = []
+    for total, count in blocks:
+        fitted.extend([round(total / count)] * count)
+    changed = False
+    for point, value in zip(present, fitted):
+        if point[key] != value:
+            point[key] = value
+            changed = True
+    return changed
 
 
 def main():
@@ -125,6 +151,9 @@ def main():
                 p["net"] = net
             if "cost" in p or "net" in p:
                 points.append(p)
+        for key in ("cost", "net"):
+            if enforce_monotonic(points, key):
+                print(f"  ! {name}: pooled non-monotonic consensus {key} points")
         # how many sources contributed (at €60k) — for transparency
         n_sources = len([s for s in srcs if name in idx[s]])
         entry = {k: base[k] for k in ("name", "flag", "eu") if k in base}
@@ -137,12 +166,18 @@ def main():
         entry["points"] = points
         out.append(entry)
 
+    source_dates = {s: d.get("meta", {}).get("fetched") for s, d in docs.items()
+                    if d.get("meta", {}).get("fetched")}
     doc = {
         "meta": {
             "title": "Consensus (median of aligned sources)",
             "source": "Consensus of Boundless eBook + Skuad + Deel",
             "currency": "EUR",
-            "fetched": datetime.date.today().isoformat(),
+            # `fetched` is retained for the UI and means newest underlying input,
+            # not the day this deterministic merge happened.
+            "fetched": max(source_dates.values()) if source_dates else None,
+            "generated": datetime.date.today().isoformat(),
+            "sourceDates": source_dates,
             "combines": list(idx.keys()),
             "grossPoints": GROSS_POINTS,
             "note": ("Per location and salary, the median of the available sources "

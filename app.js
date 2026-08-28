@@ -318,8 +318,12 @@
     var meta = currentData().meta || {};
     var when = meta.fetched ? " · fetched " + meta.fetched : "";
     if (state.source === "consensus") {
+      var dates = meta.sourceDates || {};
+      var vendorDate = dates.deel || dates.skuad;
+      var dateNote = vendorDate ? " · vendor snapshots " + vendorDate : "";
+      if (dates.us) dateNote += " · US calc " + dates.us;
       return "Source: Consensus — Europe: median of eBook + Skuad + Deel (outliers dropped); " +
-        "US: direct 2025 calc from published rates (no EOR)" + when + ".";
+        "US: direct 2025 calc from published rates (no EOR)" + dateNote + ".";
     }
     if (state.source === "skuad") {
       return "Source: Skuad live calculator" + when +
@@ -331,8 +335,9 @@
     }
     if (state.source === "formula") {
       var fx = meta.fxAsOf ? " · non-euro rows converted at FX rates from " + meta.fxAsOf : "";
+      var usUpdate = meta.usUpdated ? " · US refreshed " + meta.usUpdated : "";
       return "Source: Formula — computed from each country's published tax rates (no vendor)" +
-        when + fx + ". Countries not yet implemented show blank (—).";
+        when + fx + usUpdate + " · Europe uses 2026 rules; US cities use 2025 rules.";
     }
     return "Source: Boundless 2025 eBook · 36 European countries + 5 US cities.";
   }
