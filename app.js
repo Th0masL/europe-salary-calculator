@@ -241,12 +241,12 @@
             '<td class="rank">' + (idx + 1) + "</td>" +
             '<td class="country"><span class="country-cell"><span class="flag">' + esc(r.flag) +
               '</span><span class="cname">' + esc(r.name) + "</span>" + tag + "</span></td>" +
-            '<td class="val-strong">' + approx + costCell + "</td>" +
-            "<td>" + money(r.gross) + "</td>" +
-            '<td class="val-net">' + money(r.net) + "</td>" +
-            "<td>" + (r.netRatio != null ? Math.round(r.netRatio * 100) + "%" : "—") + "</td>" +
-            "<td>" + (r.costPerNet != null ? "€" + r.costPerNet.toFixed(2) : "—") + "</td>" +
-            '<td class="' + surplusCls + '">' +
+            '<td class="val-strong" data-label="Employer cost">' + approx + costCell + "</td>" +
+            '<td data-label="Gross">' + money(r.gross) + "</td>" +
+            '<td class="val-net" data-label="Net take-home">' + money(r.net) + "</td>" +
+            '<td data-label="You keep">' + (r.netRatio != null ? Math.round(r.netRatio * 100) + "%" : "—") + "</td>" +
+            '<td data-label="Cost per €1 net">' + (r.costPerNet != null ? "€" + r.costPerNet.toFixed(2) : "—") + "</td>" +
+            '<td class="' + surplusCls + '" data-label="After living costs">' +
               (hasSurplus ? (r.surplus >= 0 ? "+" : "−") + money(Math.abs(r.surplus)) : "—") + "</td>" +
           "</tr>"
         );
@@ -347,8 +347,10 @@
   function syncSortIndicators() {
     document.querySelectorAll("thead th").forEach(function (th) {
       th.classList.remove("sorted-asc", "sorted-desc");
+      if (th.dataset.sort) th.setAttribute("aria-sort", "none");
       if (th.dataset.sort === state.sortKey) {
         th.classList.add(state.sortDir === -1 ? "sorted-desc" : "sorted-asc");
+        th.setAttribute("aria-sort", state.sortDir === -1 ? "descending" : "ascending");
       }
     });
   }
@@ -368,7 +370,9 @@
   function setMode(mode) {
     state.mode = mode;
     document.querySelectorAll(".seg").forEach(function (b) {
-      b.setAttribute("aria-checked", b.dataset.mode === mode ? "true" : "false");
+      var selected = b.dataset.mode === mode;
+      b.setAttribute("aria-checked", selected ? "true" : "false");
+      b.tabIndex = selected ? 0 : -1;
     });
     amountLabel.textContent = MODES[mode].label;
     // sensible default sort per mode
@@ -386,7 +390,9 @@
     if (!SOURCES[source] || !SOURCES[source].data) return;
     state.source = source;
     document.querySelectorAll(".src").forEach(function (b) {
-      b.setAttribute("aria-checked", b.dataset.source === source ? "true" : "false");
+      var selected = b.dataset.source === source;
+      b.setAttribute("aria-checked", selected ? "true" : "false");
+      b.tabIndex = selected ? 0 : -1;
     });
     document.getElementById("sourceSelect").value = source;
     render();
@@ -398,6 +404,31 @@
   document.getElementById("sourceSelect").addEventListener("change", function (e) {
     setSource(e.target.value);
   });
+
+  function wireRadioKeys(selector, dataKey, activate) {
+    document.querySelectorAll(selector).forEach(function (button) {
+      button.addEventListener("keydown", function (e) {
+        var keys = ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Home", "End"];
+        if (keys.indexOf(e.key) === -1) return;
+        e.preventDefault();
+        var buttons = Array.from(document.querySelectorAll(selector)).filter(function (b) {
+          return !b.disabled;
+        });
+        var index = buttons.indexOf(button);
+        if (e.key === "Home") index = 0;
+        else if (e.key === "End") index = buttons.length - 1;
+        else {
+          var delta = (e.key === "ArrowRight" || e.key === "ArrowDown") ? 1 : -1;
+          index = (index + delta + buttons.length) % buttons.length;
+        }
+        var next = buttons[index];
+        activate(next.dataset[dataKey]);
+        next.focus();
+      });
+    });
+  }
+  wireRadioKeys(".seg", "mode", setMode);
+  wireRadioKeys(".src", "source", setSource);
 
   amountInput.addEventListener("input", function () {
     state.amount = parseAmount(amountInput.value);
@@ -417,13 +448,20 @@
     state.search = e.target.value; render();
   });
 
-  document.querySelectorAll("thead th").forEach(function (th) {
-    th.addEventListener("click", function () {
+  function sortByHeader(th) {
       var key = th.dataset.sort;
-      if (!key || key === "rank") return;
+      if (!key) return;
       if (state.sortKey === key) { state.sortDir *= -1; }
       else { state.sortKey = key; state.sortDir = key === "name" ? 1 : -1; }
       render();
+  }
+  document.querySelectorAll("thead th[data-sort]").forEach(function (th) {
+    th.tabIndex = 0;
+    th.addEventListener("click", function () { sortByHeader(th); });
+    th.addEventListener("keydown", function (e) {
+      if (e.key !== "Enter" && e.key !== " ") return;
+      e.preventDefault();
+      sortByHeader(th);
     });
   });
 
@@ -447,7 +485,9 @@
   // disable a source button if its data file failed to load
   document.querySelectorAll(".src").forEach(function (b) {
     if (!SOURCES[b.dataset.source].data) b.setAttribute("disabled", "");
-    b.setAttribute("aria-checked", b.dataset.source === state.source ? "true" : "false");
+    var selected = b.dataset.source === state.source;
+    b.setAttribute("aria-checked", selected ? "true" : "false");
+    b.tabIndex = selected ? 0 : -1;
   });
   document.querySelectorAll("#sourceSelect option").forEach(function (option) {
     if (!SOURCES[option.value].data) option.disabled = true;

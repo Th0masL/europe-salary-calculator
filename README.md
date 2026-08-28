@@ -33,6 +33,9 @@ python3 -m http.server 8000   # then visit http://localhost:8000
 Views are shareable: the URL captures the mode and amount, e.g.
 `index.html?mode=cost&amount=100000`.
 
+“Display results monthly” changes the presentation only; the entered amount and
+shareable URL remain annual so switching the display cannot change the calculation.
+
 ## How it works
 
 Each location has **total employer cost** and **employee net pay** at a few
@@ -209,7 +212,13 @@ python3 tools/fetch_numbeo.py     # → data/cost_of_living.json + .js
 python3 tools/compare_sources.py 60000   # report at €60k (writes data/comparison_<n>.json)
 python3 tools/build_consensus.py         # → data/consensus.json + .js
 python3 tools/validate_data.py           # verify interpolation/data invariants
+python3 -m unittest discover -s tests -v # structural formula/pipeline tests
 ```
+
+GitHub Actions runs the Python compilation, structural regression suite, dataset
+validation, and JavaScript syntax check on every push and pull request. These
+checks catch broken calculations and generated data, but they do not replace an
+annual review of each jurisdiction's source rates.
 
 For the eBook source, the European countries are parsed from the PDF; the US
 cities are a hardcoded table (USD, sourced from the blog) converted to EUR — edit

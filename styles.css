@@ -215,10 +215,11 @@ thead th {
   line-height: 1.25;
   padding: 12px 14px;
   white-space: nowrap;
-  cursor: pointer;
   user-select: none;
   border-bottom: 1px solid var(--line);
 }
+thead th[data-sort] { cursor: pointer; }
+thead th[data-sort]:focus-visible { outline: 2px solid var(--accent); outline-offset: -3px; }
 thead th.country, thead th.rank { text-align: left; }
 thead th:hover { color: var(--text); }
 thead th.sorted-asc::after { content: " ▲"; color: var(--accent); }
@@ -292,4 +293,60 @@ tbody tr.top-row:hover { background: #224030; }
   .seg-title-short { display: inline; }
   .seg-sub { display: none; }
   .field--options { gap: 14px; }
+  .table-panel {
+    padding: 0;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+  }
+  .table-scroll { overflow: visible; }
+  table, tbody { display: block; }
+  thead { display: none; }
+  tbody {
+    display: grid;
+    gap: 10px;
+  }
+  tbody tr {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0;
+    overflow: hidden;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 11px;
+  }
+  tbody tr:hover { background: var(--panel); }
+  tbody tr.top-row, tbody tr.top-row:hover { background: #1c3326; }
+  tbody td {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    padding: 9px 12px;
+    text-align: left;
+    white-space: normal;
+    border-bottom: 1px solid #232c47;
+  }
+  tbody td::before {
+    content: attr(data-label);
+    color: var(--muted);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  tbody td.country {
+    grid-column: 1 / -1;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    border-bottom-color: var(--line);
+  }
+  tbody td.country::before { display: none; }
+  tbody td.rank { display: none; }
+  tbody td.empty {
+    display: block;
+    grid-column: 1 / -1;
+    text-align: center;
+  }
 }
