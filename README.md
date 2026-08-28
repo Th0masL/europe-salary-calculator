@@ -50,8 +50,8 @@ row shows `—`. The Formula source extends to €400,000 gross.
 
 | Source | What | Provides | Locations |
 |---|---|---|---|
-| **Consensus** *(default)* | Median of the eBook/Skuad/Deel vendor sources, dropping outliers | cost + net | superset (47) |
-| **Formula** | Computed from each country's **published 2026 tax rates** (`tools/calc/*.py`, no vendor) | cost + net | 36 European + 11 US |
+| **Formula** *(default)* | Computed from published tax rates (`tools/calc/*.py`, no vendor) | cost + net | 36 European + 11 US |
+| **Consensus** | Median of the eBook/Skuad/Deel vendor sources, dropping outliers | cost + net | superset (47) |
 | **2025 eBook** | Boundless' *“Understanding Employment Costs in Europe in 2025”* (fixed study) | cost + net | 36 EU + 5 US |
 | **Skuad** | API behind Boundless' [online calculator](https://boundlesshq.com/cost-calculator/) | cost + net | 35 EU (no Slovenia) + 5 US |
 | **Deel** | Deel's [employee-cost](https://www.deel.com/employee-cost-calculator/) + [take-home](https://www.deel.com/take-home-pay-calculator/) calculators (EOR fee removed) | cost + net | 36 EU + 6 US (per-state) |
@@ -162,7 +162,7 @@ data/
   deel.json  / .js           # Deel live-API snapshot (cost + net)
   rippling.json / .js        # Rippling live-API snapshot (employer cost only)
   us.json    / .js           # US: direct calc from published rates (11 cities, no EOR)
-  consensus.json / .js       # merged sources, used as the default
+  consensus.json / .js       # merged vendor/direct-calculation comparison source
   formula.json   / .js       # per-country calc from published rates (build_formula.py)
 tools/
   calc/                      # Formula source: one module per country + engine.py

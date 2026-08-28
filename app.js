@@ -16,7 +16,9 @@
     deel: { label: "Deel (live)", data: window.SALARY_DATA_DEEL },
     formula: { label: "Formula", data: window.SALARY_DATA_FORMULA },
   };
-  var DEFAULT_SOURCE = ["consensus", "ebook", "skuad", "deel", "formula"]
+  // Formula is the preferred source: it is derived directly from published tax
+  // rules and covers the full salary range. Fall back gracefully if it is absent.
+  var DEFAULT_SOURCE = ["formula", "consensus", "ebook", "skuad", "deel"]
     .find(function (s) { return SOURCES[s].data; });
   if (!DEFAULT_SOURCE) {
     document.getElementById("resultsBody").innerHTML =
@@ -386,11 +388,15 @@
     document.querySelectorAll(".src").forEach(function (b) {
       b.setAttribute("aria-checked", b.dataset.source === source ? "true" : "false");
     });
+    document.getElementById("sourceSelect").value = source;
     render();
   }
 
   document.querySelectorAll(".src").forEach(function (btn) {
     btn.addEventListener("click", function () { setSource(btn.dataset.source); });
+  });
+  document.getElementById("sourceSelect").addEventListener("change", function (e) {
+    setSource(e.target.value);
   });
 
   amountInput.addEventListener("input", function () {
@@ -443,5 +449,9 @@
     if (!SOURCES[b.dataset.source].data) b.setAttribute("disabled", "");
     b.setAttribute("aria-checked", b.dataset.source === state.source ? "true" : "false");
   });
+  document.querySelectorAll("#sourceSelect option").forEach(function (option) {
+    if (!SOURCES[option.value].data) option.disabled = true;
+  });
+  document.getElementById("sourceSelect").value = state.source;
   setMode(state.mode);
 })();

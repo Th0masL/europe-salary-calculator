@@ -24,16 +24,19 @@
       <div class="field field--mode">
         <label class="field-label">I want to fix the…</label>
         <div class="segmented" role="radiogroup" aria-label="Input mode">
-          <button class="seg" data-mode="cost" role="radio" aria-checked="true">
+          <button class="seg" data-mode="cost" role="radio" aria-checked="true" aria-label="Employer budget">
             <span class="seg-title">Employer budget</span>
+            <span class="seg-title-short" aria-hidden="true">Budget</span>
             <span class="seg-sub">total cost to company</span>
           </button>
-          <button class="seg" data-mode="gross" role="radio" aria-checked="false">
+          <button class="seg" data-mode="gross" role="radio" aria-checked="false" aria-label="Gross salary">
             <span class="seg-title">Gross salary</span>
+            <span class="seg-title-short" aria-hidden="true">Gross</span>
             <span class="seg-sub">on the contract</span>
           </button>
-          <button class="seg" data-mode="net" role="radio" aria-checked="false">
+          <button class="seg" data-mode="net" role="radio" aria-checked="false" aria-label="Net pay">
             <span class="seg-title">Net pay</span>
+            <span class="seg-title-short" aria-hidden="true">Net</span>
             <span class="seg-sub">take-home target</span>
           </button>
         </div>
@@ -52,12 +55,22 @@
       <div class="field field--options">
         <div class="source" role="radiogroup" aria-label="Data source" title="Which dataset to use">
           <span class="source-label">Data:</span>
-          <button class="src" data-source="consensus" role="radio" aria-checked="true">Consensus</button>
+          <button class="src" data-source="consensus" role="radio" aria-checked="false">Consensus</button>
           <button class="src" data-source="ebook" role="radio" aria-checked="false">2025 eBook</button>
           <button class="src" data-source="skuad" role="radio" aria-checked="false">Skuad</button>
           <button class="src" data-source="deel" role="radio" aria-checked="false">Deel</button>
-          <button class="src" data-source="formula" role="radio" aria-checked="false">Formula</button>
+          <button class="src" data-source="formula" role="radio" aria-checked="true">Formula</button>
         </div>
+        <label class="source-select-label" for="sourceSelect">
+          <span>Data source</span>
+          <select id="sourceSelect">
+            <option value="formula" selected>Formula</option>
+            <option value="consensus">Consensus</option>
+            <option value="ebook">2025 eBook</option>
+            <option value="skuad">Skuad</option>
+            <option value="deel">Deel</option>
+          </select>
+        </label>
         <label class="toggle">
           <input type="checkbox" id="euOnly" />
           <span>EU members only</span>
@@ -102,7 +115,9 @@
       </p>
       <p>
         <strong>Five data sources</strong> (switch with the <em>Data</em> toggle):
-        <strong>Consensus</strong> (default) — per location and metric, the median
+        <strong>Formula</strong> (default) — direct estimates from published tax
+        rates in the country modules under <code>tools/calc/</code>.
+        <strong>Consensus</strong> — per location and metric, the median
         of the sources after discarding any value &gt;10% from the median of the
         others; the most-aligned, outlier-resistant estimate. Employer cost also
         folds in <a href="https://www.rippling.com/en-GB/employee-cost-calculator">Rippling</a>
@@ -116,9 +131,8 @@
         <a href="https://www.deel.com/employee-cost-calculator/">employee-cost</a>
         and <a href="https://www.deel.com/take-home-pay-calculator/">take-home</a>
         calculators (its EOR management fee removed from the cost).
-        <strong>Formula</strong> — direct estimates from published tax rates in
-        the country modules under <code>tools/calc/</code>. These sources use
-        different methodologies and can disagree — comparing them is the point.
+        These sources use different methodologies and can disagree — comparing
+        them is the point.
         Skuad and Deel are stored snapshots of live calculators, fetched on the date
         shown under the headline. (Two other calculators were evaluated and
         <strong>not used</strong>: <em>Remote.com</em> — employer cost wildly off
