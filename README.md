@@ -3,6 +3,8 @@
 A simple static web page to compare **take-home pay** and the **real cost of
 employment** for a salary across **36 European countries** and **11 US cities**.
 
+👉 **Live:** https://th0masl.github.io/europe-salary-calculator/
+
 It answers questions like:
 
 - **“My employer will spend €100,000 total on me — where do I take home the most?”**
@@ -15,7 +17,7 @@ It answers questions like:
 - **“I want €50,000 net — which country is cheapest for my employer?”**
   Pick *Net pay* and sort by employer cost.
 
-## Run it
+## Run locally
 
 It's a dependency-free static site — just open it:
 
