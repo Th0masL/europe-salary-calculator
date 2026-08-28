@@ -34,7 +34,7 @@ jobs:
       - name: Assemble site
         run: |
           mkdir -p _site/data
-          cp index.html styles.css app.js _site/
+          cp index.html tokens.css styles.css app.js _site/
           cp data/*.js _site/data/
           # Cache-bust: append ?v=<short-sha> to local js/css refs so every deploy
           # invalidates the browser/CDN cache (no more stale app.js after a release).
