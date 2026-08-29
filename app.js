@@ -9,6 +9,65 @@
 (function () {
   "use strict";
 
+  var root = document.documentElement;
+  var themeMeta = document.querySelector('meta[name="theme-color"]');
+  var themeButtons = document.querySelectorAll('button[data-theme-choice]');
+  var media = window.matchMedia('(prefers-color-scheme: dark)');
+  var storageKey = 'europe-salary-theme';
+
+  function savedTheme() {
+    try {
+      var saved = localStorage.getItem(storageKey);
+      return saved === 'light' || saved === 'dark' ? saved : 'system';
+    } catch (error) {
+      return 'system';
+    }
+  }
+
+  function persistTheme(choice) {
+    try {
+      if (choice === 'system') localStorage.removeItem(storageKey);
+      else localStorage.setItem(storageKey, choice);
+    } catch (error) {}
+  }
+
+  function applyTheme(choice, persist) {
+    if (choice !== 'light' && choice !== 'dark') choice = 'system';
+
+    if (choice === 'system') root.removeAttribute('data-theme');
+    else root.setAttribute('data-theme', choice);
+    root.setAttribute('data-theme-choice', choice);
+
+    var resolved = choice === 'system' ? (media.matches ? 'dark' : 'light') : choice;
+    root.style.colorScheme = resolved;
+    var background = getComputedStyle(root).getPropertyValue('--color-bg').trim();
+    if (background) themeMeta.setAttribute('content', background);
+
+    Array.prototype.forEach.call(themeButtons, function (button) {
+      button.setAttribute('aria-pressed', String(button.getAttribute('data-theme-choice') === choice));
+    });
+
+    if (persist) persistTheme(choice);
+  }
+
+  Array.prototype.forEach.call(themeButtons, function (button) {
+    button.addEventListener('click', function () {
+      applyTheme(button.getAttribute('data-theme-choice'), true);
+    });
+  });
+
+  function systemThemeChanged() {
+    if (root.getAttribute('data-theme-choice') === 'system') applyTheme('system', false);
+  }
+  if (media.addEventListener) media.addEventListener('change', systemThemeChanged);
+  else if (media.addListener) media.addListener(systemThemeChanged);
+
+  applyTheme(root.getAttribute('data-theme-choice') || savedTheme(), false);
+}());
+
+(function () {
+  "use strict";
+
   var SOURCES = {
     consensus: { label: "Consensus", data: window.SALARY_DATA_CONSENSUS },
     ebook: { label: "2025 eBook", data: window.SALARY_DATA_EBOOK },

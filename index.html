@@ -1,10 +1,32 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Europe Salary Calculator — compare net pay & employment cost</title>
   <meta name="description" content="Compare take-home pay and total employer cost of a salary across 36 European countries and 11 US cities." />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#f6f8fb" />
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var themeMeta = document.querySelector('meta[name="theme-color"]');
+      var media = window.matchMedia('(prefers-color-scheme: dark)');
+      var choice = 'system';
+      try {
+        var saved = localStorage.getItem('europe-salary-theme');
+        if (saved === 'light' || saved === 'dark') choice = saved;
+      } catch (error) {}
+
+      if (choice === 'system') root.removeAttribute('data-theme');
+      else root.setAttribute('data-theme', choice);
+      root.setAttribute('data-theme-choice', choice);
+
+      var resolved = choice === 'system' ? (media.matches ? 'dark' : 'light') : choice;
+      root.style.colorScheme = resolved;
+      themeMeta.setAttribute('content', resolved === 'dark' ? '#0f1320' : '#f6f8fb');
+    }());
+  </script>
   <link rel="stylesheet" href="tokens.css" />
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -16,6 +38,11 @@
         Compare take-home pay and the real cost of employment across
         <strong>36 European countries</strong> and <strong>11 US cities</strong>.
       </p>
+      <div class="theme-control" role="group" aria-label="Color theme">
+        <button type="button" data-theme-choice="light" aria-pressed="false">Light</button>
+        <button type="button" data-theme-choice="system" aria-pressed="true">System</button>
+        <button type="button" data-theme-choice="dark" aria-pressed="false">Dark</button>
+      </div>
     </div>
   </header>
 
@@ -71,15 +98,17 @@
             <option value="deel">Deel</option>
           </select>
         </label>
-        <label class="toggle">
-          <input type="checkbox" id="euOnly" />
-          <span>EU members only</span>
-        </label>
-        <label class="toggle">
-          <input type="checkbox" id="showMonthly" />
-          <span>Display results monthly</span>
-        </label>
-        <input id="search" class="search" type="search" placeholder="Filter country…" autocomplete="off" />
+        <div class="scope-options" role="group" aria-label="Result options">
+          <label class="toggle">
+            <input type="checkbox" id="euOnly" />
+            <span>EU members only</span>
+          </label>
+          <label class="toggle">
+            <input type="checkbox" id="showMonthly" />
+            <span>Display results monthly</span>
+          </label>
+        </div>
+        <input id="search" class="search" type="search" placeholder="Filter country…" aria-label="Filter results by country" autocomplete="off" />
       </div>
     </section>
 
