@@ -277,7 +277,15 @@ tbody tr.top-row td.country { box-shadow: inset 3px 0 0 var(--color-primary); }
 .cname { font-weight: 560; }
 .eu-tag, .us-tag { font-size: 0.64rem; border: 1px solid var(--color-border); border-radius: var(--radius-sm); padding: 1px 5px; }
 .eu-tag { color: var(--color-primary); }
-.us-tag { color: #d98cff; border-color: #50406e; }
+.us-tag {
+  /* Jurisdiction color, not an interface/status token. Keep it legible in light mode. */
+  color: #6d28d9;
+  border-color: currentColor;
+}
+:root[data-theme="dark"] .us-tag { color: #d98cff; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .us-tag { color: #d98cff; }
+}
 .approx { color: var(--color-warning); cursor: help; font-weight: 700; }
 
 .val-strong { font-weight: 680; color: var(--color-text); }
