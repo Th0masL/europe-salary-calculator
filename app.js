@@ -3,8 +3,8 @@
  * Each country exposes data points {gross, cost, net}, all monotonically
  * increasing together. Given any one of the three values we interpolate the
  * other two: find the bracketing segment on the chosen axis, compute the
- * fraction t, and linearly interpolate every field. Outside a source's measured
- * range we return null (the row shows "—") rather than extrapolating.
+ * fraction t, and linearly interpolate every field. Outside the generated
+ * Formula range we return null (the row shows "—") rather than extrapolating.
  */
 (function () {
   "use strict";
@@ -68,25 +68,11 @@
 (function () {
   "use strict";
 
-  var SOURCES = {
-    consensus: { label: "Consensus", data: window.SALARY_DATA_CONSENSUS },
-    ebook: { label: "2025 eBook", data: window.SALARY_DATA_EBOOK },
-    skuad: { label: "Skuad (live)", data: window.SALARY_DATA_SKUAD },
-    deel: { label: "Deel (live)", data: window.SALARY_DATA_DEEL },
-    formula: { label: "Formula", data: window.SALARY_DATA_FORMULA },
-  };
-  // Formula is the preferred source: it is derived directly from published tax
-  // rules and covers the full salary range. Fall back gracefully if it is absent.
-  var DEFAULT_SOURCE = ["formula", "consensus", "ebook", "skuad", "deel"]
-    .find(function (s) { return SOURCES[s].data; });
-  if (!DEFAULT_SOURCE) {
+  var DATA = window.SALARY_DATA_FORMULA;
+  if (!DATA) {
     document.getElementById("resultsBody").innerHTML =
-      '<tr><td colspan="8" class="empty">Could not load any data files (data/*.js)</td></tr>';
+      '<tr><td colspan="8" class="empty">Could not load the Formula data file (data/formula.js)</td></tr>';
     return;
-  }
-
-  function currentData() {
-    return (SOURCES[state.source] && SOURCES[state.source].data) || SOURCES[DEFAULT_SOURCE].data;
   }
 
   // Cost-of-living override (current Numbeo data, refreshed by tools/fetch_numbeo.py).
@@ -99,29 +85,13 @@
       .replace(/</g, "&lt;").replace(/>/g, "&gt;");
   }
 
-  // Metadata (flag, EU/US, cost of living) by country name, from the richest
-  // source. Lean fetchers (Deel) only carry {name, points}, so we backfill.
+  // Metadata (flag, EU/US, cost of living) by country name.
   var META = {};
-  ["ebook", "consensus", "skuad", "deel", "formula"].forEach(function (s) {
-    if (!SOURCES[s].data) return;
-    SOURCES[s].data.countries.forEach(function (c) {
-      if (!META[c.name]) META[c.name] = c;
-    });
+  DATA.countries.forEach(function (c) {
+    META[c.name] = c;
   });
 
-  // Canonical, ordered list of every location across all sources. The table
-  // always shows this full list; a source that lacks a location renders it with
-  // "—" (so e.g. the Formula source shows only Estonia + US filled in).
-  var MASTER = [];
-  (function () {
-    var seen = {};
-    ["consensus", "ebook", "skuad", "deel", "formula"].forEach(function (s) {
-      if (!SOURCES[s].data) return;
-      SOURCES[s].data.countries.forEach(function (c) {
-        if (!seen[c.name]) { seen[c.name] = 1; MASTER.push(c.name); }
-      });
-    });
-  })();
+  var MASTER = DATA.countries.map(function (c) { return c.name; });
 
   var MODES = {
     cost: { label: "Total employer budget (per year)", noun: "employer budget", best: "highest take-home" },
@@ -131,7 +101,6 @@
   var PRESETS = [50000, 75000, 100000, 150000, 200000];
 
   var state = {
-    source: DEFAULT_SOURCE,
     mode: "cost",
     amount: 100000,
     euOnly: false,
@@ -144,7 +113,6 @@
   // Hydrate from the URL query so views are shareable/bookmarkable.
   (function readURL() {
     var q = new URLSearchParams(location.search);
-    if (SOURCES[q.get("source")] && SOURCES[q.get("source")].data) state.source = q.get("source");
     if (MODES[q.get("mode")]) state.mode = q.get("mode");
     var amt = parseFloat(q.get("amount"));
     if (!isNaN(amt) && amt > 0) state.amount = amt;
@@ -154,7 +122,6 @@
 
   function writeURL() {
     var q = new URLSearchParams();
-    q.set("source", state.source);
     q.set("mode", state.mode);
     q.set("amount", String(Math.round(state.amount)));
     if (state.euOnly) q.set("eu", "1");
@@ -167,16 +134,15 @@
   function lerp(a, b, t) { return a + (b - a) * t; }
 
   // Solve a country for a given axis value. axis is "cost" | "gross" | "net".
-  // Some sources (Deel) may lack a metric for a few countries, so we only use
-  // points that carry the axis we're solving on, and only interpolate the other
-  // metrics where both endpoints provide them. Returns null if not solvable.
+  // Only use points that carry the axis we're solving on, and interpolate the
+  // other metrics where both endpoints provide them. Returns null if not solvable.
   function solve(country, axis, value) {
     var pts = country.points.filter(function (p) { return p[axis] != null; });
     var n = pts.length;
     if (n < 2) return null;
     var lo = pts[0][axis], hi = pts[n - 1][axis];
-    // Don't extrapolate beyond what this source actually measured — return null so the
-    // row shows "—" (e.g. vendor sources stop ~€150k; only the Formula goes higher).
+    // Don't extrapolate beyond the generated Formula range; return null so the
+    // row shows "—".
     if (value < lo || value > hi) return null;
     var i, t;
 
@@ -221,7 +187,7 @@
 
   function compute() {
     var byName = {};
-    currentData().countries.forEach(function (c) { byName[c.name] = c; });
+    DATA.countries.forEach(function (c) { byName[c.name] = c; });
 
     var rows = MASTER
       .filter(function (name) {
@@ -242,11 +208,11 @@
           eu: c.eu != null ? c.eu : m.eu,
           us: !!(c.us || m.us), approx: !!c.approx,
           costOfLiving: col,
-          costNote: c.costNote || null,   // employer-cost breakdown (Formula source only)
+          costNote: c.costNote || null,
         };
         var s = byName[name] ? solve(c, state.mode, state.amount) : null;
         if (!s) {
-          // this source has no data for this location → a "—" row
+          // This amount falls outside the generated range → a "—" row.
           base.cost = base.gross = base.net = null;
           base.netRatio = base.costPerNet = base.surplus = null;
           return base;
@@ -287,8 +253,8 @@
           ? '<span class="approx" title="Single-benchmark estimate: one US data point, converted from USD (1 EUR = 1.13 USD) and modelled at a flat rate. Least precise away from ~€100k.">≈</span> ' : "";
         var tag = r.eu ? '<span class="eu-tag">EU</span>'
           : r.us ? '<span class="us-tag">US</span>' : "";
-        // Employer-cost cell: if this source carries a breakdown (Formula), show it
-        // on hover so the number is auditable line-by-line.
+        // Show the Formula employer-cost breakdown on hover so the number is
+        // auditable line-by-line.
         var costCell = money(r.cost);
         if (r.costNote && r.cost != null) {
           // each " + " component on its own line (&#10; = newline)
@@ -317,10 +283,10 @@
     writeURL();
   }
 
-  // Largest value of the current axis this source actually measured (annual).
-  function sourceMax() {
+  // Largest value of the current axis generated by the Formula model (annual).
+  function formulaMax() {
     var m = 0;
-    currentData().countries.forEach(function (c) {
+    DATA.countries.forEach(function (c) {
       c.points.forEach(function (p) {
         if (p[state.mode] != null && p[state.mode] > m) m = p[state.mode];
       });
@@ -330,15 +296,12 @@
 
   function renderSummary(rows) {
     var el = document.getElementById("summary");
-    var srcMax = sourceMax();
-    if (srcMax && state.amount > srcMax) {
+    var max = formulaMax();
+    if (max && state.amount > max) {
       var per0 = state.monthly ? " / month" : " / year";
-      var more = state.source !== "formula"
-        ? ' Switch to the <strong>Formula</strong> source for higher salaries.'
-        : "";
-      el.innerHTML = '<div class="card"><span class="lead">' + SOURCES[state.source].label +
-        " only covers up to <b>" + money(srcMax) + "</b>" + per0 + ", so there's no data at <b>" +
-        money(state.amount) + "</b>." + more + "</span></div>";
+      el.innerHTML = '<div class="card"><span class="lead">Formula data only covers up to <b>' +
+        money(max) + "</b>" + per0 + ", so there's no data at <b>" +
+        money(state.amount) + "</b>.</span></div>";
       return;
     }
     if (!rows.length) { el.innerHTML = ""; return; }
@@ -372,35 +335,16 @@
         ' <span class="muted">(gross ' + money(best.gross) + ").</span>";
     }
     el.innerHTML = '<div class="card"><span class="lead">' + html + "</span>" +
-      '<span class="src-note">' + sourceNote() + "</span></div>";
+      '<span class="method-note">' + formulaNote() + "</span></div>";
   }
 
-  function sourceNote() {
-    var meta = currentData().meta || {};
+  function formulaNote() {
+    var meta = DATA.meta || {};
     var when = meta.fetched ? " · fetched " + meta.fetched : "";
-    if (state.source === "consensus") {
-      var dates = meta.sourceDates || {};
-      var vendorDate = dates.deel || dates.skuad;
-      var dateNote = vendorDate ? " · vendor snapshots " + vendorDate : "";
-      if (dates.us) dateNote += " · US calc " + dates.us;
-      return "Source: Consensus — Europe: median of eBook + Skuad + Deel (outliers dropped); " +
-        "US: direct 2025 calc from published rates (no EOR)" + dateNote + ".";
-    }
-    if (state.source === "skuad") {
-      return "Source: Skuad live calculator" + when +
-        " · 35 European countries (Slovenia n/a) + 5 US cities (blog-based).";
-    }
-    if (state.source === "deel") {
-      return "Source: Deel live calculators" + when +
-        " · cost from employee-cost tool (EOR fee removed), net from take-home tool.";
-    }
-    if (state.source === "formula") {
-      var fx = meta.fxAsOf ? " · non-euro rows converted at FX rates from " + meta.fxAsOf : "";
-      var usUpdate = meta.usUpdated ? " · US refreshed " + meta.usUpdated : "";
-      return "Source: Formula — computed from each country's published tax rates (no vendor)" +
-        when + fx + usUpdate + " · Europe uses 2026 rules; US cities use 2025 rules.";
-    }
-    return "Source: Boundless 2025 eBook · 36 European countries + 5 US cities.";
+    var fx = meta.fxAsOf ? " · non-euro rows converted at FX rates from " + meta.fxAsOf : "";
+    var usUpdate = meta.usUpdated ? " · US refreshed " + meta.usUpdated : "";
+    return "Source: Formula — computed from each country's published tax rates (no vendor)" +
+      when + fx + usUpdate + " · Europe uses 2026 rules; US cities use 2025 rules.";
   }
 
   function syncSortIndicators() {
@@ -445,25 +389,6 @@
     btn.addEventListener("click", function () { setMode(btn.dataset.mode); });
   });
 
-  function setSource(source) {
-    if (!SOURCES[source] || !SOURCES[source].data) return;
-    state.source = source;
-    document.querySelectorAll(".src").forEach(function (b) {
-      var selected = b.dataset.source === source;
-      b.setAttribute("aria-checked", selected ? "true" : "false");
-      b.tabIndex = selected ? 0 : -1;
-    });
-    document.getElementById("sourceSelect").value = source;
-    render();
-  }
-
-  document.querySelectorAll(".src").forEach(function (btn) {
-    btn.addEventListener("click", function () { setSource(btn.dataset.source); });
-  });
-  document.getElementById("sourceSelect").addEventListener("change", function (e) {
-    setSource(e.target.value);
-  });
-
   function wireRadioKeys(selector, dataKey, activate) {
     document.querySelectorAll(selector).forEach(function (button) {
       button.addEventListener("keydown", function (e) {
@@ -487,7 +412,6 @@
     });
   }
   wireRadioKeys(".seg", "mode", setMode);
-  wireRadioKeys(".src", "source", setSource);
 
   amountInput.addEventListener("input", function () {
     state.amount = parseAmount(amountInput.value);
@@ -541,16 +465,5 @@
   amountInput.value = plainNum(state.amount);
   document.getElementById("euOnly").checked = state.euOnly;
   document.getElementById("showMonthly").checked = state.monthly;
-  // disable a source button if its data file failed to load
-  document.querySelectorAll(".src").forEach(function (b) {
-    if (!SOURCES[b.dataset.source].data) b.setAttribute("disabled", "");
-    var selected = b.dataset.source === state.source;
-    b.setAttribute("aria-checked", selected ? "true" : "false");
-    b.tabIndex = selected ? 0 : -1;
-  });
-  document.querySelectorAll("#sourceSelect option").forEach(function (option) {
-    if (!SOURCES[option.value].data) option.disabled = true;
-  });
-  document.getElementById("sourceSelect").value = state.source;
   setMode(state.mode);
 })();

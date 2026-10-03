@@ -4,9 +4,8 @@ Build the "formula" dataset from the per-country calculators in tools/calc/ and
 write data/formula.json + data/formula.js.
 
 Each tools/calc/<country>.py module is a self-contained calculation from that
-country's published tax rates (no third-party API). This dataset is an
-independent ground truth: use it to validate the API sources
-(tools/compare_sources.py) or, where it's solid, to replace them in the consensus.
+country's published tax rates (no third-party API). This is the canonical dataset
+used by the website.
 
 Add a country by dropping a new file in tools/calc/ — it's picked up automatically.
 
@@ -24,7 +23,32 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 CALC_DIR = ROOT / "tools" / "calc"
 FX_URL = "https://open.er-api.com/v6/latest/EUR"
-SALARY_POINTS = list(range(20000, 400001, 10000))  # 20k..400k EUR, 10k step (39 points)
+SALARY_POINTS = list(range(20000, 600001, 5000))  # 20k..600k EUR, 5k step (117 points)
+
+COUNTRY_CODES = {
+    "Albania": "AL", "Austria": "AT", "Belgium": "BE", "Bulgaria": "BG",
+    "Croatia": "HR", "Cyprus": "CY", "Czech Republic": "CZ", "Denmark": "DK",
+    "Estonia": "EE", "Finland": "FI", "France": "FR", "Germany": "DE",
+    "Greece": "GR", "Hungary": "HU", "Ireland": "IE", "Italy": "IT",
+    "Latvia": "LV", "Lithuania": "LT", "Luxembourg": "LU", "Malta": "MT",
+    "Moldova": "MD", "Montenegro": "ME", "Netherlands": "NL", "Norway": "NO",
+    "Poland": "PL", "Portugal": "PT", "Romania": "RO", "Serbia": "RS",
+    "Slovakia": "SK", "Slovenia": "SI", "Spain": "ES", "Sweden": "SE",
+    "Switzerland": "CH", "Turkey": "TR", "Ukraine": "UA", "United Kingdom": "GB",
+}
+EU_COUNTRIES = {
+    "Austria", "Belgium", "Bulgaria", "Croatia", "Cyprus", "Czech Republic",
+    "Denmark", "Estonia", "Finland", "France", "Germany", "Greece", "Hungary",
+    "Ireland", "Italy", "Latvia", "Lithuania", "Luxembourg", "Malta",
+    "Netherlands", "Poland", "Portugal", "Romania", "Slovakia", "Slovenia",
+    "Spain", "Sweden",
+}
+
+
+def country_flag(country):
+    """Return the regional-indicator flag for a canonical country name."""
+    code = COUNTRY_CODES[country]
+    return "".join(chr(0x1F1E6 + ord(letter) - ord("A")) for letter in code)
 
 
 def load_country_modules():
@@ -76,6 +100,14 @@ def us_entries():
     return entries
 
 
+def us_updated():
+    """Return the refresh date recorded by the generated US dataset."""
+    us_path = ROOT / "data" / "us.json"
+    if not us_path.exists():
+        return None
+    return json.loads(us_path.read_text(encoding="utf-8")).get("meta", {}).get("fetched")
+
+
 def write_doc(doc):
     (ROOT / "data").mkdir(exist_ok=True)
     with open(ROOT / "data" / "formula.json", "w", encoding="utf-8") as f:
@@ -96,7 +128,7 @@ def main():
         entries = us_entries()
         doc["countries"] = [c for c in doc["countries"] if not c.get("us")] + entries
         doc["meta"]["usYear"] = entries[0].get("year") if entries else None
-        doc["meta"]["usUpdated"] = datetime.date.today().isoformat()
+        doc["meta"]["usUpdated"] = us_updated()
         write_doc(doc)
         print(f"Wrote data/formula.json + .js with {len(entries)} refreshed US cities.")
         return
@@ -125,7 +157,13 @@ def main():
             points.append({"gross": gross_eur,
                            "cost": round(cost_loc / rate),
                            "net": round(net_loc / rate)})
-        entry = {"name": m.NAME, "year": getattr(m, "YEAR", None), "points": points}
+        entry = {
+            "name": m.NAME,
+            "year": getattr(m, "YEAR", None),
+            "flag": country_flag(m.NAME),
+            "eu": m.NAME in EU_COUNTRIES,
+            "points": points,
+        }
         breakdown = getattr(m, "EMPLOYER_BREAKDOWN", None)
         if breakdown:
             entry["costNote"] = breakdown
@@ -149,6 +187,7 @@ def main():
             "fetched": datetime.date.today().isoformat(),
             "fxAsOf": fx_as_of(fx) if fx else None,
             "usYear": us_cities[0].get("year") if us_cities else None,
+            "usUpdated": us_updated() if us_cities else None,
             "provides": ["gross", "cost", "net"],
             "salaryPoints": SALARY_POINTS,
             "note": ("Independent ground truth from published rates. Single filer, no "

@@ -7,7 +7,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parent.parent
-DATASETS = ("ebook", "skuad", "deel", "consensus", "formula", "us")
+DATASETS = ("formula", "us")
 AXES = ("gross", "cost", "net")
 
 

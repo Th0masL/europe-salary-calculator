@@ -35,7 +35,7 @@ jobs:
         run: |
           mkdir -p _site/data
           cp index.html tokens.css styles.css app.js _site/
-          cp data/*.js _site/data/
+          cp data/cost_of_living.js data/formula.js _site/data/
           # Cache-bust: append ?v=<short-sha> to local js/css refs so every deploy
           # invalidates the browser/CDN cache (no more stale app.js after a release).
           # [^":] keeps it to relative paths — external https:// URLs are left alone.

@@ -24,5 +24,7 @@ jobs:
         run: python -m unittest discover -s tests -v
       - name: Validate generated datasets
         run: python tools/validate_data.py
+      - name: Check generated calculation documentation
+        run: python tools/generate_calculation_docs.py --check
       - name: Check browser JavaScript syntax
         run: node --check app.js

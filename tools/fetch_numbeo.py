@@ -3,7 +3,7 @@
 Refresh annual cost-of-living estimates from current Numbeo data and write
 data/cost_of_living.json + data/cost_of_living.js.
 
-Method (matches Boundless/Numbeo): for a single person in a 1-bedroom city-centre
+Method: for a single person in a 1-bedroom city-centre
 apartment, annual cost = (single-person monthly costs excl. rent + 1-bed
 city-centre rent) x 12, in EUR.
 
@@ -117,15 +117,11 @@ def parse(page):
 
 
 def baseline():
-    """Existing cost-of-living values (eBook countries + US cities) as fallback."""
-    out = {}
-    for fn in ("ebook.json", "us.json"):
-        p = ROOT / "data" / fn
-        if p.exists():
-            for c in json.loads(p.read_text(encoding="utf-8"))["countries"]:
-                if c.get("costOfLiving"):
-                    out.setdefault(c["name"], c["costOfLiving"])
-    return out
+    """Return the current canonical values as a fallback for failed refreshes."""
+    path = ROOT / "data" / "cost_of_living.json"
+    if not path.exists():
+        return {}
+    return json.loads(path.read_text(encoding="utf-8")).get("costOfLiving", {})
 
 
 OUT_JSON = ROOT / "data" / "cost_of_living.json"
