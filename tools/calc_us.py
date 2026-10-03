@@ -3,8 +3,8 @@
 Compute US employment cost + net pay directly from published 2025
 rates — NO reliance on EOR/payroll vendors. Writes data/us.json + data/us.js.
 
-Covers the 5 cities we track (state-level): Seattle/WA, San Francisco/CA,
-New York/NY (incl. NYC local tax), Austin/TX, Atlanta/GA.
+Covers the 11 cities tracked by the website. Most are state-level calculations;
+New York includes NYC resident tax and Denver includes its local occupational tax.
 
 Assumptions (the same simplifications every paycheck calculator makes):
   * single filer, standard deduction, no dependents/credits/itemizing
@@ -29,7 +29,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 FX_URL = "https://api.frankfurter.app/latest?from=EUR&to=USD"
 UA = "Mozilla/5.0 (salary-calculator)"
-SALARY_POINTS = list(range(20000, 400001, 10000))  # 20k..400k EUR, 10k step (39 points)
+SALARY_POINTS = list(range(20000, 600001, 5000))  # 20k..600k EUR, 5k step (117 points)
 
 # ---- 2025 federal -----------------------------------------------------------
 FED_STD_DEDUCTION = 15750  # finalized 2025 amount after P.L. 119-21
@@ -110,8 +110,8 @@ STATES = {
 
 # our city labels -> (state, annual cost of living EUR for a single person =
 # Numbeo "single person monthly costs excl. rent" + "1-bed apartment city centre"
-# rent, x12). The first five match the eBook (Boundless/Numbeo); Miami is from
-# Numbeo directly (numbeo.com/cost-of-living/in/Miami): $1,455 + $2,821/mo.
+# rent, x12). These are baked fallbacks; the live cost_of_living.json map is what
+# the app actually displays.
 CITIES = [
     ("Seattle, WA", "Washington", 40522),
     ("San Francisco, CA", "California", 50802),
@@ -119,9 +119,6 @@ CITIES = [
     ("Austin, TX", "Texas", 35197),
     ("Atlanta, GA", "Georgia", 33187),
     ("Miami, FL", "Florida", 44800),
-    # These five from fetch_numbeo.py (single + avg city-centre/outside rent). The
-    # live cost_of_living.json map is what the app actually displays; these are the
-    # baked fallback.
     ("Chicago, IL", "Illinois", 34980),
     ("Los Angeles, CA", "California", 40615),
     ("Boston, MA", "Massachusetts", 47256),
@@ -226,21 +223,6 @@ def main():
                     "costOfLiving": col, "points": points})
         p60 = next(p for p in points if p["gross"] == 60000)
         print(f"  {label}: cost@60k €{p60['cost']}, net@60k €{p60['net']}")
-
-    # self-check against Deel's independent per-state numbers, if present
-    deel_path = ROOT / "data" / "deel.json"
-    if deel_path.exists():
-        deel = {c["name"]: c["points"] for c in
-                json.loads(deel_path.read_text(encoding="utf-8"))["countries"]}
-        print("\n  validation vs Deel (net @ €60k / €150k):")
-        for c in out:
-            dp = {p["gross"]: p for p in deel.get(c["name"], [])}
-            mp = {p["gross"]: p for p in c["points"]}
-            diffs = []
-            for g in (60000, 150000):
-                if g in dp and g in mp and dp[g].get("net"):
-                    diffs.append(f"{(mp[g]['net'] - dp[g]['net']) / dp[g]['net'] * 100:+.1f}%")
-            print(f"    {c['name']:<20} {' / '.join(diffs) or 'n/a'}")
 
     doc = {
         "meta": {

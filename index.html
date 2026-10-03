@@ -80,24 +80,6 @@
       </div>
 
       <div class="field field--options">
-        <div class="source" role="radiogroup" aria-label="Data source" title="Which dataset to use">
-          <span class="source-label">Data:</span>
-          <button class="src" data-source="consensus" role="radio" aria-checked="false">Consensus</button>
-          <button class="src" data-source="ebook" role="radio" aria-checked="false">2025 eBook</button>
-          <button class="src" data-source="skuad" role="radio" aria-checked="false">Skuad</button>
-          <button class="src" data-source="deel" role="radio" aria-checked="false">Deel</button>
-          <button class="src" data-source="formula" role="radio" aria-checked="true">Formula</button>
-        </div>
-        <label class="source-select-label" for="sourceSelect">
-          <span>Data source</span>
-          <select id="sourceSelect">
-            <option value="formula" selected>Formula</option>
-            <option value="consensus">Consensus</option>
-            <option value="ebook">2025 eBook</option>
-            <option value="skuad">Skuad</option>
-            <option value="deel">Deel</option>
-          </select>
-        </label>
         <div class="scope-options" role="group" aria-label="Result options">
           <label class="toggle">
             <input type="checkbox" id="euOnly" />
@@ -125,7 +107,7 @@
               <th class="num" data-sort="gross" title="Gross salary on the contract">Gross</th>
               <th class="num sorted-desc" data-sort="net" title="Employee take-home after taxes & contributions">Net<br>(take-home)</th>
               <th class="num" data-sort="netRatio" title="Share of total employer cost the employee actually takes home">You<br>keep</th>
-              <th class="num" data-sort="costPerNet" title="Total the employer pays for every €1 the employee takes home (Boundless 'Cost-to-Net Pay Ratio')">Cost per<br>€1 net</th>
+              <th class="num" data-sort="costPerNet" title="Total the employer pays for every €1 the employee takes home">Cost per<br>€1 net</th>
               <th class="num" data-sort="surplus" title="Net pay minus estimated local cost of living (single person, capital)">After<br>living costs</th>
             </tr>
           </thead>
@@ -143,51 +125,27 @@
         the rest.
       </p>
       <p>
-        <strong>Five data sources</strong> (switch with the <em>Data</em> toggle):
-        <strong>Formula</strong> (default) — direct estimates from published tax
-        rates in the country modules under <code>tools/calc/</code>.
-        <strong>Consensus</strong> — per location and metric, the median
-        of the sources after discarding any value &gt;10% from the median of the
-        others; the most-aligned, outlier-resistant estimate. Employer cost also
-        folds in <a href="https://www.rippling.com/en-GB/employee-cost-calculator">Rippling</a>
-        (a cost-only source, accurate where the others drift).
-        <strong>2025 eBook</strong> — Boundless'
-        <em>“Understanding Employment Costs in Europe in 2025”</em>, a fixed
-        snapshot at €32k/€60k/€150k.
-        <strong>Skuad</strong> — the engine behind Boundless'
-        <a href="https://boundlesshq.com/cost-calculator/">online calculator</a>.
-        <strong>Deel</strong> — Deel's
-        <a href="https://www.deel.com/employee-cost-calculator/">employee-cost</a>
-        and <a href="https://www.deel.com/take-home-pay-calculator/">take-home</a>
-        calculators (its EOR management fee removed from the cost).
-        These sources use different methodologies and can disagree — comparing
-        them is the point.
-        Skuad and Deel are stored snapshots of live calculators, fetched on the date
-        shown under the headline. (Two other calculators were evaluated and
-        <strong>not used</strong>: <em>Remote.com</em> — employer cost wildly off
-        for ~14 countries; and <em>Papaya Global</em> — its data is stale, from
-        tax years 2021-2023.)
+        <strong>Formula model.</strong> Results are computed from published tax
+        rates in the country modules under <code>tools/calc/</code>, with no EOR
+        vendor calculator in the live calculation. The generated dataset samples
+        every €5,000 of gross salary from €20,000 through €600,000.
+        <a href="https://github.com/Th0masL/europe-salary-calculator/tree/main/docs/calculations">Read the country-by-country calculation reference</a>.
       </p>
       <p>
         <strong>US cities</strong> (🇺🇸) are state-level — 11 of them (Seattle→WA,
         San Francisco→CA, New York→NY, Austin→TX, Atlanta→GA, Miami→FL, Chicago→IL,
         Los Angeles→CA, Boston→MA, Washington→DC, Denver→CO).
-        <strong>Consensus</strong> uses a <strong>direct calculation from published rates</strong>
-        — 2025 federal brackets, FICA (with the Social Security cap), and state tax
-        incl. NYC local tax — with <em>no EOR vendor involved</em>. It's validated
-        against Deel's independent per-state figures (agree to &lt;1% everywhere
-        except NYC, which differs only because we include the local tax Deel omits). <strong>Deel</strong> shows its
-        own per-state calc. <strong>2025 eBook</strong> and <strong>Skuad</strong>
-        fall back to a single-benchmark blog estimate (one USD point, flat rate),
-        marked <span class="approx">≈</span> and rougher. Employer cost for the US is
-        small (~8–10% on top of gross — mostly FICA) versus ~50%+ in much of Europe.
-        Cost of living stays city-specific.
+        Their Formula results use 2025 federal brackets, FICA (with the Social
+        Security cap), and state tax including NYC local tax, with no EOR vendor
+        involved. Employer cost for the US is small (~8–10% on top of gross —
+        mostly FICA) versus ~50%+ in much of Europe. Cost of living stays
+        city-specific.
       </p>
       <p class="disclaimer">
         Figures are <strong>estimates for comparison only</strong> — they ignore
         personal allowances, marital status, regional taxes, benefits and
         bonuses, and currency fluctuations. European Formula rows use 2026 rules;
-        US Formula/Consensus rows currently use 2025 rules. Do not use them as
+        US Formula rows currently use 2025 rules. Do not use them as
         precise payroll or budgeting figures. “After living costs” subtracts the estimated annual cost
         of living for a single person (capital city for countries, the city itself
         for US entries).
@@ -197,15 +155,11 @@
 
   <footer class="site-footer">
     <div class="wrap">
-      <span>Data: Boundless eBook (2025) · Cost of living: Numbeo · Dev salaries: TalentUp</span>
+      <span>Salary calculations: published tax rates · Cost of living: Numbeo</span>
     </div>
   </footer>
 
   <script src="data/cost_of_living.js"></script>
-  <script src="data/consensus.js"></script>
-  <script src="data/ebook.js"></script>
-  <script src="data/skuad.js"></script>
-  <script src="data/deel.js"></script>
   <script src="data/formula.js"></script>
   <script src="app.js"></script>
 </body>

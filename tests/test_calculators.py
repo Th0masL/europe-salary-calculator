@@ -1,7 +1,9 @@
 """Structural regression tests for the formula calculators and data pipeline."""
 
 import importlib
+import json
 import math
+import re
 import sys
 import unittest
 from pathlib import Path
@@ -12,7 +14,6 @@ CALC_DIR = ROOT / "tools" / "calc"
 sys.path.insert(0, str(CALC_DIR))
 sys.path.insert(0, str(ROOT / "tools"))
 
-from build_consensus import enforce_monotonic  # noqa: E402
 from engine import progressive  # noqa: E402
 from validate_data import DATASETS, validate_dataset  # noqa: E402
 
@@ -23,13 +24,6 @@ class EngineTests(unittest.TestCase):
         self.assertEqual(progressive(5_000, brackets), 500)
         self.assertEqual(progressive(15_000, brackets), 2_000)
         self.assertEqual(progressive(30_000, brackets), 6_000)
-
-    def test_isotonic_pooling_is_minimal_and_monotonic(self):
-        points = [{"net": 10}, {"net": 20}, {"net": 16}, {"net": 30}]
-        self.assertTrue(enforce_monotonic(points, "net"))
-        self.assertEqual([point["net"] for point in points], [10, 18, 18, 30])
-        self.assertFalse(enforce_monotonic(points, "net"))
-
 
 class CountryModuleTests(unittest.TestCase):
     @classmethod
@@ -73,11 +67,60 @@ class CountryModuleTests(unittest.TestCase):
 
 
 class GeneratedDataTests(unittest.TestCase):
+    def test_formula_range_and_5k_resolution(self):
+        for dataset in ("formula", "us"):
+            with self.subTest(dataset=dataset):
+                path = ROOT / "data" / f"{dataset}.json"
+                doc = json.loads(path.read_text(encoding="utf-8"))
+                self.assertEqual(doc["meta"]["salaryPoints"], list(range(20_000, 600_001, 5_000)))
+                for country in doc["countries"]:
+                    self.assertEqual(country["points"][0]["gross"], 20_000)
+                    self.assertEqual(country["points"][-1]["gross"], 600_000)
+
+    def test_formula_covers_200k_net_for_every_european_location(self):
+        path = ROOT / "data" / "formula.json"
+        doc = json.loads(path.read_text(encoding="utf-8"))
+        for country in doc["countries"]:
+            if country.get("us"):
+                continue
+            with self.subTest(country=country["name"]):
+                nets = [point["net"] for point in country["points"]]
+                self.assertLessEqual(nets[0], 200_000)
+                self.assertGreaterEqual(nets[-1], 200_000)
+
+    def test_formula_carries_its_own_location_metadata(self):
+        path = ROOT / "data" / "formula.json"
+        doc = json.loads(path.read_text(encoding="utf-8"))
+        european = [country for country in doc["countries"] if not country.get("us")]
+        self.assertEqual(len(european), 36)
+        self.assertEqual(sum(country.get("eu") is True for country in european), 27)
+        for country in doc["countries"]:
+            with self.subTest(country=country["name"]):
+                self.assertTrue(country.get("flag"))
+                if not country.get("us"):
+                    self.assertIsInstance(country.get("eu"), bool)
+
     def test_all_generated_datasets(self):
         errors = []
         for dataset in DATASETS:
             errors.extend(validate_dataset(dataset))
         self.assertEqual(errors, [], "\n".join(errors))
+
+
+class SiteConfigurationTests(unittest.TestCase):
+    def test_live_calculator_loads_formula_only(self):
+        index = (ROOT / "index.html").read_text(encoding="utf-8")
+        app = (ROOT / "app.js").read_text(encoding="utf-8")
+        deploy = (ROOT / ".github" / "workflows" / "deploy.yml").read_text(encoding="utf-8")
+
+        self.assertIn('src="data/formula.js"', index)
+        self.assertIn("window.SALARY_DATA_FORMULA", app)
+        self.assertIn("cp data/cost_of_living.js data/formula.js _site/data/", deploy)
+        self.assertNotIn("cp data/*.js _site/data/", deploy)
+        self.assertEqual(
+            re.findall(r'<script src="(data/[^"]+\.js)"', index),
+            ["data/cost_of_living.js", "data/formula.js"],
+        )
 
 
 if __name__ == "__main__":
