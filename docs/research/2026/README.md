@@ -16,13 +16,13 @@ or certified.
 | Denmark | [Dossier complete](denmark.md) | Pending | Pending | Pending |
 | Estonia | Pending | Pending | Pending | Pending |
 | Finland | [Dossier complete](finland.md) | Pending | Pending | Pending |
-| France | Pending | Pending | Pending | Pending |
+| France | [Dossier complete](france.md) | Pending | Pending | Pending |
 | Germany | Pending | Pending | Pending | Pending |
 | Greece | Pending | Pending | Pending | Pending |
 | Hungary | Pending | Pending | Pending | Pending |
 | Ireland | Pending | Pending | Pending | Pending |
-| Italy | Pending | Pending | Pending | Pending |
-| Latvia | Pending | Pending | Pending | Pending |
+| Italy | Researching | Pending | Pending | Pending |
+| Latvia | [Dossier complete](latvia.md) | Pending | Pending | Pending |
 | Lithuania | Pending | Pending | Pending | Pending |
 | Luxembourg | Pending | Pending | Pending | Pending |
 | Malta | Pending | Pending | Pending | Pending |
@@ -36,9 +36,9 @@ or certified.
 | Serbia | Pending | Pending | Pending | Pending |
 | Slovakia | Pending | Pending | Pending | Pending |
 | Slovenia | Pending | Pending | Pending | Pending |
-| Spain | Pending | Pending | Pending | Pending |
-| Sweden | Pending | Pending | Pending | Pending |
-| Switzerland | Pending | Pending | Pending | Pending |
+| Spain | [Dossier complete](spain.md) | Pending | Pending | Pending |
+| Sweden | Researching | Pending | Pending | Pending |
+| Switzerland | Researching | Pending | Pending | Pending |
 | Turkey | Pending | Pending | Pending | Pending |
 | United Kingdom | Pending | Pending | Pending | Pending |
 | Ukraine | Pending | Pending | Pending | Pending |

@@ -64,9 +64,11 @@ For the assumed employee, the ordinary annual PIT base starts with gross employm
 
 The PIT law's Section 3 defines taxable income as gross income reduced by eligible expenses, the annual/monthly non-taxable minimum, and allowances. Section 10 lists compulsory social contributions among eligible expenses. Section 10(1.10) requires the reported social-contribution deduction to be reduced by the part of solidarity tax transferred to the PIT distribution account.
 
-The operational annual-declaration instructions confirm both sides of this treatment: employee VSAOI on the employment schedule is reduced by the solidarity amount allocated to PIT, while that allocated amount is also reported as PIT paid in advance. See Cabinet Regulation No. 662, [“Noteikumi par iedzīvotāju ienākuma nodokļa deklarācijām un to aizpildīšanas kārtību”](https://likumi.lv/ta/id/302688-noteikumi-par-iedzivotaju-ienakuma-nodokla-deklaracijam-un-to-aizpildisanas-kartibu) (“Rules on personal income tax declarations and completion”), consolidated text applicable in 2026, instructions for form D: the social-contribution/eligible-expense computation subtracts the solidarity-tax PIT allocation, and the tax-prepayment line adds that allocation to PIT paid in advance.
+The operational annual-declaration instructions confirm both sides of this treatment: employee VSAOI on the employment schedule is reduced by the solidarity amount allocated to PIT, while that allocated amount is also reported as PIT paid in advance. See Cabinet Regulation No. 662, [“Noteikumi par iedzīvotāju ienākuma nodokļa deklarācijām un to aizpildīšanas kārtību”](https://likumi.lv/ta/id/302688-noteikumi-par-iedzivotaju-ienakuma-nodokla-deklaracijam-un-to-aizpildisanas-kartibu) (“Rules on personal income tax declarations and completion”), adopted 2018-10-30, effective 2018-11-03, current consolidation effective 2025-10-24 and applicable to 2026; points 39.6–39.7 and form D lines 6, 7, and 23 subtract the solidarity PIT allocation from the VSAOI deduction and add the same amount to PIT paid in advance.
 
 This adjustment is essential above €105,300. Deducting the full 10.5% employee cash withholding *and* crediting the 10% solidarity allocation as PIT would double-count the same excess-income amount.
+
+The deductions are allocated to the lower-rate income first, rather than shifting the progressive threshold downward. Section 3(2.4) of the PIT law directs deductions to income up to the social maximum and only carries them into excess income if the lower portion is insufficient. A particularly strong computational cross-check is Cabinet Regulation No. 790, [“Grozījumi Ministru kabineta 2010. gada 21. septembra noteikumos Nr. 899 ‘Likuma ‘Par iedzīvotāju ienākuma nodokli’ normu piemērošanas kārtība’”](https://likumi.lv/ta/id/365322) (“Amendments to Cabinet Regulation No. 899”), adopted 2025-12-16, published 2025-12-22, effective 2025-12-23. Annex 4.5's €120,000 example assigns the entire €14,700 gross excess to the 33% band and obtains the €88,050 lower-band base after employee VSAOI, the solidarity adjustment, and the annual minimum. Its displayed parenthetical sign is typographically ambiguous, but the stated €88,050 result unambiguously equals `€105,300 − (€12,600 − €1,470) − €6,120`.
 
 ## 2. Mandatory state social insurance contributions (VSAOI)
 
@@ -88,7 +90,7 @@ Official support:
 - VID, [“Valsts sociālās apdrošināšanas obligāto iemaksu likmes”](https://www.vid.gov.lv/lv/valsts-socialas-apdrosinasanas-obligato-iemaksu-likmes) (“Mandatory state social-insurance contribution rates”), updated 2026-09-02: the 2026 ordinary all-risks row repeats 34.09%, 23.59%, and 10.50%.
 - VID, [“Mandatory State Social Insurance Contributions”](https://www.vid.gov.lv/en/mandatory-state-social-insurance-contributions), current 2026 English overview: standard-rate split and contribution-base explanation.
 
-The rates vary for pension-age employees and other special insurance statuses. Those variants are outside the assumptions and must not be treated as universal.
+VSAA's same page states that employees are socially insured from age 15. The standard all-risks row used here is for an employee who has not reached the age giving entitlement to the state old-age pension (including early retirement). Rates are lower/differently composed for a pension-age employee and certain other insured statuses; those variants are outside the assumptions and must not be treated as universal. The exact pension-age determination is therefore an input/status test, not a universal hard-coded age in this dossier.
 
 ### 2.2 Maximum contribution object and collection above it
 
@@ -158,8 +160,12 @@ Let:
 - `SP = 10% × E` = solidarity-tax amount allocated as PIT advance;
 - `D = S_cash − SP` = employee social deduction allowed in the annual PIT calculation;
 - `M = €6,600` = annual non-taxable minimum;
-- `T = max(G − D − M, 0)` = ordinary annual PIT taxable base;
-- `P = 25.5% × min(T, C) + 33% × max(T − C, 0)` = ordinary annual PIT;
+- `Q = D + M` = deductions allocated first to the gross-income portion at or below `C`;
+- `L = max(min(G, C) − Q, 0)` = 25.5% PIT base;
+- `R = max(Q − min(G, C), 0)` = any deductions left after exhausting the lower portion;
+- `H = max(E − R, 0)` = 33% PIT base;
+- `T = L + H` = total ordinary PIT taxable base;
+- `P = 25.5% × L + 33% × H` = ordinary annual PIT;
 - `X = 3% × max(G − €200,000, 0)` = additional annual tax;
 - `W = 25.5% × max(G − S_cash − M, 0)` = twelve months of regular payroll PIT withholding under the stated assumptions; and
 - `B = P + X − W − SP` = annual return balance, positive if payable and negative if refundable.
@@ -181,18 +187,18 @@ No separate employer payroll tax was found for an ordinary private-sector employ
 
 ### 6.1 Employee annual calculation
 
-| Gross G | Employee social cash 10.5% | Excess E | Solidarity PIT advance SP (10% E) | Deductible social D | PIT base T | Ordinary PIT P | Extra 3% X | Payroll PIT W | Annual balance B | Final employee net |
+| Gross G | Employee social cash 10.5% | Excess E | Solidarity PIT advance SP (10% E) | Deductible social D | PIT bases L / H | Ordinary PIT P | Extra 3% X | Payroll PIT W | Annual balance B | Final employee net |
 |---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| €20,000.00 | €2,100.00 | €0.00 | €0.00 | €2,100.00 | €11,300.00 | €2,881.50 | €0.00 | €2,881.50 | €0.00 | €15,018.50 |
-| €60,000.00 | €6,300.00 | €0.00 | €0.00 | €6,300.00 | €47,100.00 | €12,010.50 | €0.00 | €12,010.50 | €0.00 | €41,689.50 |
-| €100,000.00 | €10,500.00 | €0.00 | €0.00 | €10,500.00 | €82,900.00 | €21,139.50 | €0.00 | €21,139.50 | €0.00 | €68,360.50 |
-| €200,000.00 | €21,000.00 | €94,700.00 | €9,470.00 | €11,530.00 | €181,870.00 | €52,119.60 | €0.00 | €43,962.00 | **−€1,312.40 refund** | €136,350.40 |
-| €600,000.00 | €63,000.00 | €494,700.00 | €49,470.00 | €13,530.00 | €579,870.00 | €183,459.60 | €12,000.00 | €135,252.00 | **€10,737.60 payable** | €391,010.40 |
+| €20,000.00 | €2,100.00 | €0.00 | €0.00 | €2,100.00 | €11,300.00 / €0.00 | €2,881.50 | €0.00 | €2,881.50 | €0.00 | €15,018.50 |
+| €60,000.00 | €6,300.00 | €0.00 | €0.00 | €6,300.00 | €47,100.00 / €0.00 | €12,010.50 | €0.00 | €12,010.50 | €0.00 | €41,689.50 |
+| €100,000.00 | €10,500.00 | €0.00 | €0.00 | €10,500.00 | €82,900.00 / €0.00 | €21,139.50 | €0.00 | €21,139.50 | €0.00 | €68,360.50 |
+| €200,000.00 | €21,000.00 | €94,700.00 | €9,470.00 | €11,530.00 | €87,170.00 / €94,700.00 | €53,479.35 | €0.00 | €43,962.00 | **€47.35 payable** | €134,990.65 |
+| €600,000.00 | €63,000.00 | €494,700.00 | €49,470.00 | €13,530.00 | €85,170.00 / €494,700.00 | €184,969.35 | €12,000.00 | €135,252.00 | **€12,247.35 payable** | €389,500.65 |
 
 Checks on the two high-income rows:
 
-- At €200,000: `D = €21,000 − €9,470 = €11,530`; `T = €200,000 − €11,530 − €6,600 = €181,870`; `P = 25.5% × €105,300 + 33% × €76,570 = €52,119.60`; advances are `€43,962 + €9,470`, producing a €1,312.40 refund.
-- At €600,000: `D = €63,000 − €49,470 = €13,530`; `T = €579,870`; `P = €26,851.50 + 33% × €474,570 = €183,459.60`; `X = 3% × €400,000 = €12,000`; advances are `€135,252 + €49,470`, leaving €10,737.60 payable.
+- At €200,000: `D = €21,000 − €9,470 = €11,530`; lower-band base `L = €105,300 − €11,530 − €6,600 = €87,170`; upper-band base `H = €94,700`; `P = 25.5% × €87,170 + 33% × €94,700 = €53,479.35`; advances are `€43,962 + €9,470`, leaving €47.35 payable.
+- At €600,000: `D = €63,000 − €49,470 = €13,530`; `L = €105,300 − €13,530 − €6,600 = €85,170`; `H = €494,700`; `P = 25.5% × €85,170 + 33% × €494,700 = €184,969.35`; `X = 3% × €400,000 = €12,000`; advances are `€135,252 + €49,470`, leaving €12,247.35 payable.
 
 ### 6.2 Employer cash collection, reconciliation, and total cost
 
