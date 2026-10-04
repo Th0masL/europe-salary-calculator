@@ -6,7 +6,7 @@ or certified.
 
 | Country | Research | Code comparison | Integration | Independent review |
 |---|---|---|---|---|
-| Albania | Pending | Pending | Pending | Pending |
+| Albania | [Dossier complete](albania.md) | Pending | Pending | Pending |
 | Austria | [Dossier complete](austria.md) | Pending | Pending | Pending |
 | Belgium | [Dossier complete](belgium.md) | Pending | Pending | Pending |
 | Bulgaria | [Dossier complete](bulgaria.md) | Pending | Pending | Pending |
@@ -24,9 +24,9 @@ or certified.
 | Italy | [Dossier complete](italy.md) | Pending | Pending | Pending |
 | Latvia | [Dossier complete](latvia.md) | Pending | Pending | Pending |
 | Lithuania | [Dossier complete](lithuania.md) | Pending | Pending | Pending |
-| Luxembourg | Pending | Pending | Pending | Pending |
-| Malta | Researching | Pending | Pending | Pending |
-| Moldova | Pending | Pending | Pending | Pending |
+| Luxembourg | Researching | Pending | Pending | Pending |
+| Malta | [Dossier complete](malta.md) | Pending | Pending | Pending |
+| Moldova | Researching | Pending | Pending | Pending |
 | Montenegro | Pending | Pending | Pending | Pending |
 | Netherlands | [Dossier complete](netherlands.md) | Pending | Pending | Pending |
 | Norway | [Dossier complete](norway.md) | Pending | Pending | Pending |
@@ -39,6 +39,6 @@ or certified.
 | Spain | [Dossier complete](spain.md) | Pending | Pending | Pending |
 | Sweden | [Dossier complete](sweden.md) | Pending | Pending | Pending |
 | Switzerland | [Dossier complete](switzerland.md) | Pending | Pending | Pending |
-| Turkey | Researching | Pending | Pending | Pending |
-| United Kingdom | Researching | Pending | Pending | Pending |
-| Ukraine | Pending | Pending | Pending | Pending |
+| Turkey | [Dossier complete](turkey.md) | Pending | Pending | Pending |
+| United Kingdom | [Dossier complete](united-kingdom.md) | Pending | Pending | Pending |
+| Ukraine | Researching | Pending | Pending | Pending |
