@@ -10,8 +10,8 @@
 | Last independently reviewed | Not recorded |
 | Calculation currency | EUR |
 | Model | Single employee; see assumptions below |
-| Employer-cost summary | Social Security (TSU) 23.75% + Wage Guarantee Fund 1.0% + work-accident ~1.0% |
-| Formula fingerprint | `e7f6899ef963` |
+| Employer-cost summary | Social Security 23.75% (includes FGS financing) + estimated office work-accident insurance 1.0% |
+| Formula fingerprint | `55b8025b7f8b` |
 | Direct source links | Named in the model notes below; direct URLs have not yet been recorded. |
 
 ## Representative outputs
@@ -21,9 +21,9 @@ conversion where applicable. They are regression landmarks, not payroll quotes.
 
 | Annual gross | Employer cost | Take-home pay |
 |---:|---:|---:|
-| €60,000 | €75,450 | €38,025 |
-| €100,000 | €125,750 | €57,442 |
-| €200,000 | €251,500 | €101,497 |
+| €60,000 | €74,850 | €38,025 |
+| €100,000 | €124,750 | €57,442 |
+| €200,000 | €249,500 | €101,497 |
 
 ## Model notes and assumptions
 
@@ -34,8 +34,8 @@ Rates are 2026 (single private-sector employee, no dependents, mainland).
 Notes:
  - Employee Social Security is 11% of gross, no cap.
  - IRS taxable income = gross − the "specific deduction" for employment income,
-   which is max(€4,104, the employee SS paid). Above ~€37k gross the SS exceeds
-   €4,104, so in practice taxable = gross − SS. (Confirmed vs PwC / gov.pt; a
+   which is max(8.54 × IAS = €4,587.0902, the employee SS paid). Above ~€41.7k
+   gross the SS exceeds the floor, so in practice taxable = gross − SS. (A
    single person gets no extra personal credit. The EOR APIs cluster ~€3–5k lower
    on net because they skip this deduction and over-tax — our figure is realistic.)
  - IRS is progressive (2026 brackets), plus a "solidarity" surcharge: 2.5% on
@@ -44,13 +44,13 @@ Notes:
    that's payment TIMING — the annual gross total is unchanged, so the annual
    gross-to-net here is unaffected. We treat the entered figure as annual total.
 
-Employer side (verified): TSU 23.75% + Wage Guarantee Fund (FGS) 1.00% +
-work-accident insurance ~1.00% (occupation-dependent, configurable) = 25.75%.
-Verification confirmed the FGS is a SEPARATE charge, not folded into the TSU; the
-total matches the eBook/Rippling cluster (~25.5%).
+Employer side: the global 23.75% employer Social Security rate already finances
+the Wage Guarantee Fund (FGS); adding another 1% would double count it. Mandatory
+work-accident insurance is retained as an explicit 1% office-risk estimate because
+the actual commercial premium depends on occupation and insurer.
 
-Sources: PwC Portugal 2026 budget (IRS brackets, solidarity); TSU 23.75%/11%; FGS
-1.00% (separate).
+Sources: Portuguese Social Security, CIRS as amended by the 2026 State Budget,
+and the 2026 IAS ordinance.
 
 ## Implemented parameters
 
@@ -59,9 +59,8 @@ These values are copied mechanically from the live calculation module.
 ```python
 EMPLOYEE_SS = 0.11
 EMPLOYER_SS = 0.2375
-EMPLOYER_FGS = 0.01
 EMPLOYER_WORK_ACCIDENT = 0.01
-SPECIFIC_DEDUCTION = 4104
+SPECIFIC_DEDUCTION = 8.54 * 537.13
 TAX_BRACKETS = [
     (8342, 0.125), (12587, 0.157), (17838, 0.212), (23089, 0.241),
     (29397, 0.311), (43090, 0.349), (46566, 0.431), (86634, 0.446), (INF, 0.48),
@@ -83,7 +82,7 @@ def compute(gross):
                + 0.05 * max(0.0, taxable - 250000)
 
     net = gross - ss - irs - solidarity
-    employer_cost = gross * (1 + EMPLOYER_SS + EMPLOYER_FGS + EMPLOYER_WORK_ACCIDENT)
+    employer_cost = gross * (1 + EMPLOYER_SS + EMPLOYER_WORK_ACCIDENT)
     return employer_cost, net
 ```
 

@@ -6,6 +6,12 @@
 - Current implementation: `tools/calc/moldova.py`
 - Comparison date: 2026-10-04
 
+## Implementation update — 2026-10-04
+
+The nonexistent employee BASS charge was removed and the exemption eligibility
+test moved to pre-exemption income after AOAM with the strict statutory boundary.
+Both corrections have dossier-vector and boundary regression tests.
+
 ## Current implementation scenario
 
 Both artifacts model an ordinary private employer subject to 24% employer BASS and a resident employee subject to 9% AOAM and 12% PIT. The implementation additionally deducts a nonexistent 6% employee social contribution.

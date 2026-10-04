@@ -6,6 +6,13 @@
 - Current implementation: `tools/calc/lithuania.py`
 - Comparison date: 2026-10-04
 
+## Implementation update — 2026-10-04
+
+Annual NPD and the four employer components are implemented for an indefinite
+contract, accident class I, and no additional second-pillar contribution. The
+annual model stays within cents of the dossier; exact payslip sequencing and other
+risk classes still require additional inputs.
+
 ## Current implementation scenario
 
 Both artifacts model a resident employee not making an additional second-pillar contribution. The dossier selects accident class I (0.14%) and follows monthly contribution/PIT withholding plus annual PIT reconciliation.

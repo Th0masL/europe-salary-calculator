@@ -6,6 +6,11 @@
 - Current implementation: `tools/calc/turkey.py`
 - Comparison date: 2026-10-04
 
+## Implementation update — 2026-10-04
+
+The employer SGK rate was corrected to 21.75% and regression-tested against the
+TRY 5,000,000 dossier vector. The finding below is retained as audit history.
+
 ## Current implementation scenario
 
 Resident single employee, 12 equal pays, no employer incentives. Employee-side treatment matches the dossier.

@@ -10,8 +10,8 @@
 | Last independently reviewed | Not recorded |
 | Calculation currency | TRY |
 | Model | Single employee; see assumptions below |
-| Employer-cost summary | Social security (SGK) 20.75% + unemployment 2% (capped at TRY 297,270/mo) |
-| Formula fingerprint | `186714865945` |
+| Employer-cost summary | Social security (SGK) 21.75% + unemployment 2% (capped at TRY 297,270/mo) |
+| Formula fingerprint | `6c1ecaf341d7` |
 | Direct source links | Named in the model notes below; direct URLs have not yet been recorded. |
 
 ## Representative outputs
@@ -21,9 +21,9 @@ conversion where applicable. They are regression landmarks, not payroll quotes.
 
 | Annual gross | Employer cost | Take-home pay |
 |---:|---:|---:|
-| €60,000 | €73,650 | €36,645 |
-| €100,000 | €114,679 | €61,900 |
-| €200,000 | €214,679 | €121,418 |
+| €60,000 | €74,250 | €36,645 |
+| €100,000 | €115,323 | €61,900 |
+| €200,000 | €215,323 | €121,418 |
 
 ## Model notes and assumptions
 
@@ -39,7 +39,7 @@ EUR figures are FX-sensitive).
  - Minimum-wage exemption: since 2022 the income tax and stamp tax on the
    minimum-wage portion (= the SGK floor) are exempt for ALL employees — a fixed
    reduction that lifts every net.
- - Employer: SGK 20.75% + unemployment 2%, same capped base.
+ - Employer: SGK 21.75% + unemployment 2%, same capped base.
 
 Sources: PwC Turkey 2026 (15–40% brackets, deductible SGK, min-wage exemption);
 2026 SGK base TRY 33,030–297,270.
@@ -53,7 +53,7 @@ SGK_MIN = 33030 * 12
 SGK_MAX = 297270 * 12
 EE_SGK = 0.14
 EE_UNEMP = 0.01
-ER_SGK = 0.2075
+ER_SGK = 0.2175
 ER_UNEMP = 0.02
 STAMP = 0.00759
 PIT = [(190000, 0.15), (400000, 0.20), (1500000, 0.27),

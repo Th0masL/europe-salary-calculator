@@ -10,8 +10,8 @@
 | Last independently reviewed | Not recorded |
 | Calculation currency | UAH |
 | Model | Single employee; see assumptions below |
-| Employer-cost summary | Unified social contribution (USC) 22% (capped at 15× min wage) |
-| Formula fingerprint | `1e3c50bbac24` |
+| Employer-cost summary | Unified social contribution (USC) 22% (capped at 20× min wage/month; 12 equal pays) |
+| Formula fingerprint | `94615d8e0d69` |
 | Direct source links | Named in the model notes below; direct URLs have not yet been recorded. |
 
 ## Representative outputs
@@ -21,9 +21,9 @@ conversion where applicable. They are regression landmarks, not payroll quotes.
 
 | Annual gross | Employer cost | Take-home pay |
 |---:|---:|---:|
-| €60,000 | €66,767 | €46,200 |
-| €100,000 | €106,767 | €77,000 |
-| €200,000 | €206,767 | €154,000 |
+| €60,000 | €69,022 | €46,200 |
+| €100,000 | €109,022 | €77,000 |
+| €200,000 | €209,022 | €154,000 |
 
 ## Model notes and assumptions
 
@@ -32,12 +32,12 @@ Ukraine salary calculation — computed from published tax rates.
 Rates are 2026 (single). Currency UAH (FX path — needed for the USC cap).
  - Employee: 18% PIT + 5% military tax on gross, no general allowance and no cap —
    so net is a flat 77% of gross.
- - Employer: 22% unified social contribution (USC/ЄСВ) on gross, capped at 15× the
-   minimum wage per month (UAH 8,647 → UAH 129,705/mo). The cap sits at ~€34k/yr, so
+ - Employer: 22% unified social contribution (USC/ЄСВ) on gross, capped at 20× the
+   minimum wage per month (UAH 8,647 → UAH 172,940/mo). The cap sits at ~€45k/yr, so
    above that the employer USC is a flat cash amount and its % of gross falls.
 
-Sources: PwC Ukraine 2026 (18% PIT, 5% military tax, 22% USC, 15× min-wage cap with
-the 20× increase postponed for 2026).
+Sources: Ukraine 2026 Budget Act; State Tax Service (18% PIT, 5% military tax,
+22% USC, temporary 20× minimum-wage cap for 2026).
 
 ## Implemented parameters
 
@@ -45,7 +45,7 @@ These values are copied mechanically from the live calculation module.
 
 ```python
 MIN_WAGE = 8647
-USC_CAP = MIN_WAGE * 15 * 12
+MONTHLY_USC_CAP = MIN_WAGE * 20
 PIT = 0.18
 MILITARY = 0.05
 USC = 0.22
@@ -58,9 +58,11 @@ tax brackets use [`engine.progressive`](../../tools/calc/engine.py).
 
 ```python
 def compute(gross):
-    """Return (employer_cost, net) in UAH; build_formula converts to EUR."""
+    """Return (employer_cost, net) in UAH for 12 equal monthly payments."""
+    monthly_gross = gross / 12
+    usc_base = 12 * min(monthly_gross, MONTHLY_USC_CAP)
     net = gross * (1 - PIT - MILITARY)
-    employer_cost = gross + USC * min(gross, USC_CAP)
+    employer_cost = gross + USC * usc_base
     return employer_cost, net
 ```
 

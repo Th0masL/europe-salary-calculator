@@ -66,6 +66,93 @@ class CountryModuleTests(unittest.TestCase):
                 self.assertEqual(nets, sorted(nets))
 
 
+class CorrectedCountryRegressionTests(unittest.TestCase):
+    def assertAmountsAlmostEqual(self, actual, expected):
+        self.assertAlmostEqual(actual[0], expected[0], places=2)
+        self.assertAlmostEqual(actual[1], expected[1], places=2)
+
+    def test_turkey_unincentivised_employer_rate(self):
+        turkey = importlib.import_module("turkey")
+        self.assertAmountsAlmostEqual(
+            turkey.compute(5_000_000),
+            (5_847_219.50, 3_082_633.67),
+        )
+
+    def test_ukraine_temporary_2026_usc_cap(self):
+        ukraine = importlib.import_module("ukraine")
+        self.assertAmountsAlmostEqual(
+            ukraine.compute(3_000_000),
+            (3_456_561.60, 2_310_000.00),
+        )
+
+    def test_bulgaria_split_year_contribution_ceiling(self):
+        bulgaria = importlib.import_module("bulgaria")
+        expected_base = 7 * 2_111.64 + 5 * 2_300
+        cost, net = bulgaria.compute(60_000)
+        self.assertAlmostEqual(cost, 60_000 + expected_base * 0.1902, places=2)
+        employee = expected_base * 0.1378
+        self.assertAlmostEqual(net, 60_000 - employee - 0.10 * (60_000 - employee), places=2)
+
+    def test_portugal_2026_deduction_and_no_double_counted_fgs(self):
+        portugal = importlib.import_module("portugal")
+        self.assertAlmostEqual(portugal.SPECIFIC_DEDUCTION, 4_587.0902, places=4)
+        self.assertAlmostEqual(portugal.compute(60_000)[0], 74_850.00, places=2)
+
+    def test_moldova_employee_side_and_exemption_boundary(self):
+        moldova = importlib.import_module("moldova")
+        self.assertAmountsAlmostEqual(
+            moldova.compute(400_000),
+            (496_000.00, 320_320.00),
+        )
+        gross_at_limit = moldova.ALLOWANCE_CAP / (1 - moldova.EE_HEALTH)
+        _, net_below = moldova.compute(gross_at_limit - 0.01)
+        _, net_at = moldova.compute(gross_at_limit)
+        self.assertLess(net_at - net_below, -3_500)
+
+    def test_malta_total_gross_tax_and_basic_wage_contributions(self):
+        malta = importlib.import_module("malta")
+        vectors = {
+            20_000: (22_007.20, 16_451.04),
+            60_000: (62_995.72, 45_491.64),
+            100_000: (102_995.72, 71_491.64),
+        }
+        for gross, expected in vectors.items():
+            with self.subTest(gross=gross):
+                self.assertAmountsAlmostEqual(malta.compute(gross), expected)
+
+    def test_slovakia_income_dependent_allowance(self):
+        slovakia = importlib.import_module("slovakia")
+        cost, net = slovakia.compute(20_000)
+        self.assertAlmostEqual(cost, 27_239.57, delta=0.05)
+        self.assertAlmostEqual(net, 15_001.09, delta=0.02)
+
+    def test_lithuania_npd_and_employer_component_caps(self):
+        lithuania = importlib.import_module("lithuania")
+        vectors = {
+            20_000: (20_354.00, 13_288.74),
+            60_000: (61_062.00, 36_300.00),
+            200_000: (202_651.59, 118_544.05),
+        }
+        for gross, expected in vectors.items():
+            with self.subTest(gross=gross):
+                actual = lithuania.compute(gross)
+                self.assertAlmostEqual(actual[0], expected[0], delta=0.05)
+                self.assertAlmostEqual(actual[1], expected[1], delta=0.05)
+
+    def test_slovenia_deductible_contributions_and_regresses(self):
+        slovenia = importlib.import_module("slovenia")
+        vectors = {
+            20_000: (25_642.82, 13_414.44),
+            60_000: (72_482.82, 35_406.03),
+            200_000: (236_422.82, 94_904.78),
+        }
+        for gross, expected in vectors.items():
+            with self.subTest(gross=gross):
+                actual = slovenia.compute(gross)
+                self.assertAlmostEqual(actual[0], expected[0], places=2)
+                self.assertAlmostEqual(actual[1], expected[1], delta=0.01)
+
+
 class GeneratedDataTests(unittest.TestCase):
     def test_formula_range_and_5k_resolution(self):
         for dataset in ("formula", "us"):

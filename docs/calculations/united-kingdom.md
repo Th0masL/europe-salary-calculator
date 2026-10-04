@@ -21,9 +21,9 @@ conversion where applicable. They are regression landmarks, not payroll quotes.
 
 | Annual gross | Employer cost | Take-home pay |
 |---:|---:|---:|
-| €60,000 | €68,118 | €47,209 |
-| €100,000 | €114,118 | €70,409 |
-| €200,000 | €229,118 | €119,854 |
+| €60,000 | €68,119 | €47,207 |
+| €100,000 | €114,119 | €70,407 |
+| €200,000 | €229,119 | €119,852 |
 
 ## Model notes and assumptions
 

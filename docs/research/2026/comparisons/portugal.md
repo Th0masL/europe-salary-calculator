@@ -6,6 +6,12 @@
 - Current implementation: `tools/calc/portugal.py`
 - Comparison date: 2026-10-04
 
+## Implementation update — 2026-10-04
+
+The 8.54×IAS specific-deduction floor was implemented and the separately added
+FGS charge removed. The zero-invoice-credit/zero-municipal-benefit scenario and
+estimated 1% office accident premium remain explicitly documented assumptions.
+
 ## Current implementation scenario
 
 Single mainland employee; annual gross includes 14 payments. The module assumes no municipal give-back, no invoice credit, a separate 1% FGS charge, and a flat 1% accident premium.

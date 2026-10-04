@@ -6,6 +6,12 @@
 - Current implementation: `tools/calc/ukraine.py`
 - Comparison date: 2026-10-04
 
+## Implementation update — 2026-10-04
+
+The 20× monthly USC ceiling was implemented for the site's documented 12-equal-pay
+scenario and tested against the UAH 3,000,000 vector. Irregular bonus timing still
+requires payment-level inputs and remains an explicit product limitation.
+
 ## Current implementation scenario
 
 Ordinary non-disabled employee, 12 regular months. PIT and military levy are flat; employer USC is annualized from a monthly cap.

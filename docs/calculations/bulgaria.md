@@ -10,8 +10,8 @@
 | Last independently reviewed | Not recorded |
 | Calculation currency | EUR |
 | Model | Single employee; see assumptions below |
-| Employer-cost summary | Social security 13.72% + health 4.8% + accident ~0.5%, on base capped at €25,340 |
-| Formula fingerprint | `e607e2925d68` |
+| Employer-cost summary | Social security 13.72% + health 4.8% + office accident 0.5%, with split 2026 monthly caps |
+| Formula fingerprint | `df01c8b9ed32` |
 | Direct source links | Named in the model notes below; direct URLs have not yet been recorded. |
 
 ## Representative outputs
@@ -21,9 +21,9 @@ conversion where applicable. They are regression landmarks, not payroll quotes.
 
 | Annual gross | Employer cost | Take-home pay |
 |---:|---:|---:|
-| €60,000 | €64,820 | €50,857 |
-| €100,000 | €104,820 | €86,857 |
-| €200,000 | €204,820 | €176,857 |
+| €60,000 | €64,999 | €50,741 |
+| €100,000 | €104,999 | €86,741 |
+| €200,000 | €204,999 | €176,741 |
 
 ## Model notes and assumptions
 
@@ -34,9 +34,9 @@ Rates are 2026 (single private-sector employee). Bulgaria adopted the euro on
 
 Key features:
  - Social-security + health contributions are CAPPED at a low maximum insurable
-   income: €2,111.64/month = €25,339.68/yr. Above ~€25k all contributions stop
-   growing, so employer cost and the employee deduction are flat in cash terms —
-   that's why Bulgaria's employer-cost % falls sharply as salary rises.
+   income: €2,111.64/month from January through July and €2,300/month from August.
+   Above the ceiling, contributions stop growing, so employer cost and the employee
+   deduction are flat in cash terms.
  - Flat 10% income tax (no brackets, no personal allowance).
  - Tax base = gross − employee contributions; then 10%.
 
@@ -45,14 +45,15 @@ Rates (PwC 2026):
  - Employer: 13.72% social security + 4.80% health + accident 0.4–1.1% (capped).
    We use a representative office accident rate of 0.5% → 19.02% employer.
 
-Sources: PwC Bulgaria 2026 (rates + €2,111.64 max insurable income); NRA / NSSI.
+Sources: NRA / NSSI and Bulgaria's 2026 State Social Security Budget Act.
 
 ## Implemented parameters
 
 These values are copied mechanically from the live calculation module.
 
 ```python
-CONTRIB_CAP = 2111.64 * 12
+MONTHLY_CAP_JAN_JUL = 2111.64
+MONTHLY_CAP_AUG_DEC = 2300.00
 EMPLOYEE_RATE = 0.1058 + 0.0320
 EMPLOYER_RATE = 0.1372 + 0.0480 + 0.005
 INCOME_TAX = 0.10
@@ -65,8 +66,10 @@ tax brackets use [`engine.progressive`](../../tools/calc/engine.py).
 
 ```python
 def compute(gross):
-    """Return (employer_cost, net) for an annual gross salary, in EUR."""
-    base = min(gross, CONTRIB_CAP)
+    """Return (employer_cost, net) in EUR, assuming 12 equal monthly pays."""
+    monthly_gross = gross / 12
+    base = (7 * min(monthly_gross, MONTHLY_CAP_JAN_JUL)
+            + 5 * min(monthly_gross, MONTHLY_CAP_AUG_DEC))
     employee_contrib = base * EMPLOYEE_RATE
     taxable = gross - employee_contrib
     income_tax = taxable * INCOME_TAX

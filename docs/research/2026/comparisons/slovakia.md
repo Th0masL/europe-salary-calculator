@@ -6,6 +6,12 @@
 - Current implementation: `tools/calc/slovakia.py`
 - Comparison date: 2026-10-04
 
+## Implementation update — 2026-10-04
+
+The annual NČZD and monthly per-fund downward-cent contribution rounding are now
+implemented for 12 equal pays. DFT remains excluded as a variable employer-level
+banking cost that cannot be inferred from one employee's annual gross.
+
 ## Current implementation scenario
 
 Single ordinary employee, annualized regular salary. The module assumes the taxpayer allowance is zero for every supported salary and excludes employer financial-transaction tax.

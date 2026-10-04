@@ -6,6 +6,12 @@
 - Current implementation: `tools/calc/slovenia.py`
 - Comparison date: 2026-10-04
 
+## Implementation update — 2026-10-04
+
+LTC and split-year OZP now reduce the PIT base, the correct EUR 467.94 OZP is used,
+and the two full-year minimum regresses are included in employer cash cost. The
+below-range contribution-floor case remains unsupported by the annual input model.
+
 ## Current implementation scenario
 
 Single age-30 employee; salary-only cost. The module deducts ordinary 22.1% contributions for PIT but explicitly leaves LTC and OZP outside the PIT base deduction.

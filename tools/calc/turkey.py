@@ -10,7 +10,7 @@ EUR figures are FX-sensitive).
  - Minimum-wage exemption: since 2022 the income tax and stamp tax on the
    minimum-wage portion (= the SGK floor) are exempt for ALL employees — a fixed
    reduction that lifts every net.
- - Employer: SGK 20.75% + unemployment 2%, same capped base.
+ - Employer: SGK 21.75% + unemployment 2%, same capped base.
 
 Sources: PwC Turkey 2026 (15–40% brackets, deductible SGK, min-wage exemption);
 2026 SGK base TRY 33,030–297,270.
@@ -20,14 +20,14 @@ from engine import progressive
 NAME = "Turkey"
 CURRENCY = "TRY"
 YEAR = 2026
-EMPLOYER_BREAKDOWN = "Social security (SGK) 20.75% + unemployment 2% (capped at TRY 297,270/mo)"
+EMPLOYER_BREAKDOWN = "Social security (SGK) 21.75% + unemployment 2% (capped at TRY 297,270/mo)"
 INF = float("inf")
 
 SGK_MIN = 33030 * 12
 SGK_MAX = 297270 * 12
 EE_SGK = 0.14
 EE_UNEMP = 0.01
-ER_SGK = 0.2075
+ER_SGK = 0.2175
 ER_UNEMP = 0.02
 STAMP = 0.00759
 PIT = [(190000, 0.15), (400000, 0.20), (1500000, 0.27),

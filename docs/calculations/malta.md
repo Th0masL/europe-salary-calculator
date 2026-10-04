@@ -11,7 +11,7 @@
 | Calculation currency | EUR |
 | Model | Single employee; see assumptions below |
 | Employer-cost summary | Class 1 social security (capped ~€55.93/wk) + Maternity Fund 0.3% |
-| Formula fingerprint | `5195f05dc6c0` |
+| Formula fingerprint | `fded94e7a299` |
 | Direct source links | Named in the model notes below; direct URLs have not yet been recorded. |
 
 ## Representative outputs
@@ -21,9 +21,9 @@ conversion where applicable. They are regression landmarks, not payroll quotes.
 
 | Annual gross | Employer cost | Take-home pay |
 |---:|---:|---:|
-| €60,000 | €62,996 | €46,219 |
-| €100,000 | €102,996 | €72,510 |
-| €200,000 | €202,996 | €137,510 |
+| €60,000 | €62,996 | €45,492 |
+| €100,000 | €102,996 | €71,492 |
+| €200,000 | €202,996 | €136,492 |
 
 ## Model notes and assumptions
 
@@ -34,20 +34,15 @@ Rates are 2026 (single person).
 Two things that make Malta different from the % countries:
  - Social Security (Class 1) is **capped at a fixed weekly amount** (€55.93/week
    in 2026, ~€2,908/yr). Above ~€29k/yr it's a flat cash amount, not 10%.
- - Income tax is on **chargeable income = gross − employee SSC** (SSC IS
-   deductible). Verified against the official rates via PwC Tax Summaries /
-   Commissioner for Revenue: €60k gross → net €46,218.73. (An earlier version
-   here wrongly taxed the full gross because it had been "checked" against the
-   EOR APIs — which both under-deduct and agree with each other. Lesson logged.)
+ - Income tax is charged on total gross taxable emoluments. Employee SSC is a
+   separate payroll deduction and is not deducted from the PIT base.
    The €12,000 tax-free amount is the 0% band of the brackets, not a separate
    allowance on top.
 
-The employer also pays the Maternity Leave Trust Fund (0.3%). Its cap is unclear:
-the research's rate table says capped at €1.68/week (~€87/yr, same wage ceiling as
-SSC), but its worked example applied a flat 0.3% (€180 on €60k). We use the capped
-figure; the difference is < €100/yr. (Worth a quick re-verify.)
-Malta also has statutory bonuses (~€512/yr); like the other sources we treat the
-entered gross as the full annual figure and don't add them on top.
+The employer also pays the Maternity and Adoption Leave Trust contribution,
+0.3% of basic weekly wage capped at €1.68/week. Malta's €512.52 statutory bonuses
+are included in entered total annual gross, but excluded from the weekly SSC and
+Maternity contribution bases.
 
 Sources: Commissioner for Revenue (CfR) 2026 SSC + tax rates; PwC Tax Summaries.
 
@@ -61,6 +56,7 @@ SSC_RATE = 0.10
 SSC_CAP = 55.93 * WEEKS
 MATERNITY_RATE = 0.003
 MATERNITY_CAP = 1.68 * WEEKS
+STATUTORY_PAYMENTS = 512.52
 TAX_BRACKETS = [(12000, 0.0), (16000, 0.15), (60000, 0.25), (INF, 0.35)]
 ```
 
@@ -72,9 +68,13 @@ tax brackets use [`engine.progressive`](../../tools/calc/engine.py).
 ```python
 def compute(gross):
     """Return (employer_cost, net) for an annual gross salary, in EUR."""
-    ssc = min(SSC_RATE * gross, SSC_CAP)            # employee & employer each
-    maternity = min(MATERNITY_RATE * gross, MATERNITY_CAP)
-    income_tax = progressive(gross - ssc, TAX_BRACKETS)  # SSC is deductible (chargeable income)
+    annual_basic = max(0.0, gross - STATUTORY_PAYMENTS)
+    weekly_basic = annual_basic / WEEKS
+    weekly_ssc = min(round(SSC_RATE * weekly_basic, 2), SSC_CAP / WEEKS)
+    weekly_maternity = min(round(MATERNITY_RATE * weekly_basic, 2), MATERNITY_CAP / WEEKS)
+    ssc = weekly_ssc * WEEKS
+    maternity = weekly_maternity * WEEKS
+    income_tax = progressive(gross, TAX_BRACKETS)
 
     net = gross - ssc - income_tax
     employer_cost = gross + ssc + maternity

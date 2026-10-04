@@ -5,6 +5,12 @@
 - Dossier: `docs/research/2026/bulgaria.md` (official NRA/NSSI/legal sources, accessed 2026-10-04).
 - Implementation: `tools/calc/bulgaria.py`.
 
+## Implementation update — 2026-10-04
+
+The January–July and August–December ceilings are now calculated separately for
+12 equal pays and covered by a boundary-oriented regression test. The 0.5% office
+accident assumption remains a labeled scenario pending an activity-class input.
+
 ## Current implementation scenario
 
 EUR-denominated annual arithmetic, 13.78% employee and 18.52% employer core contributions, 0.5% office accident risk, and 10% PIT after employee contributions.

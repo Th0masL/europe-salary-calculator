@@ -6,6 +6,12 @@
 - Current implementation: `tools/calc/malta.py`
 - Comparison date: 2026-10-04
 
+## Implementation update — 2026-10-04
+
+PIT is now charged on total taxable gross, while weekly SSC and maternity charges
+use basic pay excluding the EUR 512.52 statutory payments. The total-gross input
+convention is documented and the dossier's EUR 20k/60k/100k vectors are tested.
+
 ## Current implementation scenario
 
 Annual gross is total taxable cash including the statutory €512.52 bonuses. The dossier treats those bonuses as non-basic pay for Class 1 SSC but as taxable emoluments for PIT; regular basic pay is spread over 52 weeks.

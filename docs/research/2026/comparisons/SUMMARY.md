@@ -12,6 +12,14 @@ Descriptive bullets in each file's **Matches** section are deliberately excluded
 
 The comparisons test the dossiers' stated resident/profile/location/payment scenarios. A scenario difference is not necessarily a code defect. Exact employer cost is particularly sensitive to sector, location, insurer, fund, collective agreement, employer size and employee elections. Where no universal amount exists, the sound output is a labeled statutory floor, range, or parameterized scenario—not a fabricated all-in percentage.
 
+## Implementation progress
+
+The first deterministic correction tranche was implemented on 2026-10-04 for
+**Bulgaria, Lithuania, Malta, Moldova, Portugal, Slovakia, Slovenia, Turkey, and
+Ukraine**. The country files record which historical findings are resolved and
+which scenario/product limitations remain. Finding totals below remain the audit
+baseline rather than being reduced whenever a fix lands.
+
 ## Verified findings totals
 
 There are **128 findings-table rows** across exactly **36 country files**.
@@ -94,21 +102,15 @@ Country-level maximum severity is Critical for 17 countries, High for 15, Medium
 
 The groups below are work streams, not a claim that every country belongs to only one conceptual category. Within each group, earlier items combine clearer authority with larger impact or smaller implementation risk.
 
-### 1. Obvious isolated corrections
+### 1. Deterministic corrections
 
-These should land first because they are tightly bounded and have authoritative expected values.
+The first tranche has landed for Turkey, Ukraine, Bulgaria, Portugal, Moldova,
+Malta, Slovakia, Lithuania, and Slovenia. Their comparison files document the
+remaining scenario limitations. The following bounded items still need work:
 
-1. **Turkey:** change unincentivized employer SGK from 20.75% to 21.75%.
-2. **Ukraine:** change the 2026 USC cap to 20 minimum wages and apply it monthly.
-3. **Bulgaria:** implement the August ceiling step.
-4. **Portugal:** update the specific deduction and remove the separately double-counted FGS.
-5. **Moldova:** remove the 6% employee BASS and correct the exemption boundary/base.
-6. **Malta:** stop deducting employee SSC from PIT; separate basic wage from statutory bonuses.
-7. **Croatia:** add the age-30 youth reduction behind an explicit eligibility input.
-8. **Slovakia and Lithuania:** add the sourced NČZD/NPD formulas.
-9. **Ireland:** add MyFutureFund and the October PRSI rate step under an explicit pay calendar.
-10. **Slovenia:** correct split-year OZP and PIT deductibility before adding employer regresses.
-11. **Germany, Czech Republic, Poland and UK:** implement authoritative rounding/period sequencing after substantive formulas are fixed.
+1. **Croatia:** add the age-30 youth reduction behind an explicit eligibility input.
+2. **Ireland:** add MyFutureFund and the October PRSI rate step under an explicit pay calendar.
+3. **Germany, Czech Republic, Poland and UK:** implement authoritative rounding/period sequencing after substantive formulas are fixed.
 
 ### 2. Material employee-net formula rebuilds
 

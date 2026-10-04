@@ -10,8 +10,8 @@
 | Last independently reviewed | Not recorded |
 | Calculation currency | EUR |
 | Model | Single employee; see assumptions below |
-| Employer-cost summary | Sodra 1.77% + Guarantee Fund 0.16% + Long-term Employment Fund 0.16% + accident ~0.4% |
-| Formula fingerprint | `575ae674d851` |
+| Employer-cost summary | Unemployment 1.31% + accident class I 0.14% (capped) + Guarantee and Long-term funds 0.16% each |
+| Formula fingerprint | `bc14c4db8de1` |
 | Direct source links | Named in the model notes below; direct URLs have not yet been recorded. |
 
 ## Representative outputs
@@ -21,9 +21,9 @@ conversion where applicable. They are regression landmarks, not payroll quotes.
 
 | Annual gross | Employer cost | Take-home pay |
 |---:|---:|---:|
-| €60,000 | €61,494 | €36,300 |
-| €100,000 | €102,490 | €59,662 |
-| €200,000 | €204,980 | €118,544 |
+| €60,000 | €61,062 | €36,300 |
+| €100,000 | €101,770 | €59,662 |
+| €200,000 | €202,652 | €118,544 |
 
 ## Model notes and assumptions
 
@@ -35,12 +35,12 @@ all contributions onto the EMPLOYEE, leaving a very low employer cost.
    (PSD) 6.98% (uncapped) = 19.5% below the ceiling.
  - Income tax (GPM): progressive 20% to 36 VDU (€83,237), 25% to 60 VDU (€138,729),
    32% above, on GROSS — Sodra/PSD are NOT deductible from the PIT base. (Confirmed
-   by eBook/Deel/Skuad all landing on €36,300 at €60k.) The non-taxable amount (NPD)
-   is ~€0 above ~€34k but ~€2.9k at €20k — not modelled, so net at €20–30k is
-   slightly understated (~€0.6k).
- - Employer: Sodra 1.77% (permanent) + Guarantee Fund 0.16% + Long-term Employment
-   Benefit Fund 0.16% + office accident ~0.4% ≈ 2.49% (cross-refs run a bit higher
-   on the accident class).
+   by eBook/Deel/Skuad all landing on €36,300 at €60k.) The annual non-taxable
+   amount (NPD) is reconciled from annual employment income and reaches zero near
+   €32.1k.
+ - Employer: indefinite-contract unemployment 1.31% + accident class I 0.14%,
+   both capped at 60 VDU, plus uncapped Guarantee Fund 0.16% and Long-term
+   Employment Benefit Fund 0.16%.
 
 The VSD ceiling (60 VDU = €138,729/yr, 2026: 60 × €2,312.15) is now modelled: above
 it VSD stops but PSD continues, so high salaries keep more — the €300k+ employee
@@ -56,8 +56,12 @@ These values are copied mechanically from the live calculation module.
 VSD = 0.1252
 PSD = 0.0698
 VSD_CAP = 138729
-ER_RATE = 0.0177 + 0.0016 + 0.0016 + 0.004
+ER_CAPPED_RATE = 0.0131 + 0.0014
+ER_UNCAPPED_RATE = 0.0016 + 0.0016
 BRACKETS = [(83237, 0.20), (138729, 0.25), (INF, 0.32)]
+NPD_MAX = 8964
+NPD_THRESHOLD = 13836
+NPD_PHASEOUT = 0.49
 ```
 
 ## Executable calculation
@@ -69,10 +73,15 @@ tax brackets use [`engine.progressive`](../../tools/calc/engine.py).
 def compute(gross):
     """Return (employer_cost, net) for an annual gross salary, in EUR."""
     employee = VSD * min(gross, VSD_CAP) + PSD * gross   # VSD capped, PSD uncapped
-    income_tax = progressive(gross, BRACKETS)            # GPM on GROSS; not deductible
+    if gross <= NPD_THRESHOLD:
+        npd = min(gross, NPD_MAX)
+    else:
+        npd = max(0.0, NPD_MAX - NPD_PHASEOUT * (gross - NPD_THRESHOLD))
+    income_tax = progressive(max(0.0, gross - npd), BRACKETS)
 
     net = gross - employee - income_tax
-    employer_cost = gross * (1 + ER_RATE)
+    employer_cost = (gross + min(gross, VSD_CAP) * ER_CAPPED_RATE
+                     + gross * ER_UNCAPPED_RATE)
     return employer_cost, net
 ```
 
