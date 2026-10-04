@@ -9,9 +9,9 @@ or certified.
 | Albania | Pending | Pending | Pending | Pending |
 | Austria | [Dossier complete](austria.md) | Pending | Pending | Pending |
 | Belgium | [Dossier complete](belgium.md) | Pending | Pending | Pending |
-| Bulgaria | Researching | Pending | Pending | Pending |
-| Croatia | Pending | Pending | Pending | Pending |
-| Cyprus | Pending | Pending | Pending | Pending |
+| Bulgaria | [Dossier complete](bulgaria.md) | Pending | Pending | Pending |
+| Croatia | Researching | Pending | Pending | Pending |
+| Cyprus | Researching | Pending | Pending | Pending |
 | Czech Republic | [Dossier complete](czech-republic.md) | Pending | Pending | Pending |
 | Denmark | [Dossier complete](denmark.md) | Pending | Pending | Pending |
 | Estonia | [Dossier complete](estonia.md) | Pending | Pending | Pending |
@@ -32,10 +32,10 @@ or certified.
 | Norway | [Dossier complete](norway.md) | Pending | Pending | Pending |
 | Poland | [Dossier complete](poland.md) | Pending | Pending | Pending |
 | Portugal | [Dossier complete](portugal.md) | Pending | Pending | Pending |
-| Romania | Researching | Pending | Pending | Pending |
+| Romania | [Dossier complete](romania.md) | Pending | Pending | Pending |
 | Serbia | Pending | Pending | Pending | Pending |
-| Slovakia | Pending | Pending | Pending | Pending |
-| Slovenia | Pending | Pending | Pending | Pending |
+| Slovakia | [Dossier complete](slovakia.md) | Pending | Pending | Pending |
+| Slovenia | [Dossier complete](slovenia.md) | Pending | Pending | Pending |
 | Spain | [Dossier complete](spain.md) | Pending | Pending | Pending |
 | Sweden | [Dossier complete](sweden.md) | Pending | Pending | Pending |
 | Switzerland | [Dossier complete](switzerland.md) | Pending | Pending | Pending |
