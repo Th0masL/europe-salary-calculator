@@ -43,6 +43,8 @@ should ultimately have:
 
 Unknowns stay unknown. Never fill an evidence gap with a plausible rate.
 
+The [2026 European coverage ledger](2026/README.md) links every completed dossier.
+
 ## Workflow states
 
 - **Researching** — clean-room primary-source reconstruction is in progress.
@@ -51,7 +53,5 @@ Unknowns stay unknown. Never fill an evidence gap with a plausible rate.
 - **Integrated** — approved changes and regression tests are implemented.
 - **Reviewed** — a second independent pass validates the integrated result.
 
-The first pilot batch covers Belgium, Denmark, and Finland. The remaining countries
-will follow after the dossier structure and calculation method are reviewed against
-those pilots.
-
+The clean-room research phase is complete for all 36 European jurisdictions. Code
+comparison, integration, and independent review remain separate follow-up phases.
