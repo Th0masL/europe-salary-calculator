@@ -7,7 +7,7 @@ or certified.
 | Country | Research | Code comparison | Integration | Independent review |
 |---|---|---|---|---|
 | Albania | Pending | Pending | Pending | Pending |
-| Austria | Researching | Pending | Pending | Pending |
+| Austria | [Dossier complete](austria.md) | Pending | Pending | Pending |
 | Belgium | [Dossier complete](belgium.md) | Pending | Pending | Pending |
 | Bulgaria | Pending | Pending | Pending | Pending |
 | Croatia | Pending | Pending | Pending | Pending |
@@ -17,10 +17,10 @@ or certified.
 | Estonia | Pending | Pending | Pending | Pending |
 | Finland | [Dossier complete](finland.md) | Pending | Pending | Pending |
 | France | [Dossier complete](france.md) | Pending | Pending | Pending |
-| Germany | Researching | Pending | Pending | Pending |
+| Germany | [Dossier complete](germany.md) | Pending | Pending | Pending |
 | Greece | Pending | Pending | Pending | Pending |
 | Hungary | Pending | Pending | Pending | Pending |
-| Ireland | Pending | Pending | Pending | Pending |
+| Ireland | Researching | Pending | Pending | Pending |
 | Italy | [Dossier complete](italy.md) | Pending | Pending | Pending |
 | Latvia | [Dossier complete](latvia.md) | Pending | Pending | Pending |
 | Lithuania | Pending | Pending | Pending | Pending |
@@ -28,10 +28,10 @@ or certified.
 | Malta | Pending | Pending | Pending | Pending |
 | Moldova | Pending | Pending | Pending | Pending |
 | Montenegro | Pending | Pending | Pending | Pending |
-| Netherlands | Researching | Pending | Pending | Pending |
+| Netherlands | [Dossier complete](netherlands.md) | Pending | Pending | Pending |
 | Norway | [Dossier complete](norway.md) | Pending | Pending | Pending |
-| Poland | Pending | Pending | Pending | Pending |
-| Portugal | Pending | Pending | Pending | Pending |
+| Poland | Researching | Pending | Pending | Pending |
+| Portugal | Researching | Pending | Pending | Pending |
 | Romania | Pending | Pending | Pending | Pending |
 | Serbia | Pending | Pending | Pending | Pending |
 | Slovakia | Pending | Pending | Pending | Pending |
