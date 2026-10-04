@@ -14,9 +14,10 @@ The comparisons test the dossiers' stated resident/profile/location/payment scen
 
 ## Implementation progress
 
-The completed correction/rebuild tranches cover **Albania, Austria, Bulgaria,
-Denmark, Finland, France, Greece, Latvia, Lithuania, Malta, Moldova, Montenegro,
-Poland, Portugal, Slovakia, Slovenia, Sweden, Switzerland, Turkey, and Ukraine**.
+The completed correction/rebuild tranches cover **Albania, Austria, Belgium,
+Bulgaria, Denmark, Finland, France, Greece, Italy, Latvia, Lithuania, Luxembourg,
+Malta, Moldova, Montenegro, Poland, Portugal, Slovakia, Slovenia, Spain, Sweden,
+Switzerland, Turkey, and Ukraine**.
 The country files record which historical findings are resolved and which
 scenario/product limitations remain. Finding totals below remain the audit
 baseline rather than being reduced whenever a fix lands.
@@ -115,25 +116,18 @@ not create new UI inputs without explicit approval.
 
 ### 2. Material employee-net formula rebuilds
 
-These require component-level rewrites and should not be patched with another blended rate.
-
-1. **Belgium:** make the 12-month/holiday-pay structure explicit and calculate work bonuses/CSSS monthly.
-2. **Italy:** implement employment relief and official regional/municipal bases for a named location.
-3. **Luxembourg:** implement contribution caps and the exact tariff, deductions, credits and rounding.
-4. **Spain:** introduce separate state/autonomous scales, minima and low-income relief.
-
-Latvia, Sweden, Switzerland, Austria, Finland, Denmark, France, and Greece have
-been rebuilt against their fixed representative dossier scenarios.
+The material rebuild tranche is complete. Belgium, Italy, Luxembourg, Spain,
+Latvia, Sweden, Switzerland, Austria, Finland, Denmark, France, and Greece now
+use their fixed representative dossier scenarios rather than blended-rate
+shortcuts. Remaining work concerns scenario/product decisions, smaller payroll
+timing details, and the explicitly research-blocked cases below.
 
 ### 3. High-income rules and ceilings
 
 These need dedicated threshold vectors even where the lower-income formula is otherwise serviceable.
 
 1. **Serbia:** supplementary annual tax; until its final statistic is available, label output before this tax.
-2. **Spain:** employee and employer solidarity tiers above the ordinary ceiling.
-3. **Luxembourg:** contribution ceiling and 9% fund addition at high tax.
-4. **Norway:** OTP through 12G using the official average G.
-5. **Italy:** extra employee INPS threshold and employer bases.
+2. **Norway:** OTP through 12G using the official average G.
 
 Poland's levy, Montenegro's uncapped payroll PIO, Latvia's solidarity mechanics,
 Austria's special-payment overflow, France's high-income bases/CEHR, Greece's
@@ -147,7 +141,7 @@ return its deterministic statutory cost, and list material exclusions. Add named
 scenario inputs only when their comparison value justifies the UI complexity. Do
 not bury variability in a generic “extras” percentage.
 
-1. **Remove unsupported blended extras:** Belgium, Netherlands and Italy remain; France, Denmark, Switzerland and Sweden now use documented statutory/selected subtotals.
+1. **Remove unsupported blended extras:** Netherlands remains; Belgium, Italy, France, Denmark, Switzerland and Sweden now use documented statutory/selected subtotals.
 2. **Document selected accident/risk assumptions:** Bulgaria, Czech Republic, Finland, Germany, Italy, Lithuania, Netherlands, Norway, Portugal, Spain and Switzerland.
 3. **Document selected location:** Belgium municipality, Croatia municipality, Denmark municipality, Finland municipality, France establishment/mobility zone, Italy region/municipality, Norway AGA zone, Spain autonomous community, Sweden municipality, Switzerland canton/municipality.
 4. **Document plan/election/status baseline:** Cyprus Holiday Fund exemption, Estonia pillar II/basic-exemption election, Ireland MyFutureFund, Netherlands occupational pension, Switzerland BVG/NBU plan, and UK Scotland/rUK.

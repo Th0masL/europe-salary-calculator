@@ -8,13 +8,14 @@ All **36 country dossiers and code comparisons are complete** as of 2026-10-04.
 Each dossier was reconstructed without reading that country's existing
 implementation or generated outputs. The comparison pass found 128 review items;
 see the [consolidated comparison summary](comparisons/SUMMARY.md). Calculator
-logic has not yet been changed from these findings.
+logic is being corrected from these findings; the Integration column records the
+completed country-level rebuilds.
 
 | Country | Research | Code comparison | Integration | Independent review |
 |---|---|---|---|---|
 | Albania | [Dossier complete](albania.md) | [Compared](comparisons/albania.md) | Core fixes implemented | Pending |
 | Austria | [Dossier complete](austria.md) | [Compared](comparisons/austria.md) | Core fixes implemented | Pending |
-| Belgium | [Dossier complete](belgium.md) | [Compared](comparisons/belgium.md) | Pending | Pending |
+| Belgium | [Dossier complete](belgium.md) | [Compared](comparisons/belgium.md) | Core fixes implemented | Pending |
 | Bulgaria | [Dossier complete](bulgaria.md) | [Compared](comparisons/bulgaria.md) | Core fixes implemented | Pending |
 | Croatia | [Dossier complete](croatia.md) | [Compared](comparisons/croatia.md) | Pending | Pending |
 | Cyprus | [Dossier complete](cyprus.md) | [Compared](comparisons/cyprus.md) | Pending | Pending |
@@ -27,10 +28,10 @@ logic has not yet been changed from these findings.
 | Greece | [Dossier complete](greece.md) | [Compared](comparisons/greece.md) | Core fixes implemented | Pending |
 | Hungary | [Dossier complete](hungary.md) | [Compared](comparisons/hungary.md) | Pending | Pending |
 | Ireland | [Dossier complete](ireland.md) | [Compared](comparisons/ireland.md) | Pending | Pending |
-| Italy | [Dossier complete](italy.md) | [Compared](comparisons/italy.md) | Pending | Pending |
+| Italy | [Dossier complete](italy.md) | [Compared](comparisons/italy.md) | Core fixes implemented | Pending |
 | Latvia | [Dossier complete](latvia.md) | [Compared](comparisons/latvia.md) | Core fixes implemented | Pending |
 | Lithuania | [Dossier complete](lithuania.md) | [Compared](comparisons/lithuania.md) | Core fixes implemented | Pending |
-| Luxembourg | [Dossier complete](luxembourg.md) | [Compared](comparisons/luxembourg.md) | Pending | Pending |
+| Luxembourg | [Dossier complete](luxembourg.md) | [Compared](comparisons/luxembourg.md) | Core fixes implemented | Pending |
 | Malta | [Dossier complete](malta.md) | [Compared](comparisons/malta.md) | Core fixes implemented | Pending |
 | Moldova | [Dossier complete](moldova.md) | [Compared](comparisons/moldova.md) | Core fixes implemented | Pending |
 | Montenegro | [Dossier complete](montenegro.md) | [Compared](comparisons/montenegro.md) | Core fixes implemented | Pending |
@@ -42,7 +43,7 @@ logic has not yet been changed from these findings.
 | Serbia | [Dossier complete](serbia.md) | [Compared](comparisons/serbia.md) | Pending | Pending |
 | Slovakia | [Dossier complete](slovakia.md) | [Compared](comparisons/slovakia.md) | Core fixes implemented | Pending |
 | Slovenia | [Dossier complete](slovenia.md) | [Compared](comparisons/slovenia.md) | Core fixes implemented | Pending |
-| Spain | [Dossier complete](spain.md) | [Compared](comparisons/spain.md) | Pending | Pending |
+| Spain | [Dossier complete](spain.md) | [Compared](comparisons/spain.md) | Core fixes implemented | Pending |
 | Sweden | [Dossier complete](sweden.md) | [Compared](comparisons/sweden.md) | Core fixes implemented | Pending |
 | Switzerland | [Dossier complete](switzerland.md) | [Compared](comparisons/switzerland.md) | Core fixes implemented | Pending |
 | Turkey | [Dossier complete](turkey.md) | [Compared](comparisons/turkey.md) | Core fixes implemented | Pending |

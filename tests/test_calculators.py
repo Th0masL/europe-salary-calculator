@@ -271,6 +271,43 @@ class CorrectedCountryRegressionTests(unittest.TestCase):
                 self.assertAlmostEqual(actual[0], expected[0], delta=0.02)
                 self.assertAlmostEqual(actual[1], expected[1], delta=0.02)
 
+    def test_remaining_material_country_rebuilds(self):
+        vectors_by_country = {
+            "belgium": {
+                20_000: (20_000.00, 19_105.88),
+                60_000: (73_931.89, 36_742.40),
+                100_000: (123_219.81, 52_956.79),
+                200_000: (246_439.63, 93_412.17),
+                600_000: (687_567.00, 255_233.68),
+            },
+            "italy": {
+                20_000: (27_324.15, 17_408.92),
+                60_000: (81_972.44, 37_500.19),
+                100_000: (136_620.74, 57_031.68),
+                200_000: (255_128.45, 110_173.41),
+                600_000: (708_371.41, 327_690.28),
+            },
+            "luxembourg": {
+                20_000: (22_514.00, 17_992.00),
+                60_000: (67_542.00, 44_104.21),
+                100_000: (112_570.00, 63_786.21),
+                200_000: (220_688.94, 115_356.09),
+                600_000: (620_688.94, 327_234.09),
+            },
+            "spain": {
+                20_000: (26_430.00, 16_828.65),
+                60_000: (79_290.00, 42_183.56),
+                100_000: (120_093.62, 65_227.27),
+                200_000: (221_313.62, 122_090.47),
+                600_000: (626_193.62, 343_688.51),
+            },
+        }
+        for country, vectors in vectors_by_country.items():
+            module = importlib.import_module(country)
+            for gross, expected in vectors.items():
+                with self.subTest(country=country, gross=gross):
+                    self.assertAmountsAlmostEqual(module.compute(gross), expected)
+
 
 class GeneratedDataTests(unittest.TestCase):
     def test_formula_range_and_5k_resolution(self):

@@ -10,8 +10,8 @@
 | Last independently reviewed | Not recorded |
 | Calculation currency | EUR |
 | Model | Single employee; see assumptions below |
-| Employer-cost summary | Pension 8.5% + health 3.05% + mutualite/accident ~1.5% |
-| Formula fingerprint | `6158cb61685d` |
+| Employer-cost summary | Capped 12.57%: pension/health plus class-1 mutuality, accident factor 1.00, and STM occupational health |
+| Formula fingerprint | `9466f3f06ac8` |
 | Direct source links | Named in the model notes below; direct URLs have not yet been recorded. |
 
 ## Representative outputs
@@ -21,53 +21,26 @@ conversion where applicable. They are regression landmarks, not payroll quotes.
 
 | Annual gross | Employer cost | Take-home pay |
 |---:|---:|---:|
-| €60,000 | €67,830 | €43,798 |
-| €100,000 | €113,050 | €63,571 |
-| €200,000 | €226,100 | €113,078 |
+| €60,000 | €67,542 | €44,104 |
+| €100,000 | €112,570 | €63,786 |
+| €200,000 | €220,689 | €115,356 |
 
 ## Model notes and assumptions
 
-Luxembourg salary calculation — computed from published tax rates.
-
-Rates are 2026 (single, tax class 1, no children).
-
-The income-tax scale below is the official PwC/ACD 2026 class-1 scale — a granular
-23-band progression rising 8%→39% in ~1% steps, then 40/41/42%. (The first research
-pass gave a broken 12%→42% table; this is the verified one. A scaled reconstruction
-of the 2024 bands had landed within ~0.1% of these boundaries.)
-
-Social contributions (cap 5×SSM = €162,224/yr — doesn't bite below €150k):
- - Employee: pension 8.5% + health 3.05% (both income-tax deductible) + dependency
-   1.40% on (gross − ~€8,112 abatement) (NOT tax-deductible). No employee
-   unemployment contribution. (Pension is 8.5%, not 8% — confirmed by the sources;
-   an earlier draft here wrongly "corrected" it to 8%.)
- - Employer: pension 8.5% + health 3.05% + mutualité (MDE) + accident ≈ 13%
-   (MDE/accident are class/insurer-dependent; tuned to the eBook/Rippling cluster).
-
-Income tax: scale on (gross − pension − health − €540 frais); 7% employment-fund
-surcharge on the tax; then the crédit d'impôt salarié (CIS) credited — €600 up to
-€40k gross, tapering to €0 by €80k (so €300 at €60k, €0 at €100k+).
-
-Sources: PwC Luxembourg 2026 (class-1 scale); ACD CIS 2026; FEDIL/PwC 2026 social
-parameters (rates, €162,224 cap).
+Luxembourg 2026 estimate, tax class 1 representative scenario.
 
 ## Implemented parameters
 
 These values are copied mechanically from the live calculation module.
 
 ```python
-EE_PENS_HEALTH = 0.085 + 0.0305
-EE_DEPENDENCY = 0.014
-DEPENDENCY_ABATEMENT = 8112
-ER_RATE = 0.085 + 0.0305 + 0.015
-FRAIS = 540
-SOLIDARITY = 0.07
+CAP, FULL_TIME_MINIMUM, DEPENDENCY_ABATEMENT = 164_589.81, 32_918.01, 8_229.46
 SCALE = [
-    (13230, 0.0), (15435, 0.08), (17640, 0.09), (19845, 0.10), (22050, 0.11),
-    (24255, 0.12), (26550, 0.14), (28845, 0.16), (31140, 0.18), (33435, 0.20),
-    (35730, 0.22), (38025, 0.24), (40320, 0.26), (42615, 0.28), (44910, 0.30),
-    (47205, 0.32), (49500, 0.34), (51795, 0.36), (54090, 0.38), (117450, 0.39),
-    (176160, 0.40), (234870, 0.41), (INF, 0.42),
+    (13_230, 0), (15_435, .08), (17_640, .09), (19_845, .10), (22_050, .11),
+    (24_255, .12), (26_550, .14), (28_845, .16), (31_140, .18), (33_435, .20),
+    (35_730, .22), (38_025, .24), (40_320, .26), (42_615, .28), (44_910, .30),
+    (47_205, .32), (49_500, .34), (51_795, .36), (54_090, .38), (117_450, .39),
+    (176_160, .40), (234_870, .41), (INF, .42),
 ]
 ```
 
@@ -77,30 +50,25 @@ This is the exact function used to build the salary dataset. Shared progressive
 tax brackets use [`engine.progressive`](../../tools/calc/engine.py).
 
 ```python
-def _cis(gross):
-    """Crédit d'impôt salarié, 2026 (function of gross salary)."""
-    if gross < 936:
+def _credits(gross):
+    if gross < 936 or gross >= 80_000:
         return 0.0
-    if gross <= 11265:
-        return 300 + (gross - 936) * 0.029
-    if gross <= 40000:
-        return 600.0
-    if gross < 80000:
-        return 600 - (gross - 40000) * 0.015
-    return 0.0
+    cis = (300 + .029 * (gross - 936) if gross <= 11_265 else 600.0
+           if gross <= 40_000 else 600 - .015 * (gross - 40_000))
+    co2 = 216.0 if gross <= 40_000 else 216 - .0054 * (gross - 40_000)
+    return cis + co2
 
 def compute(gross):
-    """Return (employer_cost, net) for an annual gross salary, in EUR."""
-    pens_health = gross * EE_PENS_HEALTH
-    dependency = max(0.0, gross - DEPENDENCY_ABATEMENT) * EE_DEPENDENCY
-
-    taxable = max(0.0, gross - pens_health - FRAIS)
-    income_tax = progressive(taxable, SCALE)
-    total_tax = max(0.0, income_tax * (1 + SOLIDARITY) - _cis(gross))
-
-    net = gross - pens_health - dependency - total_tax
-    employer_cost = gross * (1 + ER_RATE)
-    return employer_cost, net
+    capped = min(gross, CAP)
+    deductible_ss = .1155 * capped
+    abatement = .25 * gross if gross < FULL_TIME_MINIMUM else DEPENDENCY_ABATEMENT
+    dependency = .014 * max(gross - abatement, 0)
+    taxable_raw = max(0.0, gross - deductible_ss - 540 - 480)
+    taxable = math.floor(taxable_raw / 50) * 50
+    base_tax = math.floor(progressive(taxable, SCALE))
+    fund = math.floor(.07 * base_tax) if taxable <= 150_000 else math.floor(.09 * base_tax - 931.80)
+    net_tax = base_tax + fund - _credits(gross)
+    return gross + .1257 * capped, gross - deductible_ss - dependency - net_tax
 ```
 
 ## Verification checklist

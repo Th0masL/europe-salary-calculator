@@ -40,3 +40,10 @@ Parameterize autonomous community and implement separate official scales/minima.
 ## Regression vectors
 
 Use all five Madrid rows, regular cap EUR 61,214.40, solidarity boundaries at 1.10× and 1.50× cap, and credit cutoff EUR 20,048.45.
+
+## Implementation update
+
+Implemented for the fixed Madrid office-worker scenario: separate national and
+Madrid scales/minima, Article 20 reduction, the 2026 low-employment-income credit,
+and employee/employer solidarity tiers. The 1.5% occupational-accident rate
+remains an explicit scenario assumption.

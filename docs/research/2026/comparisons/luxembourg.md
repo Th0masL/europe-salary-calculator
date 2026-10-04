@@ -45,3 +45,10 @@ Implement each contribution on its statutory base and cap, then reproduce the AC
 ## Regression vectors
 
 For the dossier scenario, assert: `20,000 → 22,514.00, 17,992.00`; `60,000 → 67,542.00, 44,104.21`; `100,000 → 112,570.00, 63,786.21`; `200,000 → 220,688.94, 115,356.09`; `600,000 → 620,688.94, 327,234.09`. The €20k vector must retain its explicit part-time status.
+
+## Implementation update
+
+Implemented: the EUR164,589.81 cap, selected 12.57% employer scenario,
+hours-prorated dependency abatement below the full-time minimum, both standard
+deductions, EUR50 taxable-income rounding, whole-euro tariff/fund flooring, the
+high-income fund formula, and both refundable 2026 credits.

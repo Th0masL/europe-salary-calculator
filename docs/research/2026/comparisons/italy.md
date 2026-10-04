@@ -45,3 +45,10 @@ Replace representative percentages with an explicit location/sector/company-size
 ## Regression vectors
 
 For Milan/Lombardy, post-1995 entrant, selected small industrial employer, 0.4% INAIL, and 14 instalments included in gross, assert: `20,000 → 27,324.15, 17,408.92`; `60,000 → 81,972.44, 37,500.19`; `100,000 → 136,620.74, 57,031.68`; `200,000 → 255,128.45, 110,173.41`; `600,000 → 708,371.41, 327,690.28`.
+
+## Implementation update
+
+Implemented for the fixed Milan/Lombardy small-industrial-employer scenario:
+ordinary employment credit, permanent tax-wedge relief, progressive regional
+and Milan surtaxes, component-specific INPS bases, 0.4% INAIL, and statutory TFR.
+The unsupported 5% extras bucket was removed.

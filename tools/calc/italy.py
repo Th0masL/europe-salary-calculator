@@ -1,54 +1,51 @@
-"""Italy salary calculation — computed from published tax rates.
-
-Rates are 2026 (single, no children). Italy is high-contribution + progressive.
- - Employee: INPS ~9.19% (capped at the €122,295 pensionable ceiling) + an extra
-   1% above the first pensionable band (~€56k).
- - IRPEF: 23% to €28k, 33% to €50k, 43% above, on (gross − INPS). Plus regional
-   (~1.7%) and municipal (~0.5%) surtaxes (both vary by location — averages used).
-   The employment tax credit (detrazione) and "cuneo fiscale" relief phase out by
-   ~€50k, so they're €0 in this app's salary range.
- - Employer: INPS ~29.72% (capped) + TFR severance accrual ~6.91% + INAIL ~1% +
-   a ~5% bucket for the near-universal 13th month / CCNL & sectoral variation
-   ≈ 42.6%, which lands near the credible cross-refs (Rippling +43%, eBook/Skuad
-   +47%; Deel +71% is an outlier).
-
-*** Italy is the most variable / approximate module. The regional + municipal
-surtaxes (we use ~3%) range from ~1% to >4% by location, and the employer cost
-swings with the CCNL and whether the 13th/14th month is on top of the entered
-gross. Treat both as representative, not exact. ***
-
-Sources: Agenzia delle Entrate 2026 IRPEF; INPS 2026 (rates, €122,295 ceiling).
-"""
+"""Italy 2026 estimate for the documented Milan/Lombardy scenario."""
 from engine import progressive
 
-NAME = "Italy"
-CURRENCY = "EUR"
-YEAR = 2026
-EMPLOYER_BREAKDOWN = "INPS ~29.72% (capped) + TFR severance 6.91% + INAIL ~1% + ~5% 13th-month/CCNL"
+NAME, CURRENCY, YEAR = "Italy", "EUR", 2026
+EMPLOYER_BREAKDOWN = "Small Milan industrial employer: capped FPLD 23.81% + uncapped INPS 5.503333% + INAIL 0.4% + TFR"
 INF = float("inf")
+CAP, EXTRA_START = 122_295, 56_224
+IRPEF = [(28_000, .23), (50_000, .33), (INF, .43)]
+LOMBARDY = [(15_000, .0123), (28_000, .0158), (50_000, .0172), (INF, .0173)]
 
-INPS_CAP = 122295
-FIRST_BAND = 56000          # approx first pensionable band for the +1%
-EE_INPS = 0.0919
-EE_ADDITIONAL = 0.01
-ER_INPS = 0.2972
-ER_TFR = 0.0691
-ER_INAIL = 0.01
-ER_EXTRAS = 0.05            # near-universal 13th month + CCNL/sectoral variation (representative)
-IRPEF = [(28000, 0.23), (50000, 0.33), (INF, 0.43)]
-REGIONAL = 0.022
-MUNICIPAL = 0.008
+
+def _employment_credit(income):
+    if income <= 15_000:
+        return 1_955.0
+    if income <= 28_000:
+        credit = 1_910 + 1_190 * (28_000 - income) / 13_000
+    elif income <= 50_000:
+        credit = 1_910 * (50_000 - income) / 22_000
+    else:
+        return 0.0
+    return credit + (65 if 25_000 < income <= 35_000 else 0)
+
+
+def _wedge_relief(income):
+    if income <= 8_500:
+        return .071 * income, 0.0
+    if income <= 15_000:
+        return .053 * income, 0.0
+    if income <= 20_000:
+        return .048 * income, 0.0
+    if income <= 32_000:
+        return 0.0, 1_000.0
+    if income <= 40_000:
+        return 0.0, 1_000 * (40_000 - income) / 8_000
+    return 0.0, 0.0
 
 
 def compute(gross):
-    """Return (employer_cost, net) for an annual gross salary, in EUR."""
-    capped = min(gross, INPS_CAP)
-    ee_inps = capped * EE_INPS + max(0.0, capped - FIRST_BAND) * EE_ADDITIONAL
+    pension_base = min(gross, CAP)
+    employee_ss = (.0919 * pension_base + gross * (.005 / 3)
+                   + .01 * max(pension_base - EXTRA_START, 0))
+    taxable = max(0.0, gross - employee_ss)
+    cash_sum, extra_credit = _wedge_relief(taxable)
+    national = max(0.0, progressive(taxable, IRPEF) - _employment_credit(taxable) - extra_credit)
+    regional = progressive(taxable, LOMBARDY)
+    municipal = 0.0 if taxable <= 23_000 else .008 * taxable
+    net = gross - employee_ss - national - regional - municipal + cash_sum
 
-    taxable = max(0.0, gross - ee_inps)
-    irpef = progressive(taxable, IRPEF)
-    surtax = (REGIONAL + MUNICIPAL) * taxable
-
-    net = gross - ee_inps - irpef - surtax
-    employer_cost = gross + capped * ER_INPS + gross * (ER_TFR + ER_INAIL + ER_EXTRAS)
-    return employer_cost, net
+    employer_inps = .2381 * pension_base + .05503333 * gross
+    tfr = gross / 13.5 - .005 * pension_base
+    return gross + employer_inps + .004 * gross + tfr, net

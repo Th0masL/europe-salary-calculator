@@ -45,3 +45,11 @@ Make payment structure, municipality and sector explicit. Implement monthly work
 ## Regression vectors
 
 Use EUR60k, EUR100k, EUR200k and EUR600k dossier rows for the selected `12.92M`, 7% municipality scenario. Keep EUR20k as a marked stress vector, including both conservative and mechanically refundable-credit outcomes.
+
+## Implementation update
+
+Implemented in the calculator: the `12.92M` salary/holiday-pay split, period-specific
+social work bonus, CSSS payroll advances, final 2026 PIT constants, structural
+reduction, and quarterly high-salary cap. The live comparator deliberately uses
+the conservative EUR20k result and excludes unknown sector/company charges and
+the not-yet-finally-evidenced refundable fiscal work-bonus settlement.
