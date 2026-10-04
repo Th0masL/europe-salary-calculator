@@ -1,7 +1,7 @@
 # Croatia — employee payroll research for income year 2026
 
-**Method:** independent clean-room reconstruction from Croatian primary official sources only.  
-**Source access date:** 2026-10-04 for every link.  
+**Method:** independent clean-room reconstruction from Croatian primary official sources only.
+**Source access date:** 2026-10-04 for every link.
 **Currency:** euro (EUR).
 
 ## Scope and reproducible assumptions

@@ -2,17 +2,19 @@
 
 # 🇳🇴 Norway
 
-[← All country calculations](README.md) · [Formula source](../../tools/calc/norway.py)
+[← All country calculations](README.md) · [Calculation source](../../tools/calc/norway.py) · [Primary-source dossier](../research/2026/norway.md)
 
 | Field | Value |
 |---|---|
 | Tax year | 2026 |
-| Last independently reviewed | Not recorded |
+| Research completed | 2026-10-04 |
+| Independent review | Pending |
 | Calculation currency | NOK |
 | Model | Single employee; see assumptions below |
 | Employer-cost summary | Zone-I floor: employer NI 14.1% + minimum OTP 2% through 12G + employer NI on OTP; variable premiums excluded |
-| Formula fingerprint | `fe9d42750972` |
-| Direct source links | Named in the model notes below; direct URLs have not yet been recorded. |
+| Calculation fingerprint | `fe9d42750972` |
+| Primary-source evidence | [19 source URLs in the dossier](../research/2026/norway.md) |
+| Calculation-module links | Named in the model notes below; direct URLs have not yet been recorded. |
 
 ## Representative outputs
 
@@ -89,4 +91,4 @@ def compute(gross):
 - Check every rate, bracket, cap, allowance, deduction, and employer charge.
 - Confirm whether employee contributions reduce the income-tax base.
 - Compare the representative outputs above with an official worked example.
-- Update the module, regenerate the Formula dataset and these docs, then review the diff.
+- Update the module, regenerate the calculation dataset and these docs, then review the diff.

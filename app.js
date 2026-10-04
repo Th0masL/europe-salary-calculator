@@ -4,7 +4,7 @@
  * increasing together. Given any one of the three values we interpolate the
  * other two: find the bracketing segment on the chosen axis, compute the
  * fraction t, and linearly interpolate every field. Outside the generated
- * Formula range we return null (the row shows "—") rather than extrapolating.
+ * generated range we return null (the row shows "—") rather than extrapolating.
  */
 (function () {
   "use strict";
@@ -71,7 +71,7 @@
   var DATA = window.SALARY_DATA_FORMULA;
   if (!DATA) {
     document.getElementById("resultsBody").innerHTML =
-      '<tr><td colspan="8" class="empty">Could not load the Formula data file (data/formula.js)</td></tr>';
+      '<tr><td colspan="9" class="empty">Could not load the salary calculation data.</td></tr>';
     return;
   }
 
@@ -99,12 +99,35 @@
     net: { label: "Target net take-home (per year)", noun: "net pay", best: "cheapest for the employer" },
   };
   var PRESETS = [50000, 75000, 100000, 150000, 200000];
+  var ECB_FX_URL = "https://data-api.ecb.europa.eu/service/data/EXR/D.USD.EUR.SP00.A?lastNObservations=1&format=csvdata";
+  var FX_OVERRIDE_KEY = "europe-salary-eur-usd-override";
+  var FX_CACHE_KEY = "europe-salary-eur-usd-cache";
+  var FX_REFRESH_MS = 24 * 60 * 60 * 1000;
+  var bundledEurUsd = Number((DATA.meta || {}).usFxEurUsd) || 1.134;
+
+  function readStoredFx(key) {
+    try {
+      var value = JSON.parse(localStorage.getItem(key));
+      if (value && Number(value.rate) > 0) return value;
+    } catch (error) {}
+    return null;
+  }
+
+  var storedOverride = readStoredFx(FX_OVERRIDE_KEY);
+  var cachedFx = readStoredFx(FX_CACHE_KEY);
+  var initialFx = storedOverride || cachedFx;
 
   var state = {
     mode: "cost",
-    amount: 100000,
+    amount: 100000, // canonical annual EUR; converted only at the UI boundary
     euOnly: false,
+    euroOnly: false,
     monthly: false,
+    showLivingCosts: false,
+    displayCurrency: "EUR",
+    eurUsd: initialFx ? Number(initialFx.rate) : bundledEurUsd,
+    fxSource: storedOverride ? "manual" : cachedFx ? "cached" : "bundled",
+    fxDate: initialFx ? initialFx.date || null : null,
     search: "",
     sortKey: "net",
     sortDir: -1, // -1 desc, 1 asc
@@ -117,7 +140,16 @@
     var amt = parseFloat(q.get("amount"));
     if (!isNaN(amt) && amt > 0) state.amount = amt;
     if (q.get("eu") === "1") state.euOnly = true;
+    if (q.get("euro") === "1") state.euroOnly = true;
     if (q.get("monthly") === "1") state.monthly = true;
+    if (q.get("living") === "1") state.showLivingCosts = true;
+    if (q.get("currency") === "USD") state.displayCurrency = "USD";
+    var fx = parseFloat(q.get("fx"));
+    if (!isNaN(fx) && fx > 0) {
+      state.eurUsd = fx;
+      state.fxSource = "manual";
+      state.fxDate = null;
+    }
   })();
 
   function writeURL() {
@@ -125,7 +157,11 @@
     q.set("mode", state.mode);
     q.set("amount", String(Math.round(state.amount)));
     if (state.euOnly) q.set("eu", "1");
+    if (state.euroOnly) q.set("euro", "1");
     if (state.monthly) q.set("monthly", "1");
+    if (state.showLivingCosts) q.set("living", "1");
+    if (state.displayCurrency === "USD") q.set("currency", "USD");
+    if (state.fxSource === "manual") q.set("fx", String(state.eurUsd));
     history.replaceState(null, "", "?" + q.toString());
   }
 
@@ -133,15 +169,28 @@
 
   function lerp(a, b, t) { return a + (b - a) * t; }
 
+  function pointsInEur(country) {
+    if (country.nativeCurrency === "USD" && country.nativePoints && state.eurUsd > 0) {
+      return country.nativePoints.map(function (point) {
+        return {
+          gross: point.gross / state.eurUsd,
+          cost: point.cost / state.eurUsd,
+          net: point.net / state.eurUsd,
+        };
+      });
+    }
+    return country.points;
+  }
+
   // Solve a country for a given axis value. axis is "cost" | "gross" | "net".
   // Only use points that carry the axis we're solving on, and interpolate the
   // other metrics where both endpoints provide them. Returns null if not solvable.
   function solve(country, axis, value) {
-    var pts = country.points.filter(function (p) { return p[axis] != null; });
+    var pts = pointsInEur(country).filter(function (p) { return p[axis] != null; });
     var n = pts.length;
     if (n < 2) return null;
     var lo = pts[0][axis], hi = pts[n - 1][axis];
-    // Don't extrapolate beyond the generated Formula range; return null so the
+    // Don't extrapolate beyond the generated range; return null so the
     // row shows "—".
     if (value < lo || value > hi) return null;
     var i, t;
@@ -174,12 +223,23 @@
 
   // ---- formatting ---------------------------------------------------------
 
-  var eur0 = new Intl.NumberFormat("en-IE", { style: "currency", currency: "EUR", maximumFractionDigits: 0 });
+  var formatters = {
+    EUR: new Intl.NumberFormat("en-IE", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }),
+    USD: new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }),
+  };
+
+  function toDisplayCurrency(value) {
+    return state.displayCurrency === "USD" ? value * state.eurUsd : value;
+  }
+
+  function fromDisplayCurrency(value) {
+    return state.displayCurrency === "USD" ? value / state.eurUsd : value;
+  }
 
   function money(v) {
     if (v == null) return "—";
-    var n = state.monthly ? v / 12 : v;
-    return eur0.format(Math.round(n));
+    var n = state.monthly ? toDisplayCurrency(v) / 12 : toDisplayCurrency(v);
+    return formatters[state.displayCurrency].format(Math.round(n));
   }
   function plainNum(v) { return new Intl.NumberFormat("en-US").format(Math.round(v)); }
 
@@ -193,6 +253,10 @@
       .filter(function (name) {
         var eu = (META[name] || {}).eu;
         return !state.euOnly || eu;
+      })
+      .filter(function (name) {
+        var currency = (META[name] || {}).currency;
+        return !state.euroOnly || currency === "EUR";
       })
       .filter(function (name) {
         return !state.search || name.toLowerCase().indexOf(state.search.toLowerCase()) !== -1;
@@ -241,19 +305,19 @@
   function render() {
     var rows = compute();
     var body = document.getElementById("resultsBody");
+    document.getElementById("resultsTable").classList.toggle("show-living-costs", state.showLivingCosts);
 
     if (!rows.length) {
-      body.innerHTML = '<tr><td colspan="8" class="empty">No countries match your filter.</td></tr>';
+      body.innerHTML = '<tr><td colspan="9" class="empty">No countries match your filter.</td></tr>';
     } else {
       body.innerHTML = rows.map(function (r, idx) {
         var hasSurplus = r.surplus != null;
         var surplusCls = !hasSurplus ? "" : r.surplus >= 0 ? "surplus-pos" : "surplus-neg";
-        var topCls = idx === 0 && (state.sortKey === "net" || state.sortKey === "surplus") && state.sortDir === -1 ? "top-row" : "";
         var approx = r.approx
           ? '<span class="approx" title="Single-benchmark estimate: one US data point, converted from USD (1 EUR = 1.13 USD) and modelled at a flat rate. Least precise away from ~€100k.">≈</span> ' : "";
         var tag = r.eu ? '<span class="eu-tag">EU</span>'
           : r.us ? '<span class="us-tag">US</span>' : "";
-        // Show the Formula employer-cost breakdown on hover so the number is
+        // Show the employer-cost breakdown on hover so the number is
         // auditable line-by-line.
         var costCell = money(r.cost);
         if (r.costNote && r.cost != null) {
@@ -262,7 +326,7 @@
           costCell = '<span class="has-note" title="Employer cost:&#10;' + t + '">' + costCell + "</span>";
         }
         return (
-          '<tr class="' + topCls + '">' +
+          "<tr>" +
             '<td class="rank">' + (idx + 1) + "</td>" +
             '<td class="country"><span class="country-cell"><span class="flag">' + esc(r.flag) +
               '</span><span class="cname">' + esc(r.name) + "</span>" + tag + "</span></td>" +
@@ -270,81 +334,43 @@
             '<td data-label="Gross">' + money(r.gross) + "</td>" +
             '<td class="val-net" data-label="Net take-home">' + money(r.net) + "</td>" +
             '<td data-label="You keep">' + (r.netRatio != null ? Math.round(r.netRatio * 100) + "%" : "—") + "</td>" +
-            '<td data-label="Cost per €1 net">' + (r.costPerNet != null ? "€" + r.costPerNet.toFixed(2) : "—") + "</td>" +
-            '<td class="' + surplusCls + '" data-label="After living costs">' +
+            '<td class="cost-per-net" data-label="Cost per ' + (state.displayCurrency === "USD" ? "$" : "€") + '1 net">' +
+              (r.costPerNet != null ? (state.displayCurrency === "USD" ? "$" : "€") + r.costPerNet.toFixed(2) : "—") + "</td>" +
+            '<td class="living-col" data-label="Cost of living">' + money(r.costOfLiving) + "</td>" +
+            '<td class="living-col ' + surplusCls + '" data-label="After living costs">' +
               (hasSurplus ? (r.surplus >= 0 ? "+" : "−") + money(Math.abs(r.surplus)) : "—") + "</td>" +
           "</tr>"
         );
       }).join("");
     }
 
-    renderSummary(rows);
+    renderRangeNotice();
     syncSortIndicators();
     writeURL();
   }
 
-  // Largest value of the current axis generated by the Formula model (annual).
-  function formulaMax() {
+  // Largest value of the current generated axis (annual).
+  function generatedRangeMax() {
     var m = 0;
     DATA.countries.forEach(function (c) {
-      c.points.forEach(function (p) {
+      pointsInEur(c).forEach(function (p) {
         if (p[state.mode] != null && p[state.mode] > m) m = p[state.mode];
       });
     });
     return m;
   }
 
-  function renderSummary(rows) {
-    var el = document.getElementById("summary");
-    var max = formulaMax();
+  function renderRangeNotice() {
+    var el = document.getElementById("rangeNotice");
+    var max = generatedRangeMax();
     if (max && state.amount > max) {
       var per0 = state.monthly ? " / month" : " / year";
-      el.innerHTML = '<div class="card"><span class="lead">Formula data only covers up to <b>' +
+      el.innerHTML = '<div class="card">Calculations cover values up to <b>' +
         money(max) + "</b>" + per0 + ", so there's no data at <b>" +
-        money(state.amount) + "</b>.</span></div>";
+        money(state.amount) + "</b>.</div>";
       return;
     }
-    if (!rows.length) { el.innerHTML = ""; return; }
-    var mode = MODES[state.mode];
-    // best = best for the user given the mode (ignoring rows missing that metric)
-    var best;
-    if (state.mode === "net") {
-      var withCost = rows.filter(function (r) { return r.cost != null; });
-      best = withCost.reduce(function (a, b) { return b.cost < a.cost ? b : a; }, withCost[0]);
-    } else {
-      var withNet = rows.filter(function (r) { return r.net != null; });
-      best = withNet.reduce(function (a, b) { return b.net > a.net ? b : a; }, withNet[0]);
-    }
-    if (!best) { el.innerHTML = ""; return; }
-    var per = state.monthly ? " / month" : " / year";
-    var html;
-    if (state.mode === "cost") {
-      html = "With an employer budget of <b>" + money(state.amount) + "</b>" + per +
-        ", <strong>" + best.flag + " " + best.name + "</strong> gives the highest take-home: " +
-        "<b>" + money(best.net) + "</b>" + per + " net" +
-        ' <span class="muted">(gross ' + money(best.gross) + ").</span>";
-    } else if (state.mode === "gross") {
-      html = "For a gross salary of <b>" + money(state.amount) + "</b>" + per +
-        ", the best net take-home is in <strong>" + best.flag + " " + best.name + "</strong>: " +
-        "<b>" + money(best.net) + "</b>" + per +
-        ' <span class="muted">(costs the employer ' + money(best.cost) + ").</span>";
-    } else {
-      html = "To deliver a net take-home of <b>" + money(state.amount) + "</b>" + per +
-        ", <strong>" + best.flag + " " + best.name + "</strong> is cheapest for the employer: " +
-        "<b>" + money(best.cost) + "</b>" + per +
-        ' <span class="muted">(gross ' + money(best.gross) + ").</span>";
-    }
-    el.innerHTML = '<div class="card"><span class="lead">' + html + "</span>" +
-      '<span class="method-note">' + formulaNote() + "</span></div>";
-  }
-
-  function formulaNote() {
-    var meta = DATA.meta || {};
-    var when = meta.fetched ? " · fetched " + meta.fetched : "";
-    var fx = meta.fxAsOf ? " · non-euro rows converted at FX rates from " + meta.fxAsOf : "";
-    var usUpdate = meta.usUpdated ? " · US refreshed " + meta.usUpdated : "";
-    return "Source: Formula — computed from each country's published tax rates (no vendor)" +
-      when + fx + usUpdate + " · Europe uses 2026 rules; US cities use 2025 rules.";
+    el.innerHTML = "";
   }
 
   function syncSortIndicators() {
@@ -369,6 +395,130 @@
 
   var amountInput = document.getElementById("amount");
   var amountLabel = document.getElementById("amountLabel");
+  var currencyButtons = document.querySelectorAll(".currency-option");
+  var currencySymbol = document.getElementById("currencySymbol");
+  var fxInput = document.getElementById("eurUsdRate");
+  var fxStatus = document.getElementById("fxStatus");
+  var latestFxButton = document.getElementById("useLatestFx");
+  var costPerNetHeader = document.getElementById("costPerNetHeader");
+  var chips = document.getElementById("presets");
+
+  function formatDate(date) {
+    if (!date) return "";
+    var parsed = new Date(date + "T00:00:00Z");
+    return isNaN(parsed.getTime()) ? date : parsed.toLocaleDateString(undefined, {
+      year: "numeric", month: "short", day: "numeric", timeZone: "UTC",
+    });
+  }
+
+  function renderFxStatus() {
+    fxInput.value = state.eurUsd.toFixed(4);
+    fxStatus.removeAttribute("data-state");
+    if (state.fxSource === "manual") fxStatus.textContent = "Manual override";
+    else if (state.fxSource === "ecb") fxStatus.textContent = "ECB · " + formatDate(state.fxDate);
+    else if (state.fxSource === "cached") fxStatus.textContent = "Cached ECB rate" + (state.fxDate ? " · " + formatDate(state.fxDate) : "");
+    else fxStatus.textContent = "Bundled fallback";
+  }
+
+  function showFxFeedback(message, stateName) {
+    fxStatus.textContent = message;
+    fxStatus.setAttribute("data-state", stateName);
+  }
+
+  function renderPresets() {
+    chips.innerHTML = PRESETS.map(function (v) {
+      return '<button class="chip" data-v="' + v + '">' +
+        formatters[state.displayCurrency].format(v) + "</button>";
+    }).join("");
+  }
+
+  function applyCurrencyUI() {
+    currencyButtons.forEach(function (button) {
+      var selected = button.dataset.currency === state.displayCurrency;
+      button.setAttribute("aria-checked", selected ? "true" : "false");
+      button.tabIndex = selected ? 0 : -1;
+    });
+    currencySymbol.textContent = state.displayCurrency === "USD" ? "$" : "€";
+    amountInput.value = plainNum(toDisplayCurrency(state.amount));
+    var symbol = state.displayCurrency === "USD" ? "$" : "€";
+    costPerNetHeader.innerHTML = "Cost per<br>" + symbol + "1 net";
+    costPerNetHeader.title = "Total the employer pays for every " + symbol + "1 the employee takes home";
+    renderPresets();
+    renderFxStatus();
+  }
+
+  function setDisplayCurrency(currency) {
+    state.displayCurrency = currency === "USD" ? "USD" : "EUR";
+    applyCurrencyUI();
+    render();
+  }
+
+  function storeFx(key, rate, date, fetchedAt) {
+    try {
+      localStorage.setItem(key, JSON.stringify({
+        rate: rate,
+        date: date || null,
+        fetchedAt: fetchedAt || null,
+      }));
+    } catch (error) {}
+  }
+
+  function setFx(rate, source, date, preserveDisplayedAmount) {
+    if (!(rate > 0)) return;
+    var displayedAmount = toDisplayCurrency(state.amount);
+    state.eurUsd = rate;
+    if (preserveDisplayedAmount && state.displayCurrency === "USD") {
+      state.amount = displayedAmount / rate;
+    }
+    state.fxSource = source;
+    state.fxDate = date || null;
+    if (source === "manual") storeFx(FX_OVERRIDE_KEY, rate, null, null);
+    if (source === "ecb") storeFx(FX_CACHE_KEY, rate, date, Date.now());
+    applyCurrencyUI();
+    render();
+  }
+
+  function parseEcbCsv(csv) {
+    var lines = csv.trim().split(/\r?\n/);
+    if (lines.length < 2) throw new Error("ECB response did not contain an observation");
+    var headers = lines[0].split(",");
+    var values = lines[lines.length - 1].split(",");
+    var date = values[headers.indexOf("TIME_PERIOD")];
+    var rate = parseFloat(values[headers.indexOf("OBS_VALUE")]);
+    if (!(rate > 0) || !date) throw new Error("ECB response was incomplete");
+    return {rate: rate, date: date};
+  }
+
+  function fetchLatestFx(preserveDisplayedAmount, userInitiated) {
+    latestFxButton.disabled = true;
+    latestFxButton.textContent = "Checking…";
+    showFxFeedback("Contacting ECB…", "loading");
+    return fetch(ECB_FX_URL, {headers: {Accept: "text/csv"}})
+      .then(function (response) {
+        if (!response.ok) throw new Error("ECB request failed: " + response.status);
+        return response.text();
+      })
+      .then(function (csv) {
+        var latest = parseEcbCsv(csv);
+        try { localStorage.removeItem(FX_OVERRIDE_KEY); } catch (error) {}
+        setFx(latest.rate, "ecb", latest.date, preserveDisplayedAmount);
+        if (userInitiated) {
+          showFxFeedback("Updated from ECB · " + formatDate(latest.date), "success");
+        }
+      })
+      .catch(function () {
+        showFxFeedback("ECB refresh failed · keeping current rate", "error");
+      })
+      .then(function () {
+        latestFxButton.disabled = false;
+        latestFxButton.textContent = "Use latest ECB rate";
+      });
+  }
+
+  function cachedFxIsFresh() {
+    return cachedFx && Number(cachedFx.fetchedAt) > 0 &&
+      Date.now() - Number(cachedFx.fetchedAt) < FX_REFRESH_MS;
+  }
 
   function setMode(mode) {
     state.mode = mode;
@@ -412,20 +562,44 @@
     });
   }
   wireRadioKeys(".seg", "mode", setMode);
+  wireRadioKeys(".currency-option", "currency", setDisplayCurrency);
 
   amountInput.addEventListener("input", function () {
-    state.amount = parseAmount(amountInput.value);
+    state.amount = fromDisplayCurrency(parseAmount(amountInput.value));
     render();
   });
   amountInput.addEventListener("blur", function () {
-    if (state.amount > 0) amountInput.value = plainNum(state.amount);
+    if (state.amount > 0) amountInput.value = plainNum(toDisplayCurrency(state.amount));
   });
+
+  currencyButtons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      setDisplayCurrency(button.dataset.currency);
+    });
+  });
+  fxInput.addEventListener("change", function () {
+    var rate = parseFloat(fxInput.value);
+    if (rate > 0) setFx(rate, "manual", null, true);
+    else renderFxStatus();
+  });
+  latestFxButton.addEventListener("click", function () { fetchLatestFx(true, true); });
 
   document.getElementById("euOnly").addEventListener("change", function (e) {
     state.euOnly = e.target.checked; render();
   });
+  document.getElementById("euroOnly").addEventListener("change", function (e) {
+    state.euroOnly = e.target.checked; render();
+  });
   document.getElementById("showMonthly").addEventListener("change", function (e) {
     state.monthly = e.target.checked; render();
+  });
+  document.getElementById("showLivingCosts").addEventListener("change", function (e) {
+    state.showLivingCosts = e.target.checked;
+    if (!state.showLivingCosts && (state.sortKey === "costOfLiving" || state.sortKey === "surplus")) {
+      state.sortKey = state.mode === "net" ? "cost" : "net";
+      state.sortDir = state.mode === "net" ? 1 : -1;
+    }
+    render();
   });
   document.getElementById("search").addEventListener("input", function (e) {
     state.search = e.target.value; render();
@@ -448,22 +622,22 @@
     });
   });
 
-  // presets
-  var chips = document.getElementById("presets");
-  chips.innerHTML = PRESETS.map(function (v) {
-    return '<button class="chip" data-v="' + v + '">' + eur0.format(v) + "</button>";
-  }).join("");
+  // presets use round numbers in the selected display currency.
   chips.addEventListener("click", function (e) {
     var b = e.target.closest(".chip");
     if (!b) return;
-    state.amount = parseFloat(b.dataset.v);
-    amountInput.value = plainNum(state.amount);
+    var displayAmount = parseFloat(b.dataset.v);
+    state.amount = fromDisplayCurrency(displayAmount);
+    amountInput.value = plainNum(displayAmount);
     render();
   });
 
   // init — reflect hydrated state into the DOM, then render
-  amountInput.value = plainNum(state.amount);
   document.getElementById("euOnly").checked = state.euOnly;
+  document.getElementById("euroOnly").checked = state.euroOnly;
   document.getElementById("showMonthly").checked = state.monthly;
+  document.getElementById("showLivingCosts").checked = state.showLivingCosts;
+  applyCurrencyUI();
   setMode(state.mode);
+  if (state.fxSource !== "manual" && !cachedFxIsFresh()) fetchLatestFx(false, false);
 })();

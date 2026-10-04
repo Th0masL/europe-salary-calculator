@@ -288,71 +288,71 @@ FGS funding is already inside the 23.75%. `P_AT` cannot be bounded from salary a
 
 All sources below were accessed 2026-10-04.
 
-1. **Autoridade Tributária e Aduaneira, CIRS Article 68, “Taxas gerais”**, current text amended by Lei 73-A/2025 of 30 December 2025. Pinpoint: paragraph 1 table gives all nine 2026 bands/rates; paragraph 2 gives the average-rate-plus-excess method.  
+1. **Autoridade Tributária e Aduaneira, CIRS Article 68, “Taxas gerais”**, current text amended by Lei 73-A/2025 of 30 December 2025. Pinpoint: paragraph 1 table gives all nine 2026 bands/rates; paragraph 2 gives the average-rate-plus-excess method.
    <https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/cirs_rep/Pages/irs68.aspx>
 
-2. **Lei n.º 73-A/2025, Orçamento do Estado para 2026**, published 30 December 2025. Pinpoint: amendments to CIRS Article 68 and 2026 income-tax rules.  
+2. **Lei n.º 73-A/2025, Orçamento do Estado para 2026**, published 30 December 2025. Pinpoint: amendments to CIRS Article 68 and 2026 income-tax rules.
    <https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/legislacao/diplomas_legislativos/Documents/Lei-73-A-2025.pdf>
 
-3. **AT, CIRS Article 25, “Rendimentos do trabalho dependente: deduções”**, current text (Article 25(1)(a), 25(2)). Pinpoint: `8.54 × IAS`; mandatory social-protection contributions replace that amount when larger.  
+3. **AT, CIRS Article 25, “Rendimentos do trabalho dependente: deduções”**, current text (Article 25(1)(a), 25(2)). Pinpoint: `8.54 × IAS`; mandatory social-protection contributions replace that amount when larger.
    <https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/cirs_rep/Pages/irs25.aspx>
 
-4. **Portaria n.º 480-A/2025/1**, published 30 December 2025, annual IAS update; corroborated in **Segurança Social, Guia Prático — Inscrição, Alteração e Cessação do Serviço Doméstico**, 2026 edition, p.17. Pinpoint: “O valor do IAS em 2026 é igual a 537,13€.”  
-   <https://diariodarepublica.pt/dr/detalhe/portaria/480-a-2025-993056222>  
+4. **Portaria n.º 480-A/2025/1**, published 30 December 2025, annual IAS update; corroborated in **Segurança Social, Guia Prático — Inscrição, Alteração e Cessação do Serviço Doméstico**, 2026 edition, p.17. Pinpoint: “O valor do IAS em 2026 é igual a 537,13€.”
+   <https://diariodarepublica.pt/dr/detalhe/portaria/480-a-2025-993056222>
    <https://www.seg-social.pt/ptss/pssd/documento/cmc1xnoen00dakl2y9vd3tedj>
 
-5. **AT, CIRS Article 68-A, “Taxa adicional de solidariedade”**, current text. Pinpoint: paragraphs 1–2, 2.5% over EUR 80,000 through EUR 250,000 and 5% above EUR 250,000.  
+5. **AT, CIRS Article 68-A, “Taxa adicional de solidariedade”**, current text. Pinpoint: paragraphs 1–2, 2.5% over EUR 80,000 through EUR 250,000 and 5% above EUR 250,000.
    <https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/cirs_rep/Pages/irs68a.aspx>
 
-6. **AT, CIRS Article 70, “Mínimo de existência”**, current text amended by Lei 73-A/2025. Pinpoint: paragraph 1 EUR 12,880/IAS reference; paragraph 4(a) gross-income exclusion at `2.2 × 14 × IAS`.  
+6. **AT, CIRS Article 70, “Mínimo de existência”**, current text amended by Lei 73-A/2025. Pinpoint: paragraph 1 EUR 12,880/IAS reference; paragraph 4(a) gross-income exclusion at `2.2 × 14 × IAS`.
    <https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/cirs_rep/Pages/irs70.aspx>
 
-7. **AT, CIRS Article 78, “Deduções à coleta”**, current page dated 18 May 2026. Pinpoint: paragraph 1 deduction categories; paragraph 2 withholding as credit; paragraph 7 capped deduction categories (which omit Article 78(1)(b)).  
+7. **AT, CIRS Article 78, “Deduções à coleta”**, current page dated 18 May 2026. Pinpoint: paragraph 1 deduction categories; paragraph 2 withholding as credit; paragraph 7 capped deduction categories (which omit Article 78(1)(b)).
    <https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/cirs_rep/Pages/irs78.aspx>
 
-8. **AT, CIRS Article 78-B, “Dedução das despesas gerais familiares”**, current text amended by Decreto-Lei 49/2025 effective 1 July 2025. Pinpoint: paragraph 1, 35% and EUR 250 per-taxpayer cap; paragraphs 3 and 5, NIF/invoice communication requirements.  
+8. **AT, CIRS Article 78-B, “Dedução das despesas gerais familiares”**, current text amended by Decreto-Lei 49/2025 effective 1 July 2025. Pinpoint: paragraph 1, 35% and EUR 250 per-taxpayer cap; paragraphs 3 and 5, NIF/invoice communication requirements.
    <https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/cirs_rep/Pages/irs78b.aspx>
 
-9. **Despacho n.º 233-A/2026, Tabelas de retenção na fonte para o continente — 2026**, published Diário da República no. 3/2026, supplement, Series II, 6 January 2026; effective from 1 January 2026. Pinpoint: paragraphs 3(b), 10, 12, 15 and Table I on PDF pp.4–5 (document pagination), including every threshold, rate, and deduction used above.  
+9. **Despacho n.º 233-A/2026, Tabelas de retenção na fonte para o continente — 2026**, published Diário da República no. 3/2026, supplement, Series II, 6 January 2026; effective from 1 January 2026. Pinpoint: paragraphs 3(b), 10, 12, 15 and Table I on PDF pp.4–5 (document pagination), including every threshold, rate, and deduction used above.
    <https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/legislacao/diplomas_legislativos/Documents/Despacho-233-A-2026.pdf>
 
-10. **AT, CIRS Article 99-C, “Aplicação da retenção na fonte à categoria A”**, current text. Pinpoint: paragraph 5 autonomous holiday/Christmas withholding; paragraph 6 proportional withholding if subsidies are fractionated.  
+10. **AT, CIRS Article 99-C, “Aplicação da retenção na fonte à categoria A”**, current text. Pinpoint: paragraph 5 autonomous holiday/Christmas withholding; paragraph 6 proportional withholding if subsidies are fractionated.
     <https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/cirs_rep/Pages/irs99c.aspx>
 
-11. **Segurança Social, Guia Prático — Inscrição, Vinculação e Cessação de Atividade Trabalhador/Estagiário por Conta de Outrem**, 2026-current guide. Pinpoint: p.15 table, ordinary employee/global rates 23.75% employer, 11% employee, 34.75% total.  
+11. **Segurança Social, Guia Prático — Inscrição, Vinculação e Cessação de Atividade Trabalhador/Estagiário por Conta de Outrem**, 2026-current guide. Pinpoint: p.15 table, ordinary employee/global rates 23.75% employer, 11% employee, 34.75% total.
     <https://www.seg-social.pt/ptss/pssd/documento/cmc1xlxpq00d9kl2y0p3inyft>
 
-12. **Lei n.º 110/2009, Código dos Regimes Contributivos do Sistema Previdencial**, published 16 September 2009, consolidated current text supplied by DGSS. Pinpoint: Article 44 gross-remuneration base; Article 46(1) remuneration concept; Article 46(2)(a) base salary and (h) holiday/Christmas subsidies; Article 46(3) IRS-aligned incidence for meal allowances; Articles 49–51 composition of the global rate.  
+12. **Lei n.º 110/2009, Código dos Regimes Contributivos do Sistema Previdencial**, published 16 September 2009, consolidated current text supplied by DGSS. Pinpoint: Article 44 gross-remuneration base; Article 46(1) remuneration concept; Article 46(2)(a) base salary and (h) holiday/Christmas subsidies; Article 46(3) IRS-aligned incidence for meal allowances; Articles 49–51 composition of the global rate.
     <https://sisscontent.seg-social.pt/documents/10152/113014/C%C3%B3digo%2Bcontributivo%2B-%2Breda%C3%A7%C3%A3o%2Bem%2Bvigor/1e56fad5-0e2a-42c2-b94c-194c4aa64f74>
 
-13. **Código do Trabalho, Lei n.º 7/2009, consolidated official text**. Pinpoint: Article 263(1), Christmas subsidy equals one month and is due by 15 December; Article 264(1)–(3), holiday remuneration/subsidy and normal payment timing.  
+13. **Código do Trabalho, Lei n.º 7/2009, consolidated official text**. Pinpoint: Article 263(1), Christmas subsidy equals one month and is due by 15 December; Article 264(1)–(3), holiday remuneration/subsidy and normal payment timing.
     <https://guiadoinvestidor.dre.pt/DRE_Investidores/PDF.aspx?DecretoLeiId=38&Idioma=1>
 
-14. **Decreto-Lei n.º 59/2015, Novo regime do Fundo de Garantia Salarial**, published 21 April 2015, effective first working day of the following month. Pinpoint: annex Article 14(2), employer funding through the active-employment-policy portion of the employer's share of the global contribution rate.  
+14. **Decreto-Lei n.º 59/2015, Novo regime do Fundo de Garantia Salarial**, published 21 April 2015, effective first working day of the following month. Pinpoint: annex Article 14(2), employer funding through the active-employment-policy portion of the employer's share of the global contribution rate.
     <https://files.dre.pt/gratuitos/1s/2015/04/07700.pdf>
 
-15. **Lei n.º 98/2009, Regime de reparação de acidentes de trabalho**, published 4 September 2009, effective 1 January 2010. Pinpoint: Article 79(1), compulsory transfer to authorised insurer; Article 81(2)–(3), premium graduation by activity risk and prevention conditions.  
+15. **Lei n.º 98/2009, Regime de reparação de acidentes de trabalho**, published 4 September 2009, effective 1 January 2010. Pinpoint: Article 79(1), compulsory transfer to authorised insurer; Article 81(2)–(3), premium graduation by activity risk and prevention conditions.
     <https://files.dre.pt/1s/2009/09/17200/0589405920.pdf>
 
-16. **ASF, “Seguro de Acidentes de Trabalho”**, current consumer guidance; and **“Taxas cobradas através do portal da ASF”**, updated 11 February 2026. Pinpoint: mandatory insurance and remuneration-sensitive benefits; FAT charge of 0.15% of insured salaries. ASF's separate **“Taxas e impostos sem intervenção da ASF”**, also updated 11 February 2026, identifies 5% stamp duty on accident-insurance premiums.  
-    <https://www.fat.asf.com.pt/pt/web/site-pc/seguros/seguro-de-acidentes-de-trabalho>  
-    <https://www.asf.com.pt/taxas-cobradas-atraves-do-portal-asf>  
+16. **ASF, “Seguro de Acidentes de Trabalho”**, current consumer guidance; and **“Taxas cobradas através do portal da ASF”**, updated 11 February 2026. Pinpoint: mandatory insurance and remuneration-sensitive benefits; FAT charge of 0.15% of insured salaries. ASF's separate **“Taxas e impostos sem intervenção da ASF”**, also updated 11 February 2026, identifies 5% stamp duty on accident-insurance premiums.
+    <https://www.fat.asf.com.pt/pt/web/site-pc/seguros/seguro-de-acidentes-de-trabalho>
+    <https://www.asf.com.pt/taxas-cobradas-atraves-do-portal-asf>
     <https://www.asf.com.pt/taxas-e-impostos-sem-intervencao-da-asf>
 
-17. **AT, CIRS Article 2, “Rendimentos da categoria A”**, current text amended by Lei 45-A/2024 of 31 December 2024. Pinpoint: paragraph 2 broad remuneration; paragraph 3(b)(2) meal allowance excess and 70% voucher uplift; paragraph 14 public-sector reference.  
+17. **AT, CIRS Article 2, “Rendimentos da categoria A”**, current text amended by Lei 45-A/2024 of 31 December 2024. Pinpoint: paragraph 2 broad remuneration; paragraph 3(b)(2) meal allowance excess and 70% voucher uplift; paragraph 14 public-sector reference.
     <https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/codigos_tributarios/cirs_rep/Pages/irs2.aspx>
 
-18. **AT binding information, Processo 27870**, issued/published 2025. Pinpoint: point 8 confirms EUR 6.00 cash and EUR 10.20 card/voucher daily references; point 10 explains private-sector treatment.  
+18. **AT binding information, Processo 27870**, issued/published 2025. Pinpoint: point 8 confirms EUR 6.00 cash and EUR 10.20 card/voucher daily references; point 10 explains private-sector treatment.
     <https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/informacoes_vinculativas/rendimento/cirs/Documents/PIV_27870.pdf>
 
-19. **Lei n.º 73/2013, Regime financeiro das autarquias locais**, published 3 September 2013, as amended; official AT-hosted **Lei n.º 51/2018**, published 16 August 2018. Pinpoint: Article 26(1), up to 5% participation on collection net of Article 78(1) deductions; Article 26(4), difference from 5% is a taxpayer deduction.  
-    <https://files.dre.pt/gratuitos/1s/2013/09/16900.pdf>  
+19. **Lei n.º 73/2013, Regime financeiro das autarquias locais**, published 3 September 2013, as amended; official AT-hosted **Lei n.º 51/2018**, published 16 August 2018. Pinpoint: Article 26(1), up to 5% participation on collection net of Article 78(1) deductions; Article 26(4), difference from 5% is a taxpayer deduction.
+    <https://files.dre.pt/gratuitos/1s/2013/09/16900.pdf>
     <https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/legislacao/diplomas_legislativos/Documents/Lei_51_2018.pdf>
 
-20. **Câmara Municipal de Lisboa, Orçamento 2026 da Cidade de Lisboa**, approved December 2025. Pinpoint: p.21 explains 5% give-back in the 2026 budget relates to 2025 income and is calculated on collection after Article 78 deductions. This source supports the timing warning, not a rate assumed in the calculations.  
+20. **Câmara Municipal de Lisboa, Orçamento 2026 da Cidade de Lisboa**, approved December 2025. Pinpoint: p.21 explains 5% give-back in the 2026 budget relates to 2025 income and is calculated on collection after Article 78 deductions. This source supports the timing warning, not a rate assumed in the calculations.
     <https://www.lisboa.pt/fileadmin/info_administrativa/orcamento/2026/op/Orcamento_2026_2030.pdf>
 
-21. **AT, “Taxa Efetiva de Tributação (TET) em IRS para o ano de 2023”**, official liquidation-order explainer published for the 2023 assessment campaign. Pinpoint: liquidation lines 15 and 18 put the additional tax in total collection; lines 19–22 then subtract collection deductions and municipal benefit. The document is used only to resolve statutory calculation order, not for any 2026 rate or threshold.  
+21. **AT, “Taxa Efetiva de Tributação (TET) em IRS para o ano de 2023”**, official liquidation-order explainer published for the 2023 assessment campaign. Pinpoint: liquidation lines 15 and 18 put the additional tax in total collection; lines 19–22 then subtract collection deductions and municipal benefit. The document is used only to resolve statutory calculation order, not for any 2026 rate or threshold.
     <https://info.portaldasfinancas.gov.pt/pt/apoio_contribuinte/IRS/IRS_2023/Documents/Formula_Taxa_Tributacao_Efetiva_IRS2023.pdf>
 
 ## 9. Evidence assessment and unresolved items

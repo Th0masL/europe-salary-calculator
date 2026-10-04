@@ -2,17 +2,18 @@
 
 # 🇺🇸 Atlanta, GA
 
-[← All calculations](../README.md) · [US methodology](README.md) · [Formula source](../../../tools/calc_us.py)
+[← All calculations](../README.md) · [US methodology](README.md) · [Calculation source](../../../tools/calc_us.py)
 
 | Field | Value |
 |---|---|
-| Tax year | 2025 |
-| Last independently reviewed | Not recorded |
+| Tax year | 2026 |
+| Research completed | 2026-10-04 |
+| Independent review | Pending |
 | Calculation jurisdiction | Georgia |
 | Calculation currency | USD; website output converted to EUR |
 | Build exchange rate | 1 EUR = 1.1340 USD |
-| Formula fingerprint | `e10c016c4f17` |
-| Direct source links | Not recorded in `tools/calc_us.py` |
+| Calculation fingerprint | `016a9b8434a2` |
+| Official source links | 25; see the [shared US methodology](README.md) |
 
 ## Representative outputs
 
@@ -21,13 +22,13 @@ conversion. They are regression landmarks, not payroll quotes.
 
 | Annual gross | Employer cost | Take-home pay |
 |---:|---:|---:|
-| €60,000 | €64,854 | €47,087 |
-| €100,000 | €107,914 | €73,071 |
-| €200,000 | €212,791 | €137,720 |
+| €60,000 | €64,854 | €47,662 |
+| €100,000 | €107,914 | €73,807 |
+| €200,000 | €213,250 | €138,785 |
 
 ## What is calculated
 
-Federal income tax and employee FICA; 5.39% flat state income tax after a $12,000 deduction; employer FICA, FUTA, and representative new-employer SUTA.
+Federal income tax and employee FICA; 4.99% flat state income tax after a $15,000 deduction; employer FICA, FUTA, and representative new-employer SUTA.
 
 The model assumes a single filer using the standard deduction, with no dependents,
 credits, itemized deductions, benefits, or workers' compensation. See the
@@ -39,14 +40,14 @@ calculation used with this location configuration.
 This is the exact configuration passed to the shared calculation for Atlanta, GA.
 
 ```python
-{'income': ('flat', 0.0539, 12000), 'suta': (0.027, 9500)}
+{'income': ('flat', 0.0499, 15000), 'suta': (0.027, 9500)}
 ```
 
 ## Verification checklist
 
-- Confirm the federal and Georgia rules still apply for tax year 2025.
+- Confirm the federal and Georgia rules still apply for tax year 2026.
 - Verify the state deduction, brackets or flat rate, and any city income tax.
 - Verify employee disability or paid-leave charges and their wage caps.
 - Verify the representative new-employer SUTA rate and taxable wage base.
-- Add direct official source URLs and review metadata to `calc_us.py`.
+- Recheck the linked official sources and record an independent review when completed.
 - Compare the representative outputs with authoritative paycheck examples.

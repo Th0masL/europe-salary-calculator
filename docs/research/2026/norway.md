@@ -1,7 +1,7 @@
 # Norway employee payroll and income tax, 2026 — independent research dossier
 
-**All sources accessed:** 2026-10-04  
-**Currency:** Norwegian kroner (NOK)  
+**All sources accessed:** 2026-10-04
+**Currency:** Norwegian kroner (NOK)
 **Result type:** final 2026 annual tax liability and a statutory employer-cost floor, not a reproduction of tax-card withholding by pay period.
 
 ## 1. Reproducible case and scope

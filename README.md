@@ -49,15 +49,14 @@ increase together. The calculator:
    the target net and solve for the other two.
 
 Amounts outside the generated range are not extrapolated; the affected row shows
-`—`. Formula data covers €20,000–€600,000 gross in €5,000 increments.
+`—`. The generated data covers €20,000–€600,000 gross in €5,000 increments.
 
-### Formula model — computed from published rates
+### Calculation methodology — computed from published rates
 
-The live calculator uses Formula exclusively. It computes employer cost and net
-pay **from published tax rates**, with no EOR vendor in the runtime calculation —
+The live calculator computes employer cost and net pay **from published tax
+rates**, with no EOR vendor in the runtime calculation —
 one self-contained Python module per country under `tools/calc/`, sharing
-`tools/calc/engine.py`. European modules use 2026 rules; the US city calculator
-currently uses 2025 federal and state rules.
+`tools/calc/engine.py`. European modules and the US city calculator use 2026 rules.
 
 This is a **big-picture cross-country comparator**, not a payslip engine. Each
 location uses one representative, documented employee/employer scenario so that
@@ -74,13 +73,12 @@ location, employer class, insurance, pension, or payroll timing still matters, t
 country module selects and names one representative scenario instead of adding a
 country-specific control.
 
-Each module was assembled from named official or secondary sources (national tax
-authorities and tax-provider summaries), with vendor outputs used as sanity checks
-during the original research. The resulting reasoning, comparisons, and caveats
-remain in the module notes and Git history, but most original source URLs were not
-retained. The per-module docstrings record the rates and which figures were treated
-as confirmed versus representative; the audit below is the first systematic check
-against retained primary-source links. Coverage: **all 36 European
+Each European module now has a linked clean-room primary-source dossier containing
+the reasoning, official URLs, comparison findings, and caveats used during the 2026
+integration pass. The per-module docstrings record the active scenario and the
+generated calculation reference links the implementation directly to that dossier. A
+completed dossier is not the same as a second independent review, which remains
+explicitly tracked as pending. Coverage: **all 36 European
 entries (27 EU + Montenegro + Albania, Moldova, Norway, Serbia, Switzerland, Turkey,
 Ukraine, UK) + 11 US cities** = 47 total (the US from `tools/calc_us.py`).
 
@@ -99,7 +97,7 @@ wrong) is **whether employee social contributions are deductible from the
 income-tax base** — it varies by country (e.g. Lithuania / Czechia *no*, Latvia /
 Greece / Slovenia *yes*), so neighbours can't be assumed to match.
 
-The comparison table's input and output contract is always EUR. Non-euro formulas
+The generated comparison dataset uses EUR as its canonical internal unit. Non-euro formulas
 with currency-denominated thresholds or caps (such as Poland, Denmark, Sweden and
 Czechia) convert the EUR input to local currency for the calculation, then convert
 the result back using FX rates fetched at build time (the FX date is shown in the
@@ -107,6 +105,15 @@ app). Currency-invariant percentage-only formulas may calculate directly in EUR;
 eurozone countries also compute directly in EUR. Build with
 `python3 tools/build_formula.py` → `data/formula.json` + `.js`; drop a new
 `tools/calc/<country>.py` and it's picked up automatically.
+
+The interface can display and accept amounts in either EUR or USD. It fetches the
+latest daily EUR/USD reference rate directly from the ECB in the browser, caches
+the last successful observation for 24 hours and for offline use, and falls back to the bundled
+build-time rate. Users can enter and persist a manual rate, then return to the
+latest ECB observation with one action. US curves retain native USD points, so an
+updated EUR/USD rate rebases the US calculations instead of merely changing the
+currency symbol. Other non-euro countries still use their documented build-time
+FX conversions.
 
 The **“After living costs”** column subtracts Numbeo's estimated annual cost of
 living for a single person (capital city for countries, the city itself for US
@@ -117,15 +124,16 @@ entries) — a rough proxy for purchasing power.
 The 11 US cities are state-level: Seattle→WA, San Francisco→CA, New York→NY,
 Austin→TX, Atlanta→GA, Miami→FL, Chicago→IL, Los Angeles→CA, Boston→MA,
 Washington→DC, Denver→CO. (Miami/Florida, like Texas and Washington, has no state
-income tax — a strong high-take-home example.) Their Formula figures are calculated
-directly by `tools/calc_us.py`: 2025 federal brackets plus the standard deduction,
+income tax — a strong high-take-home example.) Their figures are calculated
+directly by `tools/calc_us.py`: 2026 federal brackets plus the standard deduction,
 FICA (with the Social Security cap), and state income tax, including NYC local tax
-for New York. Employer cost includes mandatory payroll taxes only (employer FICA +
-FUTA + SUTA; workers' compensation and benefits excluded). The model assumes a
-single filer taking the standard deduction.
+for New York. Employer cost includes mandatory payroll taxes and configured state
+paid-leave premiums for a representative larger employer; workers' compensation
+and benefits are excluded. The model assumes a single filer taking the standard
+deduction.
 
-US employer cost is small — **~8–10% on top of gross** (mostly the 7.65% employer
-FICA, tapering above the Social Security cap) — versus 50%+ across much of Europe.
+US employer cost is generally dominated by employer FICA, which tapers above the
+Social Security cap; state unemployment and paid-leave charges vary by location.
 Cost of living stays city-specific.
 
 ## Project layout
@@ -140,13 +148,13 @@ data/
   cost_of_living.json / .js  # current per-location living-cost estimates
 docs/calculations/            # generated, auditable location calculation reference
 tools/
-  calc/                      # Formula source: one module per country + engine.py
+  calc/                      # Calculation source: one module per country + engine.py
     engine.py                #   shared maths (progressive brackets, caps)
     <country>.py             #   36 European modules — compute(gross) -> (cost, net)
     country-data-prompt.md   #   reusable research prompt for gathering a country's rates
   build_formula.py           # build data/formula.json/.js from tools/calc/* (+ FX, + US)
   generate_calculation_docs.py # build/check the location calculation reference
-  calc_us.py                 # US cost + net from published 2025 federal/state rates
+  calc_us.py                 # US cost + net from published 2026 federal/state rates
   fetch_numbeo.py            # refresh cost-of-living from current Numbeo
 ```
 
@@ -159,7 +167,7 @@ works directly from `file://` without a server.
 # 1. US direct calculation from published rates
 python3 tools/calc_us.py          # → data/us.json + .js
 
-# 2. Formula data — per-country modules plus the US data from step 1
+# 2. Calculation data — per-country modules plus the US data from step 1
 python3 tools/build_formula.py    # → data/formula.json + .js  (fetches FX for non-euro)
 
 # 3. Optional: refresh cost-of-living from current Numbeo (slow; rate-limited)
@@ -203,7 +211,7 @@ directly from federal, state, and city rules rather than a flat effective rate:
   "name": "Austin, TX",
   "flag": "🇺🇸",
   "us": true,
-  "year": 2025,
+  "year": 2026,
   "costOfLiving": 35197,
   "points": [
     { "gross": 20000, "cost": 21781, "net": 17859 },

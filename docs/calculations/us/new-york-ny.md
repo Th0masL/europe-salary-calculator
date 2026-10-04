@@ -2,17 +2,18 @@
 
 # 🇺🇸 New York, NY
 
-[← All calculations](../README.md) · [US methodology](README.md) · [Formula source](../../../tools/calc_us.py)
+[← All calculations](../README.md) · [US methodology](README.md) · [Calculation source](../../../tools/calc_us.py)
 
 | Field | Value |
 |---|---|
-| Tax year | 2025 |
-| Last independently reviewed | Not recorded |
+| Tax year | 2026 |
+| Research completed | 2026-10-04 |
+| Independent review | Pending |
 | Calculation jurisdiction | New York |
 | Calculation currency | USD; website output converted to EUR |
 | Build exchange rate | 1 EUR = 1.1340 USD |
-| Formula fingerprint | `196a3d782bfa` |
-| Direct source links | Not recorded in `tools/calc_us.py` |
+| Calculation fingerprint | `9575faacdf1d` |
+| Official source links | 25; see the [shared US methodology](README.md) |
 
 ## Representative outputs
 
@@ -21,9 +22,9 @@ conversion. They are regression landmarks, not payroll quotes.
 
 | Annual gross | Employer cost | Take-home pay |
 |---:|---:|---:|
-| €60,000 | €65,090 | €44,769 |
-| €100,000 | €108,150 | €69,049 |
-| €200,000 | €213,028 | €129,187 |
+| €60,000 | €65,097 | €45,068 |
+| €100,000 | €108,157 | €69,388 |
+| €200,000 | €213,495 | €129,552 |
 
 ## What is calculated
 
@@ -41,11 +42,11 @@ This is the exact configuration passed to the shared calculation for New York, N
 ```python
 {'income': ('brackets',
             8000,
-            [(8500, 0.04),
-             (11700, 0.045),
-             (13900, 0.0525),
-             (80650, 0.055),
-             (215400, 0.06),
+            [(8500, 0.039),
+             (11700, 0.044),
+             (13900, 0.0515),
+             (80650, 0.054),
+             (215400, 0.059),
              (1077550, 0.0685),
              (5000000, 0.0965),
              (25000000, 0.103),
@@ -53,14 +54,14 @@ This is the exact configuration passed to the shared calculation for New York, N
  'local': ('brackets',
            0,
            [(12000, 0.03078), (25000, 0.03762), (50000, 0.03819), (inf, 0.03876)]),
- 'suta': (0.041, 12800)}
+ 'suta': (0.041, 13000)}
 ```
 
 ## Verification checklist
 
-- Confirm the federal and New York rules still apply for tax year 2025.
+- Confirm the federal and New York rules still apply for tax year 2026.
 - Verify the state deduction, brackets or flat rate, and any city income tax.
 - Verify employee disability or paid-leave charges and their wage caps.
 - Verify the representative new-employer SUTA rate and taxable wage base.
-- Add direct official source URLs and review metadata to `calc_us.py`.
+- Recheck the linked official sources and record an independent review when completed.
 - Compare the representative outputs with authoritative paycheck examples.

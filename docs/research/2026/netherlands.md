@@ -1,6 +1,6 @@
 # Netherlands employee salary and payroll rules — tax year 2026
 
-Research status: **independent clean-room reconstruction from Dutch primary official sources**.  
+Research status: **independent clean-room reconstruction from Dutch primary official sources**.
 Access date for every source: **2026-10-04**.
 
 ## Scope and modelling boundary

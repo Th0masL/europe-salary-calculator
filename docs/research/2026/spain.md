@@ -1,7 +1,7 @@
 # Spain employee payroll and income tax, 2026 — independent research dossier
 
-**Access date for every source:** 2026-10-04  
-**Currency:** euro (EUR)  
+**Access date for every source:** 2026-10-04
+**Currency:** euro (EUR)
 **Scope:** a 40-year-old Spanish tax resident, single, no children or other dependants, no disability, no other income, and no deductions or credits arising from housing, investment, donations, union/professional fees, mobility, or personal circumstances. The employee has an ordinary, full-time, indefinite private-sector contract and receives only regular cash salary.
 
 This is a clean-room reconstruction from the official sources listed below. It calculates final annual IRPF liability, not payroll withholding. Spanish withholding is a prepayment calculated under its own procedure and can differ from the final return.

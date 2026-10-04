@@ -1,6 +1,6 @@
 # Sweden employee salary and payroll rules — income year 2026
 
-Research status: **independent clean-room reconstruction from Swedish primary official sources**.  
+Research status: **independent clean-room reconstruction from Swedish primary official sources**.
 Access date for every source: **2026-10-04**.
 
 ## Scope and explicit assumptions

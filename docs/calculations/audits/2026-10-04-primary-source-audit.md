@@ -1,4 +1,4 @@
-# Formula primary-source audit — 2026-10-04
+# Calculation primary-source audit — 2026-10-04
 
 This is a first-pass provenance and discrepancy audit of the formulas currently
 used by the website. It is **not** a payroll certification. The review compared
@@ -164,4 +164,3 @@ income tax, but their employer-side assumptions still require that fuller review
 5. Complete primary-source packs for every **Partial** and **Insufficient evidence**
    row. Each pack should record URL, publication/effective date, access date,
    exact constants derived from it, and at least one reproducible worked example.
-

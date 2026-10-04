@@ -1,7 +1,7 @@
 # Slovenia — employee payroll research for income year 2026
 
-**Research status:** clean-room reconstruction from Slovenian primary sources only.  
-**Access date for every linked source:** 2026-10-04.  
+**Research status:** clean-room reconstruction from Slovenian primary sources only.
+**Access date for every linked source:** 2026-10-04.
 **Currency:** euro (EUR). Amounts are annual unless stated otherwise.
 
 ## Scope and result definition

@@ -25,6 +25,34 @@ class EngineTests(unittest.TestCase):
         self.assertEqual(progressive(15_000, brackets), 2_000)
         self.assertEqual(progressive(30_000, brackets), 6_000)
 
+
+class USCalculatorTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.us = importlib.import_module("calc_us")
+
+    def test_2026_federal_parameters_and_sources(self):
+        self.assertEqual(self.us.YEAR, 2026)
+        self.assertEqual(self.us.FED_STD_DEDUCTION, 16_100)
+        self.assertEqual(self.us.SS_WAGE_BASE, 184_500)
+        self.assertGreaterEqual(len(self.us.SOURCES), 10)
+
+    def test_mandatory_state_leave_levies_are_included(self):
+        washington = self.us.STATES["Washington"]
+        self.assertGreater(self.us.configured_levies(100_000, washington, "employee"), 1_300)
+        self.assertGreater(self.us.configured_levies(100_000, washington, "employer"), 300)
+        dc = self.us.STATES["District of Columbia"]
+        self.assertAlmostEqual(
+            self.us.configured_levies(100_000, dc, "employer"), 750.0, places=2
+        )
+
+    def test_illinois_exemption_stops_above_income_limit(self):
+        cfg = self.us.STATES["Illinois"]
+        self.assertAlmostEqual(self.us.state_income_tax(250_000, cfg),
+                               (250_000 - 2_925) * 0.0495, places=2)
+        self.assertAlmostEqual(self.us.state_income_tax(250_001, cfg),
+                               250_001 * 0.0495, places=2)
+
 class CountryModuleTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -397,8 +425,27 @@ class GeneratedDataTests(unittest.TestCase):
         for country in doc["countries"]:
             with self.subTest(country=country["name"]):
                 self.assertTrue(country.get("flag"))
+                self.assertRegex(country.get("currency", ""), r"^[A-Z]{3}$")
                 if not country.get("us"):
                     self.assertIsInstance(country.get("eu"), bool)
+
+        euro_locations = {country["name"] for country in doc["countries"]
+                          if country.get("currency") == "EUR"}
+        self.assertIn("Austria", euro_locations)
+        self.assertIn("Montenegro", euro_locations)
+        self.assertNotIn("Hungary", euro_locations)
+        self.assertNotIn("Romania", euro_locations)
+
+        self.assertGreater(doc["meta"].get("usFxEurUsd", 0), 0)
+        for country in (country for country in doc["countries"] if country.get("us")):
+            with self.subTest(native_currency=country["name"]):
+                self.assertEqual(country.get("nativeCurrency"), "USD")
+                self.assertEqual(len(country.get("nativePoints", [])), len(country["points"]))
+                self.assertAlmostEqual(
+                    country["nativePoints"][0]["gross"],
+                    20_000 * doc["meta"]["usFxEurUsd"],
+                    places=2,
+                )
 
     def test_all_generated_datasets(self):
         errors = []
@@ -415,6 +462,19 @@ class SiteConfigurationTests(unittest.TestCase):
 
         self.assertIn('src="data/formula.js"', index)
         self.assertIn("window.SALARY_DATA_FORMULA", app)
+        self.assertIn('id="euroOnly"', index)
+        self.assertIn('currency === "EUR"', app)
+        self.assertIn('class="currency-option" data-currency="USD"', index)
+        self.assertIn('id="eurUsdRate"', index)
+        self.assertNotIn('id="fxControl" hidden', index)
+        self.assertIn('data-sort="costOfLiving"', index)
+        self.assertIn('data-label="Cost of living"', app)
+        self.assertIn('id="showLivingCosts"', index)
+        self.assertIn("showLivingCosts: false", app)
+        self.assertIn("data-api.ecb.europa.eu/service/data/EXR/D.USD.EUR.SP00.A", app)
+        self.assertIn("FX_REFRESH_MS = 24 * 60 * 60 * 1000", app)
+        self.assertIn("Updated from ECB", app)
+        self.assertIn('country.nativeCurrency === "USD"', app)
         self.assertIn("cp data/cost_of_living.js data/formula.js _site/data/", deploy)
         self.assertNotIn("cp data/*.js _site/data/", deploy)
         self.assertEqual(

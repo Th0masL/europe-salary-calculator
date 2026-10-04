@@ -1,7 +1,7 @@
 # Ireland employee payroll and employer cost, 2026 — independent research dossier
 
-**All sources accessed:** 2026-10-04  
-**Currency:** euro (EUR)  
+**All sources accessed:** 2026-10-04
+**Currency:** euro (EUR)
 **Result type:** annual PAYE/USC plus pay-period PRSI and MyFutureFund deductions for regular cash salary.
 
 ## 1. Reproducible case and scope

@@ -2,17 +2,19 @@
 
 # 🇪🇪 Estonia
 
-[← All country calculations](README.md) · [Formula source](../../tools/calc/estonia.py)
+[← All country calculations](README.md) · [Calculation source](../../tools/calc/estonia.py) · [Primary-source dossier](../research/2026/estonia.md)
 
 | Field | Value |
 |---|---|
 | Tax year | 2026 |
-| Last independently reviewed | Not recorded |
+| Research completed | 2026-10-04 |
+| Independent review | Pending |
 | Calculation currency | EUR |
 | Model | Single employee; see assumptions below |
 | Employer-cost summary | Social tax 33% + employer unemployment 0.8% |
-| Formula fingerprint | `a5e5b5bcedd8` |
-| Direct source links | [https://www.emta.ee/en/private-client/taxes-and-payment/declaration-income/tax-rates](https://www.emta.ee/en/private-client/taxes-and-payment/declaration-income/tax-rates)<br>[https://www.emta.ee/en/private-client/taxes-and-payment/tax-incentives/calculation-basic-exemption](https://www.emta.ee/en/private-client/taxes-and-payment/tax-incentives/calculation-basic-exemption) |
+| Calculation fingerprint | `a5e5b5bcedd8` |
+| Primary-source evidence | [15 source URLs in the dossier](../research/2026/estonia.md) |
+| Calculation-module links | [https://www.emta.ee/en/private-client/taxes-and-payment/declaration-income/tax-rates](https://www.emta.ee/en/private-client/taxes-and-payment/declaration-income/tax-rates)<br>[https://www.emta.ee/en/private-client/taxes-and-payment/tax-incentives/calculation-basic-exemption](https://www.emta.ee/en/private-client/taxes-and-payment/tax-incentives/calculation-basic-exemption) |
 
 ## Representative outputs
 
@@ -85,4 +87,4 @@ def compute(gross):
 - Check every rate, bracket, cap, allowance, deduction, and employer charge.
 - Confirm whether employee contributions reduce the income-tax base.
 - Compare the representative outputs above with an official worked example.
-- Update the module, regenerate the Formula dataset and these docs, then review the diff.
+- Update the module, regenerate the calculation dataset and these docs, then review the diff.

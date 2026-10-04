@@ -2,17 +2,19 @@
 
 # 🇷🇴 Romania
 
-[← All country calculations](README.md) · [Formula source](../../tools/calc/romania.py)
+[← All country calculations](README.md) · [Calculation source](../../tools/calc/romania.py) · [Primary-source dossier](../research/2026/romania.md)
 
 | Field | Value |
 |---|---|
 | Tax year | 2026 |
-| Last independently reviewed | Not recorded |
+| Research completed | 2026-10-04 |
+| Independent review | Pending |
 | Calculation currency | EUR |
 | Model | Single employee; see assumptions below |
 | Employer-cost summary | Work insurance contribution (CAM) 2.25% only (pension/health are employee-side) |
-| Formula fingerprint | `b236f2dffbe5` |
-| Direct source links | Named in the model notes below; direct URLs have not yet been recorded. |
+| Calculation fingerprint | `a06b26182ae2` |
+| Primary-source evidence | [15 source URLs in the dossier](../research/2026/romania.md) |
+| Calculation-module links | Named in the model notes below; direct URLs have not yet been recorded. |
 
 ## Representative outputs
 
@@ -54,6 +56,7 @@ Sources: PwC Romania 2026 (CAS 25% / CASS 10% / CAM 2.25% / flat 10% PIT).
 These values are copied mechanically from the live calculation module.
 
 ```python
+BASE_CURRENCY = "RON"
 EMPLOYEE_SS = 0.25 + 0.10
 INCOME_TAX = 0.10
 EMPLOYER_CAM = 0.0225
@@ -81,4 +84,4 @@ def compute(gross):
 - Check every rate, bracket, cap, allowance, deduction, and employer charge.
 - Confirm whether employee contributions reduce the income-tax base.
 - Compare the representative outputs above with an official worked example.
-- Update the module, regenerate the Formula dataset and these docs, then review the diff.
+- Update the module, regenerate the calculation dataset and these docs, then review the diff.

@@ -2,7 +2,7 @@
 
 # United States calculation methodology
 
-[← All calculations](../README.md) · [Formula source](../../../tools/calc_us.py)
+[← All calculations](../README.md) · [Calculation source](../../../tools/calc_us.py)
 
 The 11 US entries share one federal and payroll-tax implementation, then apply a
 state configuration and, where relevant, city-specific tax. Calculations run in
@@ -11,43 +11,72 @@ rate of **1 EUR = 1.1340 USD**.
 
 ## Cities
 
-| City | State or district | Additional local/employee levy |
+| City | State or district | Additional state/local levy |
 |---|---|---|
-| 🇺🇸 [Seattle, WA](seattle-wa.md) | Washington | None |
-| 🇺🇸 [San Francisco, CA](san-francisco-ca.md) | California | employee leave/disability levy |
+| 🇺🇸 [Seattle, WA](seattle-wa.md) | Washington | employee leave/disability levy; employer leave/training levy |
+| 🇺🇸 [San Francisco, CA](san-francisco-ca.md) | California | employee leave/disability levy; employer leave/training levy |
 | 🇺🇸 [New York, NY](new-york-ny.md) | New York | NYC income tax |
 | 🇺🇸 [Austin, TX](austin-tx.md) | Texas | None |
 | 🇺🇸 [Atlanta, GA](atlanta-ga.md) | Georgia | None |
 | 🇺🇸 [Miami, FL](miami-fl.md) | Florida | None |
 | 🇺🇸 [Chicago, IL](chicago-il.md) | Illinois | None |
-| 🇺🇸 [Los Angeles, CA](los-angeles-ca.md) | California | employee leave/disability levy |
-| 🇺🇸 [Boston, MA](boston-ma.md) | Massachusetts | employee leave/disability levy |
-| 🇺🇸 [Washington, DC](washington-dc.md) | District of Columbia | None |
-| 🇺🇸 [Denver, CO](denver-co.md) | Colorado | employee leave/disability levy; Denver OPT |
+| 🇺🇸 [Los Angeles, CA](los-angeles-ca.md) | California | employee leave/disability levy; employer leave/training levy |
+| 🇺🇸 [Boston, MA](boston-ma.md) | Massachusetts | employee leave/disability levy; employer leave/training levy |
+| 🇺🇸 [Washington, DC](washington-dc.md) | District of Columbia | employer leave/training levy |
+| 🇺🇸 [Denver, CO](denver-co.md) | Colorado | employee leave/disability levy; employer leave/training levy; Denver OPT |
 
 ## Scope and assumptions
 
-- Tax year: **2025**.
+- Tax year: **2026**.
+- Research completed: **2026-10-04**; independent review: **pending**.
 - Single filer using the standard deduction; no dependents, credits, or itemizing.
 - Employee deductions include federal, state and applicable city income tax,
   employee FICA, and configured employee disability/paid-leave contributions.
 - Employer cost includes employer FICA, FUTA, representative new-employer SUTA,
-  and Denver OPT where applicable.
-- Benefits, workers' compensation, and employer paid-leave premiums in WA/DC are
-  excluded because they vary or sit outside this model's defined payroll-tax scope.
+  configured mandatory paid-leave/training premiums, and Denver OPT where applicable.
+- Washington and Massachusetts use the employer-paid tier for a representative
+  larger employer (50+ and 25+ employees respectively).
+- Benefits and workers' compensation are excluded.
 - SUTA rates vary by employer; the configured rates are representative estimates.
-- Direct official source URLs and an independent review date are not yet recorded.
+
+## Official sources
+
+- <https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026-including-amendments-from-the-one-big-beautiful-bill>
+- <https://www.ssa.gov/oact/COLA/cbb.html>
+- <https://edd.ca.gov/en/payroll_taxes/rates_and_withholding/>
+- <https://www.ftb.ca.gov/forms/2026/2026-540-es-instructions.html>
+- <https://www.ftb.ca.gov/forms/2025/2025-540-tax-rate-schedules.pdf>
+- <https://www.tax.ny.gov/bus/wt/rate.htm>
+- <https://www.tax.ny.gov/pdf/publications/withholding/nys50_t_nys.pdf>
+- <https://dor.georgia.gov/taxes/important-tax-updates>
+- <https://tax.illinois.gov/questionsandanswers/answer.851.html>
+- <https://www.mass.gov/info-details/tax-rates>
+- <https://tax.colorado.gov/sites/tax/files/documents/DR_0104EP_2026.pdf>
+- <https://otr.cfo.dc.gov/sites/default/files/dc/sites/otr/publication/attachments/2026_D40ES_Book_wLinks04012026.pdf>
+- <https://paidleave.wa.gov/estimate-your-paid-leave-payments/>
+- <https://wacaresfund.wa.gov/how-it-works>
+- <https://esd.wa.gov/employer-requirements/unemployment-taxes/how-we-determine-tax-rates>
+- <https://efte.twc.texas.gov/estimate_cbs_and_tax_rates.html>
+- <https://dol.georgia.gov/faqs-employers/employers-faqs-unemployment-insurance>
+- <https://floridarevenue.com/taxes/taxesfees/Pages/rt_rate.aspx>
+- <https://ides.illinois.gov/content/dam/soi/en/web/ides/ides_forms_and_publications/EA-50_2026.pdf>
+- <https://dol.ny.gov/node/131>
+- <https://www.mass.gov/info-details/employer-contributions-to-unemployment>
+- <https://www.mass.gov/info-details/paid-family-and-medical-leave-employer-contribution-rates-and-calculator>
+- <https://famli.colorado.gov/employers/premiums-and-finances>
+- <https://dcpaidfamilyleave.dc.gov/employer-information/>
+- <https://essp.does.dc.gov/DOES%20ESSP%20Employer%20Landing%20Page.html>
 
 ## Shared federal parameters
 
 ```python
-FED_STD_DEDUCTION = 15750
+FED_STD_DEDUCTION = 16100
 FED_BRACKETS = [  # (upper bound of taxable income, marginal rate)
-    (11925, 0.10), (48475, 0.12), (103350, 0.22), (197300, 0.24),
-    (250525, 0.32), (626350, 0.35), (float("inf"), 0.37),
+    (12400, 0.10), (50400, 0.12), (105700, 0.22), (201775, 0.24),
+    (256225, 0.32), (640600, 0.35), (float("inf"), 0.37),
 ]
 SS_RATE = 0.062
-SS_WAGE_BASE = 176100
+SS_WAGE_BASE = 184500
 MEDICARE_RATE = 0.0145
 ADD_MEDICARE_RATE = 0.009
 ADD_MEDICARE_THRESHOLD = 200000
@@ -74,6 +103,8 @@ def state_income_tax(gross, cfg):
         return 0.0
     if inc[0] == "flat":
         _, rate, std = inc
+        if gross > cfg.get("deduction_income_limit", float("inf")):
+            std = 0
         return max(0.0, gross - std) * rate
     if inc[0] == "brackets":
         _, std, brackets = inc
@@ -87,6 +118,11 @@ def local_tax(gross, cfg):
     _, std, brackets = loc
     return progressive(max(0.0, gross - std), brackets)
 
+def configured_levies(gross, cfg, side):
+    """Employee/employer state program charges as (rate, optional wage cap)."""
+    return sum(rate * (gross if cap is None else min(gross, cap))
+               for rate, cap in cfg.get(f"{side}_levies", ()))
+
 def employee_fica(gross):
     ss = min(gross, SS_WAGE_BASE) * SS_RATE
     medicare = gross * MEDICARE_RATE
@@ -98,18 +134,20 @@ def employer_payroll(gross, cfg):
     medicare = gross * MEDICARE_RATE
     suta_rate, suta_base = cfg["suta"]
     suta = min(gross, suta_base) * suta_rate
-    return ss + medicare + FUTA + suta
+    return ss + medicare + FUTA + suta + configured_levies(gross, cfg, "employer")
 
 def compute(gross_usd, cfg):
     """Return (employer_cost_usd, net_usd) for a single filer."""
     fed = progressive(max(0.0, gross_usd - FED_STD_DEDUCTION), FED_BRACKETS)
     state = state_income_tax(gross_usd, cfg)
+    if cfg.get("surtax"):
+        threshold, rate = cfg["surtax"]
+        state += max(0.0, gross_usd - threshold) * rate
     local = local_tax(gross_usd, cfg)
-    sdi_base = min(gross_usd, SS_WAGE_BASE) if cfg.get("sdi_capped") else gross_usd
-    sdi = sdi_base * cfg.get("sdi", 0.0)             # CA SDI (uncapped) / MA PFML, CO FAMLI (SS-capped)
+    employee_levies = configured_levies(gross_usd, cfg, "employee")
     head_ee, head_er = cfg.get("head_tax", (0.0, 0.0))  # fixed local head tax (Denver OPT)
     emp_fica = employee_fica(gross_usd)
-    net = gross_usd - fed - state - local - sdi - emp_fica - head_ee
+    net = gross_usd - fed - state - local - employee_levies - emp_fica - head_ee
     cost = gross_usd + employer_payroll(gross_usd, cfg) + head_er
     return round(cost), round(net)
 ```

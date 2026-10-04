@@ -2,17 +2,18 @@
 
 # 🇺🇸 Washington, DC
 
-[← All calculations](../README.md) · [US methodology](README.md) · [Formula source](../../../tools/calc_us.py)
+[← All calculations](../README.md) · [US methodology](README.md) · [Calculation source](../../../tools/calc_us.py)
 
 | Field | Value |
 |---|---|
-| Tax year | 2025 |
-| Last independently reviewed | Not recorded |
+| Tax year | 2026 |
+| Research completed | 2026-10-04 |
+| Independent review | Pending |
 | Calculation jurisdiction | District of Columbia |
 | Calculation currency | USD; website output converted to EUR |
 | Build exchange rate | 1 EUR = 1.1340 USD |
-| Formula fingerprint | `765ee0d38bbd` |
-| Direct source links | Not recorded in `tools/calc_us.py` |
+| Calculation fingerprint | `2f4524f822c5` |
+| Official source links | 25; see the [shared US methodology](README.md) |
 
 ## Representative outputs
 
@@ -21,13 +22,13 @@ conversion. They are regression landmarks, not payroll quotes.
 
 | Annual gross | Employer cost | Take-home pay |
 |---:|---:|---:|
-| €60,000 | €64,841 | €47,063 |
-| €100,000 | €107,901 | €71,926 |
-| €200,000 | €212,780 | €133,466 |
+| €60,000 | €65,307 | €47,372 |
+| €100,000 | €108,668 | €72,254 |
+| €200,000 | €214,755 | €133,723 |
 
 ## What is calculated
 
-Federal income tax and employee FICA; progressive state income tax after a $15,000 deduction; employer FICA, FUTA, and representative new-employer SUTA.
+Federal income tax and employee FICA; progressive state income tax after a $16,100 deduction; configured employer paid-leave/training contributions; employer FICA, FUTA, and representative new-employer SUTA.
 
 The model assumes a single filer using the standard deduction, with no dependents,
 credits, itemized deductions, benefits, or workers' compensation. See the
@@ -40,7 +41,7 @@ This is the exact configuration passed to the shared calculation for Washington,
 
 ```python
 {'income': ('brackets',
-            15000,
+            16100,
             [(10000, 0.04),
              (40000, 0.06),
              (60000, 0.065),
@@ -48,14 +49,15 @@ This is the exact configuration passed to the shared calculation for Washington,
              (500000, 0.0925),
              (1000000, 0.0975),
              (inf, 0.1075)]),
- 'suta': (0.027, 9000)}
+ 'suta': (0.029, 9000),
+ 'employer_levies': [(0.0075, None)]}
 ```
 
 ## Verification checklist
 
-- Confirm the federal and District of Columbia rules still apply for tax year 2025.
+- Confirm the federal and District of Columbia rules still apply for tax year 2026.
 - Verify the state deduction, brackets or flat rate, and any city income tax.
 - Verify employee disability or paid-leave charges and their wage caps.
 - Verify the representative new-employer SUTA rate and taxable wage base.
-- Add direct official source URLs and review metadata to `calc_us.py`.
+- Recheck the linked official sources and record an independent review when completed.
 - Compare the representative outputs with authoritative paycheck examples.

@@ -1,6 +1,6 @@
 # Bulgaria employee payroll, tax year 2026 — clean-room research dossier
 
-**Research cut-off/access date:** 2026-10-04.  
+**Research cut-off/access date:** 2026-10-04.
 **Scope:** resident, single employee aged 30, no children or other reliefs, one ordinary private-sector labour contract, third category of labour, equal regular cash salary in all 12 months. This is an independent reconstruction from Bulgarian primary official sources only. It does not rely on calculator code, generated data, prior audits, or another country dossier.
 
 ## Executive result

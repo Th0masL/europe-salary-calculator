@@ -1,7 +1,7 @@
 # Germany employee payroll, wage tax, and employer cost, 2026 — independent research dossier
 
-**All sources accessed:** 2026-10-04  
-**Currency:** euro (EUR)  
+**All sources accessed:** 2026-10-04
+**Currency:** euro (EUR)
 **Result type:** annualized payroll withholding and contribution liability for regular salary; not individualized tax-return advice.
 
 ## 1. Reproducible employee and employer

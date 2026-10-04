@@ -1,6 +1,6 @@
 # Latvia employee salary and payroll rules — tax year 2026
 
-Research status: **independent clean-room reconstruction from Latvian official sources**.  
+Research status: **independent clean-room reconstruction from Latvian official sources**.
 Access date for every web source: **2026-10-04**.
 
 ## Scope and calculation assumptions

@@ -2,17 +2,18 @@
 
 # 🇺🇸 Los Angeles, CA
 
-[← All calculations](../README.md) · [US methodology](README.md) · [Formula source](../../../tools/calc_us.py)
+[← All calculations](../README.md) · [US methodology](README.md) · [Calculation source](../../../tools/calc_us.py)
 
 | Field | Value |
 |---|---|
-| Tax year | 2025 |
-| Last independently reviewed | Not recorded |
+| Tax year | 2026 |
+| Research completed | 2026-10-04 |
+| Independent review | Pending |
 | Calculation jurisdiction | California |
 | Calculation currency | USD; website output converted to EUR |
 | Build exchange rate | 1 EUR = 1.1340 USD |
-| Formula fingerprint | `8f2932ca6572` |
-| Direct source links | Not recorded in `tools/calc_us.py` |
+| Calculation fingerprint | `ea27395aa4f6` |
+| Official source links | 25; see the [shared US methodology](README.md) |
 
 ## Representative outputs
 
@@ -21,13 +22,13 @@ conversion. They are regression landmarks, not payroll quotes.
 
 | Annual gross | Employer cost | Take-home pay |
 |---:|---:|---:|
-| €60,000 | €64,837 | €46,861 |
-| €100,000 | €107,897 | €70,894 |
-| €200,000 | €212,775 | €130,434 |
+| €60,000 | €64,843 | €47,126 |
+| €100,000 | €107,903 | €71,146 |
+| €200,000 | €213,241 | €130,513 |
 
 ## What is calculated
 
-Federal income tax and employee FICA; progressive state income tax after a $5,540 deduction; 1.20% employee paid-leave/disability contribution uncapped; employer FICA, FUTA, and representative new-employer SUTA.
+Federal income tax and employee FICA; progressive state income tax after a $5,706 deduction; configured employee paid-leave/disability contributions; configured employer paid-leave/training contributions; employer FICA, FUTA, and representative new-employer SUTA.
 
 The model assumes a single filer using the standard deduction, with no dependents,
 credits, itemized deductions, benefits, or workers' compensation. See the
@@ -40,25 +41,26 @@ This is the exact configuration passed to the shared calculation for Los Angeles
 
 ```python
 {'income': ('brackets',
-            5540,
-            [(10756, 0.01),
-             (25499, 0.02),
-             (40245, 0.04),
-             (55866, 0.06),
-             (70606, 0.08),
-             (360659, 0.093),
-             (432787, 0.103),
-             (721314, 0.113),
+            5706,
+            [(11079, 0.01),
+             (26264, 0.02),
+             (41452, 0.04),
+             (57542, 0.06),
+             (72724, 0.08),
+             (371479, 0.093),
+             (445771, 0.103),
+             (742953, 0.113),
              (inf, 0.123)]),
- 'sdi': 0.012,
+ 'employee_levies': [(0.013, None)],
+ 'employer_levies': [(0.001, 7000)],
  'suta': (0.034, 7000)}
 ```
 
 ## Verification checklist
 
-- Confirm the federal and California rules still apply for tax year 2025.
+- Confirm the federal and California rules still apply for tax year 2026.
 - Verify the state deduction, brackets or flat rate, and any city income tax.
 - Verify employee disability or paid-leave charges and their wage caps.
 - Verify the representative new-employer SUTA rate and taxable wage base.
-- Add direct official source URLs and review metadata to `calc_us.py`.
+- Recheck the linked official sources and record an independent review when completed.
 - Compare the representative outputs with authoritative paycheck examples.

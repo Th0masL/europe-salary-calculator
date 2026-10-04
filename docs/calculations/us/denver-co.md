@@ -2,17 +2,18 @@
 
 # 🇺🇸 Denver, CO
 
-[← All calculations](../README.md) · [US methodology](README.md) · [Formula source](../../../tools/calc_us.py)
+[← All calculations](../README.md) · [US methodology](README.md) · [Calculation source](../../../tools/calc_us.py)
 
 | Field | Value |
 |---|---|
-| Tax year | 2025 |
-| Last independently reviewed | Not recorded |
+| Tax year | 2026 |
+| Research completed | 2026-10-04 |
+| Independent review | Pending |
 | Calculation jurisdiction | Colorado |
 | Calculation currency | USD; website output converted to EUR |
 | Build exchange rate | 1 EUR = 1.1340 USD |
-| Formula fingerprint | `1de7051dac1d` |
-| Direct source links | Not recorded in `tools/calc_us.py` |
+| Calculation fingerprint | `65fc25910443` |
+| Official source links | 25; see the [shared US methodology](README.md) |
 
 ## Representative outputs
 
@@ -21,13 +22,13 @@ conversion. They are regression landmarks, not payroll quotes.
 
 | Annual gross | Employer cost | Take-home pay |
 |---:|---:|---:|
-| €60,000 | €65,401 | €47,362 |
-| €100,000 | €108,461 | €73,562 |
-| €200,000 | €213,339 | €138,952 |
+| €60,000 | €65,757 | €47,656 |
+| €100,000 | €108,992 | €73,861 |
+| €200,000 | €214,606 | €139,153 |
 
 ## What is calculated
 
-Federal income tax and employee FICA; 4.40% flat state income tax after a $15,000 deduction; 0.45% employee paid-leave/disability contribution capped at the Social Security wage base; Denver employee and employer occupational privilege tax; employer FICA, FUTA, and representative new-employer SUTA.
+Federal income tax and employee FICA; 4.40% flat state income tax after a $16,100 deduction; configured employee paid-leave/disability contributions; configured employer paid-leave/training contributions; Denver employee and employer occupational privilege tax; employer FICA, FUTA, and representative new-employer SUTA.
 
 The model assumes a single filer using the standard deduction, with no dependents,
 credits, itemized deductions, benefits, or workers' compensation. See the
@@ -39,18 +40,18 @@ calculation used with this location configuration.
 This is the exact configuration passed to the shared calculation for Denver, CO.
 
 ```python
-{'income': ('flat', 0.044, 15000),
- 'sdi': 0.0045,
- 'sdi_capped': True,
+{'income': ('flat', 0.044, 16100),
+ 'employee_levies': [(0.0044, 184500)],
+ 'employer_levies': [(0.0044, 184500)],
  'head_tax': (69.0, 48.0),
- 'suta': (0.0305, 27200)}
+ 'suta': (0.0305, 30600)}
 ```
 
 ## Verification checklist
 
-- Confirm the federal and Colorado rules still apply for tax year 2025.
+- Confirm the federal and Colorado rules still apply for tax year 2026.
 - Verify the state deduction, brackets or flat rate, and any city income tax.
 - Verify employee disability or paid-leave charges and their wage caps.
 - Verify the representative new-employer SUTA rate and taxable wage base.
-- Add direct official source URLs and review metadata to `calc_us.py`.
+- Recheck the linked official sources and record an independent review when completed.
 - Compare the representative outputs with authoritative paycheck examples.

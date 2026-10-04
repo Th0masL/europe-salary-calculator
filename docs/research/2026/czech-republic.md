@@ -1,7 +1,7 @@
 # Czech Republic employee payroll and employer cost, 2026 — independent research dossier
 
-**All sources accessed:** 2026-10-04  
-**Currency:** Czech koruna (CZK)  
+**All sources accessed:** 2026-10-04
+**Currency:** Czech koruna (CZK)
 **Result type:** 2026 monthly payroll deductions, annual personal-income-tax result, and employer cost.
 
 ## 1. Reproducible case

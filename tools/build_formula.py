@@ -83,8 +83,6 @@ def fx_as_of(fx):
 
 def us_entries():
     """Return browser dataset entries for the direct US calculator."""
-    us_cost_note = ("Employer FICA 7.65% (6.2% Social Security capped, 1.45% Medicare) + "
-                    "FUTA (federal unemployment) + SUTA (state unemployment)")
     us_path = ROOT / "data" / "us.json"
     if not us_path.exists():
         return []
@@ -92,8 +90,10 @@ def us_entries():
     year = us_doc.get("meta", {}).get("year")
     entries = []
     for c in us_doc["countries"]:
-        entry = {k: c[k] for k in ("name", "us", "flag", "costOfLiving", "points") if k in c}
-        entry["costNote"] = us_cost_note
+        entry = {k: c[k] for k in
+                 ("name", "us", "flag", "currency", "costOfLiving", "costNote", "points",
+                  "nativeCurrency", "nativePoints") if k in c}
+        entry.setdefault("currency", "USD")
         if year:
             entry["year"] = year
         entries.append(entry)
@@ -106,6 +106,14 @@ def us_updated():
     if not us_path.exists():
         return None
     return json.loads(us_path.read_text(encoding="utf-8")).get("meta", {}).get("fetched")
+
+
+def us_fx_eur_usd():
+    """Return the EUR->USD rate used for the bundled US fallback points."""
+    us_path = ROOT / "data" / "us.json"
+    if not us_path.exists():
+        return None
+    return json.loads(us_path.read_text(encoding="utf-8")).get("meta", {}).get("fxEurUsd")
 
 
 def write_doc(doc):
@@ -121,7 +129,24 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--us-only", action="store_true",
                         help="refresh US entries without rebuilding European FX conversions")
+    parser.add_argument("--metadata-only", action="store_true",
+                        help="refresh location metadata without recalculating salary points")
     args = parser.parse_args()
+    if args.metadata_only:
+        path = ROOT / "data" / "formula.json"
+        doc = json.loads(path.read_text(encoding="utf-8"))
+        modules = {m.NAME: m for m in load_country_modules()}
+        for entry in doc["countries"]:
+            if entry.get("us"):
+                entry["currency"] = "USD"
+                continue
+            module = modules[entry["name"]]
+            entry["currency"] = getattr(
+                module, "BASE_CURRENCY", getattr(module, "CURRENCY", "EUR")
+            )
+        write_doc(doc)
+        print(f"Updated currency metadata for {len(doc['countries'])} locations.")
+        return
     if args.us_only:
         path = ROOT / "data" / "formula.json"
         doc = json.loads(path.read_text(encoding="utf-8"))
@@ -129,6 +154,7 @@ def main():
         doc["countries"] = [c for c in doc["countries"] if not c.get("us")] + entries
         doc["meta"]["usYear"] = entries[0].get("year") if entries else None
         doc["meta"]["usUpdated"] = us_updated()
+        doc["meta"]["usFxEurUsd"] = us_fx_eur_usd()
         write_doc(doc)
         print(f"Wrote data/formula.json + .js with {len(entries)} refreshed US cities.")
         return
@@ -162,6 +188,7 @@ def main():
             "year": getattr(m, "YEAR", None),
             "flag": country_flag(m.NAME),
             "eu": m.NAME in EU_COUNTRIES,
+            "currency": getattr(m, "BASE_CURRENCY", cur),
             "points": points,
         }
         breakdown = getattr(m, "EMPLOYER_BREAKDOWN", None)
@@ -188,6 +215,7 @@ def main():
             "fxAsOf": fx_as_of(fx) if fx else None,
             "usYear": us_cities[0].get("year") if us_cities else None,
             "usUpdated": us_updated() if us_cities else None,
+            "usFxEurUsd": us_fx_eur_usd() if us_cities else None,
             "provides": ["gross", "cost", "net"],
             "salaryPoints": SALARY_POINTS,
             "note": ("Independent ground truth from published rates. Single filer, no "

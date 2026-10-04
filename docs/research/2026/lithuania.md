@@ -1,6 +1,6 @@
 # Lithuania employee payroll, income year 2026 — clean-room research dossier
 
-**Research/access date:** 2026-10-04  
+**Research/access date:** 2026-10-04
 **Scope:** a Lithuanian-resident, single employee with no children, below pension age, in ordinary indefinite private employment; regular cash salary only; no benefits, deductible expenses, disability NPD, or second-pillar contribution unless shown separately. Amounts are euro. This is an independent reconstruction from Lithuanian primary sources; it does not rely on calculator code or another country model.
 
 ## Reproducible scenario and important boundaries

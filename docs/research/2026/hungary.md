@@ -1,6 +1,6 @@
 # Hungary employee payroll, income year 2026 — clean-room research dossier
 
-**Research/access date:** 2026-10-04  
+**Research/access date:** 2026-10-04
 **Scope:** Hungarian-resident employee, age 30, single, no children, ordinary private-sector employment for the full year, regular gross cash salary only, and no personal, family, disability, young-person, mother, or other tax allowance. The employer is assumed to be in the ordinary social-contribution-tax regime, not KIVA, and to claim no employee-specific szocho credit. Amounts are Hungarian forint (HUF).
 
 This is an independent reconstruction from Hungarian primary sources. It does not rely on calculator code, generated data, prior audits, or another country model.

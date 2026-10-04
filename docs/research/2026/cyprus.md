@@ -1,6 +1,6 @@
 # Cyprus employee payroll, tax year 2026 — clean-room research dossier
 
-**Access/research date:** 2026-10-04  
+**Access/research date:** 2026-10-04
 **Scope:** Cyprus-resident, single employee aged 30, no children, ordinary private employment, equal cash salary in 12 monthly payrolls, no first-employment exemption, pension/provident contribution, life insurance, housing/green deduction, benefit in kind, or other income. All calculations were independently reconstructed from Cyprus government, Tax Department, and Social Insurance Services material.
 
 ## Headline result

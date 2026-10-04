@@ -2,17 +2,19 @@
 
 # 🇩🇪 Germany
 
-[← All country calculations](README.md) · [Formula source](../../tools/calc/germany.py)
+[← All country calculations](README.md) · [Calculation source](../../tools/calc/germany.py) · [Primary-source dossier](../research/2026/germany.md)
 
 | Field | Value |
 |---|---|
 | Tax year | 2026 |
-| Last independently reviewed | Not recorded |
+| Research completed | 2026-10-04 |
+| Independent review | Pending |
 | Calculation currency | EUR |
 | Model | Single employee; see assumptions below |
 | Employer-cost summary | Statutory floor: pension/unemployment + health/care (capped) + 0.15% insolvency; variable U1/U2 and accident insurance excluded |
-| Formula fingerprint | `87b48cc4a8ae` |
-| Direct source links | Named in the model notes below; direct URLs have not yet been recorded. |
+| Calculation fingerprint | `87b48cc4a8ae` |
+| Primary-source evidence | [15 source URLs in the dossier](../research/2026/germany.md) |
+| Calculation-module links | Named in the model notes below; direct URLs have not yet been recorded. |
 
 ## Representative outputs
 
@@ -116,4 +118,4 @@ def compute(gross):
 - Check every rate, bracket, cap, allowance, deduction, and employer charge.
 - Confirm whether employee contributions reduce the income-tax base.
 - Compare the representative outputs above with an official worked example.
-- Update the module, regenerate the Formula dataset and these docs, then review the diff.
+- Update the module, regenerate the calculation dataset and these docs, then review the diff.

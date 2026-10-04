@@ -1,8 +1,8 @@
 # Montenegro employee payroll — income year 2026
 
-**Research cut-off / access date:** 2026-10-04  
-**Currency:** euro (EUR)  
-**Location:** Podgorica (Glavni grad)  
+**Research cut-off / access date:** 2026-10-04
+**Currency:** euro (EUR)
+**Location:** Podgorica (Glavni grad)
 **Case:** resident, age 30, single, no children, ordinary private-sector office employee, twelve equal monthly cash salaries, no benefits, reliefs or employer incentive. For a reproducible employer-cost result, the employer is an ordinary company and Chamber member, and the employee is assumed **not** to be a union member.
 
 This is a clean-room reconstruction from Montenegro government, Tax Administration, Ministry, Official Gazette, Podgorica and statutory-fund sources. It distinguishes payroll withheld during 2026 from a possible later refund of pension contributions above the annual maximum, whose 2026 amount had not yet been promulgated at the research cut-off.

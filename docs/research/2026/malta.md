@@ -1,6 +1,6 @@
 # Malta employee payroll, tax year 2026 — clean-room research dossier
 
-**Access/research date:** 2026-10-04  
+**Access/research date:** 2026-10-04
 **Scope:** Malta-resident single employee, age 30, no children, ordinary full-time private employment, one main employment, equal regular basic salary over 52 contribution weeks, no benefits in kind or special tax regime. This dossier was reconstructed independently from Malta Tax and Customs Administration (MTCA), Department of Social Security, Department of Industrial and Employment Relations (DIER), and legislation sources.
 
 ## Executive result and gross-pay convention

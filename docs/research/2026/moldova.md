@@ -1,7 +1,7 @@
 # Moldova employee payroll — income year 2026
 
-**Research cut-off / access date:** 2026-10-04  
-**Currency:** Moldovan leu (MDL)  
+**Research cut-off / access date:** 2026-10-04
+**Currency:** Moldovan leu (MDL)
 **Scope:** resident individual, age 30, single, no children, ordinary private-sector employment, regular cash salary, no special regime or employer incentive. This is a clean-room reconstruction from Moldovan government, SFS, CNAS and CNAM material. It is an annual model of twelve equal monthly salaries unless stated otherwise.
 
 ## Result in one page

@@ -1,7 +1,7 @@
 # Italy employee payroll and income tax, 2026 — independent research dossier
 
-**All sources accessed:** 2026-10-04  
-**Currency:** euro (EUR)  
+**All sources accessed:** 2026-10-04
+**Currency:** euro (EUR)
 **Result type:** final annual economic liability and employer cost, not a reconstruction of each payslip withholding.
 
 ## 1. Fixed facts and why they are necessary

@@ -2,17 +2,18 @@
 
 # 🇺🇸 Chicago, IL
 
-[← All calculations](../README.md) · [US methodology](README.md) · [Formula source](../../../tools/calc_us.py)
+[← All calculations](../README.md) · [US methodology](README.md) · [Calculation source](../../../tools/calc_us.py)
 
 | Field | Value |
 |---|---|
-| Tax year | 2025 |
-| Last independently reviewed | Not recorded |
+| Tax year | 2026 |
+| Research completed | 2026-10-04 |
+| Independent review | Pending |
 | Calculation jurisdiction | Illinois |
 | Calculation currency | USD; website output converted to EUR |
 | Build exchange rate | 1 EUR = 1.1340 USD |
-| Formula fingerprint | `69f8dc15e4ed` |
-| Direct source links | Not recorded in `tools/calc_us.py` |
+| Calculation fingerprint | `f8b51820573c` |
+| Official source links | 25; see the [shared US methodology](README.md) |
 
 ## Representative outputs
 
@@ -21,13 +22,13 @@ conversion. They are regression landmarks, not payroll quotes.
 
 | Annual gross | Employer cost | Take-home pay |
 |---:|---:|---:|
-| €60,000 | €65,112 | €46,902 |
-| €100,000 | €108,172 | €73,062 |
-| €200,000 | €213,049 | €138,152 |
+| €60,000 | €65,048 | €47,154 |
+| €100,000 | €108,108 | €73,314 |
+| €200,000 | €213,445 | €138,332 |
 
 ## What is calculated
 
-Federal income tax and employee FICA; 4.95% flat state income tax after a $2,775 deduction; employer FICA, FUTA, and representative new-employer SUTA.
+Federal income tax and employee FICA; 4.95% flat state income tax after a $2,925 deduction; employer FICA, FUTA, and representative new-employer SUTA.
 
 The model assumes a single filer using the standard deduction, with no dependents,
 credits, itemized deductions, benefits, or workers' compensation. See the
@@ -39,14 +40,16 @@ calculation used with this location configuration.
 This is the exact configuration passed to the shared calculation for Chicago, IL.
 
 ```python
-{'income': ('flat', 0.0495, 2775), 'suta': (0.0395, 13916)}
+{'income': ('flat', 0.0495, 2925),
+ 'deduction_income_limit': 250000,
+ 'suta': (0.0335, 14250)}
 ```
 
 ## Verification checklist
 
-- Confirm the federal and Illinois rules still apply for tax year 2025.
+- Confirm the federal and Illinois rules still apply for tax year 2026.
 - Verify the state deduction, brackets or flat rate, and any city income tax.
 - Verify employee disability or paid-leave charges and their wage caps.
 - Verify the representative new-employer SUTA rate and taxable wage base.
-- Add direct official source URLs and review metadata to `calc_us.py`.
+- Recheck the linked official sources and record an independent review when completed.
 - Compare the representative outputs with authoritative paycheck examples.

@@ -2,17 +2,18 @@
 
 # 🇺🇸 Austin, TX
 
-[← All calculations](../README.md) · [US methodology](README.md) · [Formula source](../../../tools/calc_us.py)
+[← All calculations](../README.md) · [US methodology](README.md) · [Calculation source](../../../tools/calc_us.py)
 
 | Field | Value |
 |---|---|
-| Tax year | 2025 |
-| Last independently reviewed | Not recorded |
+| Tax year | 2026 |
+| Research completed | 2026-10-04 |
+| Independent review | Pending |
 | Calculation jurisdiction | Texas |
 | Calculation currency | USD; website output converted to EUR |
 | Build exchange rate | 1 EUR = 1.1340 USD |
-| Formula fingerprint | `c4139058dacc` |
-| Direct source links | Not recorded in `tools/calc_us.py` |
+| Calculation fingerprint | `00ef2d99d526` |
+| Official source links | 25; see the [shared US methodology](README.md) |
 
 ## Representative outputs
 
@@ -21,9 +22,9 @@ conversion. They are regression landmarks, not payroll quotes.
 
 | Annual gross | Employer cost | Take-home pay |
 |---:|---:|---:|
-| €60,000 | €64,841 | €49,750 |
-| €100,000 | €107,901 | €77,891 |
-| €200,000 | €212,780 | €147,930 |
+| €60,000 | €64,841 | €49,996 |
+| €100,000 | €107,901 | €78,137 |
+| €200,000 | €213,239 | €148,105 |
 
 ## What is calculated
 
@@ -44,9 +45,9 @@ This is the exact configuration passed to the shared calculation for Austin, TX.
 
 ## Verification checklist
 
-- Confirm the federal and Texas rules still apply for tax year 2025.
+- Confirm the federal and Texas rules still apply for tax year 2026.
 - Verify the state deduction, brackets or flat rate, and any city income tax.
 - Verify employee disability or paid-leave charges and their wage caps.
 - Verify the representative new-employer SUTA rate and taxable wage base.
-- Add direct official source URLs and review metadata to `calc_us.py`.
+- Recheck the linked official sources and record an independent review when completed.
 - Compare the representative outputs with authoritative paycheck examples.

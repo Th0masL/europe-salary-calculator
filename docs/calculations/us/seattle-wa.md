@@ -2,17 +2,18 @@
 
 # 🇺🇸 Seattle, WA
 
-[← All calculations](../README.md) · [US methodology](README.md) · [Formula source](../../../tools/calc_us.py)
+[← All calculations](../README.md) · [US methodology](README.md) · [Calculation source](../../../tools/calc_us.py)
 
 | Field | Value |
 |---|---|
-| Tax year | 2025 |
-| Last independently reviewed | Not recorded |
+| Tax year | 2026 |
+| Research completed | 2026-10-04 |
+| Independent review | Pending |
 | Calculation jurisdiction | Washington |
 | Calculation currency | USD; website output converted to EUR |
 | Build exchange rate | 1 EUR = 1.1340 USD |
-| Formula fingerprint | `c39732c5ead6` |
-| Direct source links | Not recorded in `tools/calc_us.py` |
+| Calculation fingerprint | `f4710c5f54d9` |
+| Official source links | 25; see the [shared US methodology](README.md) |
 
 ## Representative outputs
 
@@ -21,13 +22,13 @@ conversion. They are regression landmarks, not payroll quotes.
 
 | Annual gross | Employer cost | Take-home pay |
 |---:|---:|---:|
-| €60,000 | €65,377 | €49,750 |
-| €100,000 | €108,489 | €77,891 |
-| €200,000 | €213,368 | €147,930 |
+| €60,000 | €65,571 | €49,164 |
+| €100,000 | €108,872 | €76,750 |
+| €200,000 | €214,412 | €145,632 |
 
 ## What is calculated
 
-Federal income tax and employee FICA; no state income tax; employer FICA, FUTA, and representative new-employer SUTA.
+Federal income tax and employee FICA; no state income tax; configured employee paid-leave/disability contributions; configured employer paid-leave/training contributions; employer FICA, FUTA, and representative new-employer SUTA.
 
 The model assumes a single filer using the standard deduction, with no dependents,
 credits, itemized deductions, benefits, or workers' compensation. See the
@@ -39,14 +40,17 @@ calculation used with this location configuration.
 This is the exact configuration passed to the shared calculation for Seattle, WA.
 
 ```python
-{'income': None, 'suta': (0.0125, 72800)}
+{'income': None,
+ 'suta': (0.0125, 78200),
+ 'employee_levies': [(0.00807159, 184500), (0.0058, None)],
+ 'employer_levies': [(0.0032284099999999997, 184500)]}
 ```
 
 ## Verification checklist
 
-- Confirm the federal and Washington rules still apply for tax year 2025.
+- Confirm the federal and Washington rules still apply for tax year 2026.
 - Verify the state deduction, brackets or flat rate, and any city income tax.
 - Verify employee disability or paid-leave charges and their wage caps.
 - Verify the representative new-employer SUTA rate and taxable wage base.
-- Add direct official source URLs and review metadata to `calc_us.py`.
+- Recheck the linked official sources and record an independent review when completed.
 - Compare the representative outputs with authoritative paycheck examples.
