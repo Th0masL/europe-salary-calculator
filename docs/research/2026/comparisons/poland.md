@@ -6,6 +6,13 @@
 - Current implementation: `tools/calc/poland.py`
 - Comparison date: 2026-10-04
 
+## Implementation update — 2026-10-04
+
+The 4% solidarity levy is now included in final annual net and tested below and
+above its PLN 1m statutory-income threshold. The representative 1.67% accident
+rate and no-PPK scenario remain fixed; payslip-level grosz differences are accepted
+under the comparator's material-accuracy contract.
+
 ## Current implementation scenario
 
 Resident single age-30 employee, one ordinary employment contract, standard PLN 3,000 expense, no PPK, and the dossier's 1.67% small-payer accident scenario. It uses annualized arithmetic rather than the dossier's monthly grosz calculation.

@@ -11,7 +11,7 @@
 | Calculation currency | ALL |
 | Model | Single employee; see assumptions below |
 | Employer-cost summary | Social security 15.0% (capped at ALL 186,416/mo) + health 1.7% |
-| Formula fingerprint | `06f7386b6d46` |
+| Formula fingerprint | `597b756152c9` |
 | Direct source links | Named in the model notes below; direct URLs have not yet been recorded. |
 
 ## Representative outputs
@@ -21,9 +21,9 @@ conversion where applicable. They are regression landmarks, not payroll quotes.
 
 | Annual gross | Employer cost | Take-home pay |
 |---:|---:|---:|
-| €60,000 | €64,664 | €45,335 |
-| €100,000 | €105,344 | €75,455 |
-| €200,000 | €207,044 | €150,755 |
+| €60,000 | €64,664 | €45,987 |
+| €100,000 | €105,344 | €76,107 |
+| €200,000 | €207,044 | €151,407 |
 
 ## Model notes and assumptions
 
@@ -32,8 +32,9 @@ Albania salary calculation — computed from published tax rates.
 Rates are 2026 (single). Currency ALL (FX path).
  - Employee: social security 9.5% (wage base capped at ALL 186,416/mo) + health
    1.7% (on full gross, no cap).
- - Income tax: progressive monthly withholding table — 0 up to ALL 30,000/mo, 13%
-   to ALL 150,000/mo, 23% above — applied to GROSS (contributions not deductible).
+ - Income tax: the signed personal-status declaration provides an income-dependent
+   monthly personal deduction (ALL 30,000 in the website's range). Taxable monthly
+   employment income is taxed at 13% through ALL 170,000 and 23% above.
  - Employer: social security 15.0% (same capped base) + health 1.7%.
 
 Our salary range sits well above the SS cap, so the social part is a flat cash
@@ -53,7 +54,7 @@ EE_SS = 0.095
 EE_HEALTH = 0.017
 ER_SS = 0.15
 ER_HEALTH = 0.017
-PIT = [(360000, 0.0), (1800000, 0.13), (INF, 0.23)]
+MONTHLY_PIT_THRESHOLD = 170000
 ```
 
 ## Executable calculation
@@ -62,14 +63,29 @@ This is the exact function used to build the salary dataset. Shared progressive
 tax brackets use [`engine.progressive`](../../tools/calc/engine.py).
 
 ```python
+def monthly_personal_deduction(monthly_gross):
+    if monthly_gross <= 50000:
+        return 50000
+    if monthly_gross <= 60000:
+        return 35000
+    return 30000
+
 def compute(gross):
-    """Return (employer_cost, net) in ALL; build_formula converts to EUR."""
-    ss_base = min(max(gross, SS_FLOOR), SS_CAP)
-    employee = ss_base * EE_SS + gross * EE_HEALTH
-    pit = progressive(gross, PIT)        # withholding table is on gross
+    """Return annual amounts in ALL for 12 equal monthly payments."""
+    monthly_gross = gross / 12
+    monthly_ss_base = min(max(monthly_gross, SS_FLOOR / 12), SS_CAP / 12)
+    ss_base = monthly_ss_base * 12
+    health_base = max(monthly_gross, SS_FLOOR / 12) * 12
+    employee = ss_base * EE_SS + health_base * EE_HEALTH
+
+    monthly_taxable = max(0.0, monthly_gross - monthly_personal_deduction(monthly_gross))
+    pit = progressive(
+        monthly_taxable,
+        [(MONTHLY_PIT_THRESHOLD, 0.13), (INF, 0.23)],
+    ) * 12
 
     net = gross - employee - pit
-    employer_cost = gross + ss_base * ER_SS + gross * ER_HEALTH
+    employer_cost = gross + ss_base * ER_SS + health_base * ER_HEALTH
     return employer_cost, net
 ```
 

@@ -12,7 +12,7 @@ logic has not yet been changed from these findings.
 
 | Country | Research | Code comparison | Integration | Independent review |
 |---|---|---|---|---|
-| Albania | [Dossier complete](albania.md) | [Compared](comparisons/albania.md) | Pending | Pending |
+| Albania | [Dossier complete](albania.md) | [Compared](comparisons/albania.md) | Core fixes implemented | Pending |
 | Austria | [Dossier complete](austria.md) | [Compared](comparisons/austria.md) | Pending | Pending |
 | Belgium | [Dossier complete](belgium.md) | [Compared](comparisons/belgium.md) | Pending | Pending |
 | Bulgaria | [Dossier complete](bulgaria.md) | [Compared](comparisons/bulgaria.md) | Core fixes implemented | Pending |
@@ -33,10 +33,10 @@ logic has not yet been changed from these findings.
 | Luxembourg | [Dossier complete](luxembourg.md) | [Compared](comparisons/luxembourg.md) | Pending | Pending |
 | Malta | [Dossier complete](malta.md) | [Compared](comparisons/malta.md) | Core fixes implemented | Pending |
 | Moldova | [Dossier complete](moldova.md) | [Compared](comparisons/moldova.md) | Core fixes implemented | Pending |
-| Montenegro | [Dossier complete](montenegro.md) | [Compared](comparisons/montenegro.md) | Pending | Pending |
+| Montenegro | [Dossier complete](montenegro.md) | [Compared](comparisons/montenegro.md) | Core fixes implemented | Pending |
 | Netherlands | [Dossier complete](netherlands.md) | [Compared](comparisons/netherlands.md) | Pending | Pending |
 | Norway | [Dossier complete](norway.md) | [Compared](comparisons/norway.md) | Pending | Pending |
-| Poland | [Dossier complete](poland.md) | [Compared](comparisons/poland.md) | Pending | Pending |
+| Poland | [Dossier complete](poland.md) | [Compared](comparisons/poland.md) | Core fixes implemented | Pending |
 | Portugal | [Dossier complete](portugal.md) | [Compared](comparisons/portugal.md) | Core fixes implemented | Pending |
 | Romania | [Dossier complete](romania.md) | [Compared](comparisons/romania.md) | Pending | Pending |
 | Serbia | [Dossier complete](serbia.md) | [Compared](comparisons/serbia.md) | Pending | Pending |

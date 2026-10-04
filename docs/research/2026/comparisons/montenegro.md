@@ -6,6 +6,13 @@
 - Current implementation: `tools/calc/montenegro.py`
 - Comparison date: 2026-10-04
 
+## Implementation update — 2026-10-04
+
+The unsupported PIO payroll cap was removed, Podgorica surtax moved to employer
+cost, and the Labour Fund and Chamber levies added. The formula now represents
+in-year payroll before any later PIO refund and is regression-tested at EUR 20k,
+60k and 600k. The unresolved final 2026 refund maximum remains documented.
+
 ## Current implementation scenario
 
 Both artifacts use Podgorica and equal monthly salary. The dossier reports in-year payroll cash because the 2026 annual PIO maximum had not been officially located by the access date; any excess refund is a later employee procedure. The module hard-codes an unsupported annual cap and treats municipal surtax as an employee deduction.

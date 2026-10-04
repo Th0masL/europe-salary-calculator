@@ -152,6 +152,35 @@ class CorrectedCountryRegressionTests(unittest.TestCase):
                 self.assertAlmostEqual(actual[0], expected[0], places=2)
                 self.assertAlmostEqual(actual[1], expected[1], delta=0.01)
 
+    def test_poland_high_income_solidarity_levy(self):
+        poland = importlib.import_module("poland")
+        # The annual approximation differs from monthly statutory rounding only
+        # by grosze; the PLN 75,667 levy must be present at PLN 3 million.
+        self.assertAlmostEqual(poland.compute(1_000_000)[1], 585_331.08, delta=0.50)
+        self.assertAlmostEqual(poland.compute(3_000_000)[1], 1_660_754.11, delta=0.50)
+
+    def test_montenegro_in_year_payroll_baseline(self):
+        montenegro = importlib.import_module("montenegro")
+        vectors = {
+            20_000: (20_422.60, 16_376.00),
+            60_000: (61_710.60, 46_176.00),
+            600_000: (619_098.60, 448_476.00),
+        }
+        for gross, expected in vectors.items():
+            with self.subTest(gross=gross):
+                self.assertAmountsAlmostEqual(montenegro.compute(gross), expected)
+
+    def test_albania_personal_deduction_and_taxable_bands(self):
+        albania = importlib.import_module("albania")
+        vectors = {
+            2_000_000: (2_334_000.00, 1_562_800.00),
+            6_000_000: (6_437_548.80, 4_592_285.76),
+            60_000_000: (61_355_548.80, 45_254_285.76),
+        }
+        for gross, expected in vectors.items():
+            with self.subTest(gross=gross):
+                self.assertAmountsAlmostEqual(albania.compute(gross), expected)
+
 
 class GeneratedDataTests(unittest.TestCase):
     def test_formula_range_and_5k_resolution(self):

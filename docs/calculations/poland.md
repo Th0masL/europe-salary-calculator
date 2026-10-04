@@ -11,7 +11,7 @@
 | Calculation currency | PLN |
 | Model | Single employee; see assumptions below |
 | Employer-cost summary | Pension+disability 16.26% (capped) + accident 1.67% + Labour Fund 2.45% + FGS 0.1% |
-| Formula fingerprint | `abb9c4cfeea7` |
+| Formula fingerprint | `afb3da312862` |
 | Direct source links | Named in the model notes below; direct URLs have not yet been recorded. |
 
 ## Representative outputs
@@ -42,6 +42,8 @@ Structure:
  - PIT progressive 12% / 32% over PLN 120,000, on (gross − ZUS social − KUP). The
    PLN 30,000 tax-free amount is delivered as a PLN 3,600 annual tax reduction;
    KUP (koszty uzyskania) = PLN 3,000/yr standard.
+ - High-income solidarity levy: 4% of qualifying salary income after KUP and
+   employee social contributions above PLN 1,000,000.
  - Employer ~20.48%: pension 9.76% + disability 6.5% (capped) + accident 1.67% +
    Labour Fund 2.45% + FGŚP 0.1% (uncapped). Accident rate is sector-dependent.
 
@@ -59,6 +61,8 @@ ZUS_CAP = 282600
 PIT_THRESHOLD = 120000
 TAX_REDUCTION = 3600
 KUP = 3000
+SOLIDARITY_THRESHOLD = 1_000_000
+SOLIDARITY_RATE = 0.04
 EE_PENS_DIS = 0.0976 + 0.015
 EE_SICKNESS = 0.0245
 HEALTH = 0.09
@@ -84,7 +88,12 @@ def compute(gross):
     else:
         pit = (PIT_THRESHOLD * 0.12 - TAX_REDUCTION) + (taxable - PIT_THRESHOLD) * 0.32
 
-    net = gross - zus_social - health - pit
+    # Separately assessed after year-end. Polish declarations round the excess
+    # base and levy to whole złoty; floor(x + 0.5) implements ordinary half-up.
+    solidarity_base = int(max(0.0, gross - zus_social - KUP - SOLIDARITY_THRESHOLD) + 0.5)
+    solidarity = int(solidarity_base * SOLIDARITY_RATE + 0.5)
+
+    net = gross - zus_social - health - pit - solidarity
     employer_cost = gross + capped * ER_PENS_DIS + gross * ER_OTHER
     return employer_cost, net
 ```

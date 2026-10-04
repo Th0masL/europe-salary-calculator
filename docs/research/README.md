@@ -26,7 +26,11 @@ Unless a dossier records a necessary jurisdiction-specific exception, research u
 
 Researchers must distinguish universal statutory rules from regional, municipal,
 sectoral, risk-class, insurer, age, employer-history, or employee-choice inputs.
-Variable inputs must not be presented as universally accurate constants.
+The product intentionally uses one representative baseline rather than exposing
+every variable as an input. A selected assumption must be documented and must not
+be presented as a universal statutory constant. Minor payslip-rounding and unusual
+payment-pattern differences may remain when they do not affect the broad comparison.
+Adding a country-specific UI input requires an explicit product decision.
 
 ## Evidence standard
 

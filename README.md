@@ -59,6 +59,14 @@ one self-contained Python module per country under `tools/calc/`, sharing
 `tools/calc/engine.py`. European modules use 2026 rules; the US city calculator
 currently uses 2025 federal and state rules.
 
+This is a **big-picture cross-country comparator**, not a payslip engine. Each
+location uses one representative, documented employee/employer scenario so that
+the table remains understandable and comparable. The project prioritizes material
+tax, contribution, and employer-cost differences that can change the ranking; it
+does not attempt to model every municipality, industry, pension election, family
+status, payment pattern, or payroll-rounding edge case. Country-specific controls
+are added only when their comparison value justifies the extra interface complexity.
+
 Each module was assembled from named official or secondary sources (national tax
 authorities and tax-provider summaries), with vendor outputs used as sanity checks
 during the original research. The resulting reasoning, comparisons, and caveats

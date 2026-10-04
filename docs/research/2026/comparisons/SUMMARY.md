@@ -14,11 +14,12 @@ The comparisons test the dossiers' stated resident/profile/location/payment scen
 
 ## Implementation progress
 
-The first deterministic correction tranche was implemented on 2026-10-04 for
-**Bulgaria, Lithuania, Malta, Moldova, Portugal, Slovakia, Slovenia, Turkey, and
-Ukraine**. The country files record which historical findings are resolved and
-which scenario/product limitations remain. Finding totals below remain the audit
-baseline rather than being reduced whenever a fix lands.
+Two deterministic correction tranches were implemented on 2026-10-04 for
+**Albania, Bulgaria, Lithuania, Malta, Moldova, Montenegro, Poland, Portugal,
+Slovakia, Slovenia, Turkey, and Ukraine**. The country files record which
+historical findings are resolved and which scenario/product limitations remain.
+Finding totals below remain the audit baseline rather than being reduced whenever
+a fix lands.
 
 ## Verified findings totals
 
@@ -104,13 +105,13 @@ The groups below are work streams, not a claim that every country belongs to onl
 
 ### 1. Deterministic corrections
 
-The first tranche has landed for Turkey, Ukraine, Bulgaria, Portugal, Moldova,
-Malta, Slovakia, Lithuania, and Slovenia. Their comparison files document the
-remaining scenario limitations. The following bounded items still need work:
-
-1. **Croatia:** add the age-30 youth reduction behind an explicit eligibility input.
-2. **Ireland:** add MyFutureFund and the October PRSI rate step under an explicit pay calendar.
-3. **Germany, Czech Republic, Poland and UK:** implement authoritative rounding/period sequencing after substantive formulas are fixed.
+The completed tranches cover Albania, Bulgaria, Lithuania, Malta, Moldova,
+Montenegro, Poland, Portugal, Slovakia, Slovenia, Turkey, and Ukraine. Their
+comparison files document remaining scenario limitations. Payslip-level rounding
+for Germany, Czech Republic, Poland, and the UK is deliberately lower priority
+because it does not materially affect this comparator. Croatia's age relief and
+Ireland's MyFutureFund/pay-calendar behavior remain product decisions; they should
+not create new UI inputs without explicit approval.
 
 ### 2. Material employee-net formula rebuilds
 
@@ -128,33 +129,36 @@ These require component-level rewrites and should not be patched with another bl
 10. **Italy:** implement employment relief and official regional/municipal bases for a named location.
 11. **Luxembourg:** implement contribution caps and the exact tariff, deductions, credits and rounding.
 12. **Spain:** introduce separate state/autonomous scales, minima and low-income relief.
-13. **Albania:** replace gross-based withholding bands with the statutory personal-deduction/taxable-base schedule.
 
 ### 3. High-income rules and ceilings
 
 These need dedicated threshold vectors even where the lower-income formula is otherwise serviceable.
 
-1. **Poland:** 4% solidarity levy over PLN1 million.
-2. **Serbia:** supplementary annual tax; until its final statistic is available, label output before this tax.
-3. **Latvia:** social maximum does not cap in-year withholding; reconcile solidarity separately.
-4. **Austria:** move net special payments above EUR83,333 into ordinary taxation.
-5. **France:** four-PASS CSG allowance limit, P8 retirement ceiling and CEHR.
-6. **Spain:** employee and employer solidarity tiers above the ordinary ceiling.
-7. **Luxembourg:** contribution ceiling and 9% fund addition at high tax.
-8. **Greece:** per-payment EFKA ceiling across 14 payments.
-9. **Switzerland:** remove obsolete ALV2 above CHF148,200.
-10. **Norway:** OTP through 12G using the official average G.
-11. **Italy:** extra employee INPS threshold and employer bases.
-12. **Montenegro:** distinguish uncapped payroll withholding from any later maximum-contribution refund.
+1. **Serbia:** supplementary annual tax; until its final statistic is available, label output before this tax.
+2. **Latvia:** social maximum does not cap in-year withholding; reconcile solidarity separately.
+3. **Austria:** move net special payments above EUR83,333 into ordinary taxation.
+4. **France:** four-PASS CSG allowance limit, P8 retirement ceiling and CEHR.
+5. **Spain:** employee and employer solidarity tiers above the ordinary ceiling.
+6. **Luxembourg:** contribution ceiling and 9% fund addition at high tax.
+7. **Greece:** per-payment EFKA ceiling across 14 payments.
+8. **Switzerland:** remove obsolete ALV2 above CHF148,200.
+9. **Norway:** OTP through 12G using the official average G.
+10. **Italy:** extra employee INPS threshold and employer bases.
+
+Poland's 4% solidarity levy and Montenegro's uncapped in-year PIO withholding are
+implemented. Montenegro's eventual after-refund result remains research-blocked.
 
 ### 4. Employer-cost scenario and product decisions
 
-Adopt a common product contract: return deterministic statutory cost, list excluded mandatory variables, and allow named scenario inputs. Do not bury variability in a generic “extras” percentage.
+Adopt a common product contract: use one documented representative scenario,
+return its deterministic statutory cost, and list material exclusions. Add named
+scenario inputs only when their comparison value justifies the UI complexity. Do
+not bury variability in a generic “extras” percentage.
 
 1. **Remove unsupported blended extras:** France, Belgium, Denmark, Netherlands, Switzerland, Sweden and Italy.
-2. **Expose accident/risk inputs:** Bulgaria, Czech Republic, Finland, Germany, Italy, Lithuania, Netherlands, Norway, Portugal, Spain and Switzerland.
-3. **Expose location:** Belgium municipality, Croatia municipality, Denmark municipality, Finland municipality, France establishment/mobility zone, Italy region/municipality, Norway AGA zone, Spain autonomous community, Sweden municipality, Switzerland canton/municipality.
-4. **Expose plan/election/status:** Cyprus Holiday Fund exemption, Estonia pillar II/basic-exemption election, Ireland MyFutureFund, Netherlands occupational pension, Switzerland BVG/NBU plan, and UK Scotland/rUK.
+2. **Document selected accident/risk assumptions:** Bulgaria, Czech Republic, Finland, Germany, Italy, Lithuania, Netherlands, Norway, Portugal, Spain and Switzerland.
+3. **Document selected location:** Belgium municipality, Croatia municipality, Denmark municipality, Finland municipality, France establishment/mobility zone, Italy region/municipality, Norway AGA zone, Spain autonomous community, Sweden municipality, Switzerland canton/municipality.
+4. **Document plan/election/status baseline:** Cyprus Holiday Fund exemption, Estonia pillar II/basic-exemption election, Ireland MyFutureFund, Netherlands occupational pension, Switzerland BVG/NBU plan, and UK Scotland/rUK.
 5. **Separate salary from mandatory non-salary cash:** Slovenia regresses, Italy TFR, and conditional sickness/leave costs rather than treating them as universal percentages.
 6. **Use subtotal/range semantics:** Czech, Denmark, France, Germany and Switzerland cannot produce exact employer cost from gross salary alone.
 

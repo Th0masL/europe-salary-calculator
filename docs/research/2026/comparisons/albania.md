@@ -5,6 +5,13 @@
 - Independent dossier: `docs/research/2026/albania.md` (official-source clean-room reconstruction, accessed 2026-10-04).
 - Implementation: `tools/calc/albania.py`.
 
+## Implementation update — 2026-10-04
+
+The signed-declaration personal deduction and 13%/23% taxable-income schedule are
+now implemented for twelve equal payments. Dossier vectors at ALL 2m, 6m and 60m
+are regression-tested. Unusual or partial-month contribution-floor cases remain
+outside the representative annual-salary scenario.
+
 ## Current implementation scenario
 
 Resident ordinary employee, twelve regular payments; annual gross in ALL. Social insurance is floored/capped monthly after annualisation, health is uncapped, and PIT is computed directly on gross using an old monthly withholding table.
