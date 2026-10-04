@@ -37,3 +37,9 @@ Retain the direct-EUR formula for the documented high-income scenario. Add a loc
 ## Regression vectors
 
 Preserve all five exact matches. Add monthly tests immediately around RON 6,050 (H1) and RON 6,325 (H2), plus the two 2026 minimum wages.
+
+## Implementation update
+
+The current EUR20k–EUR600k table is explicitly scoped to the age-40 high-income
+path, where the percentage-only calculation is currency-invariant. The product
+does not claim low-income/minimum-wage coverage and adds no Romania-only inputs.

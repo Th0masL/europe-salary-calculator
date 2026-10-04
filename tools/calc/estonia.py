@@ -1,9 +1,11 @@
 """Estonia salary calculation — computed from published tax rates.
 
-Rates are 2026, from the Estonian Tax and Customs Board (EMTA) and the KPMG 2026
+Rates are 2026 for the shared age-40, single, no-child profile, from the Estonian
+Tax and Customs Board (EMTA) and the KPMG 2026
 tax card. Confirmed against EMTA's official calculation: €60k gross → net
 €46,963.20, employer cost €80,280.00 — this module matches to the cent. The
-default funded-pension rate is 2% (4%/6% are opt-in only).
+fixed scenario uses the default 2% funded-pension rate and applies the full basic
+exemption at this sole employer (4%/6% are opt-in only).
 
 Key 2026 change vs 2025: the basic exemption is a FLAT EUR 700/mo (8,400/yr) with
 the income-based phase-out ("tax hump") removed — so it now applies at every

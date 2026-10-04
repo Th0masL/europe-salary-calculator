@@ -44,3 +44,9 @@ Replace estimated deductions with official 2026 values, implement the NI thresho
 ## Regression vectors
 
 For zone I and minimum OTP, excluding variable insurance/administration, assert: `200,000 → 232,764.00, 184,800.00`; `600,000 → 698,292.00, 455,817.40`; `1,000,000 → 1,163,820.00, 694,130.35`; `2,000,000 → 2,318,809.30, 1,224,802.35`; `6,000,000 → 6,882,809.30, 3,328,802.35`. Add NI tests at NOK 99,650 and the 25%/7.6% crossover.
+
+## Implementation update
+
+Implemented final 2026 deductions, the NI lower-threshold taper, minimum OTP from
+the first krone through 12G using NOK134,419, and employer NI on OTP. Output is a
+named Oslo/zone-I statutory floor with variable premiums excluded.

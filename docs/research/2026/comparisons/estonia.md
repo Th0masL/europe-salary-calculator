@@ -40,3 +40,9 @@ No arithmetic change for the current scenario. Surface pillar membership/rate an
 ## Regression vectors
 
 All five dossier cross-check rows are authoritative for the selected default scenario. Add separate future vectors for 0%/4%/6% pillar rates, no exemption application, and a monthly wage below EUR886.
+
+## Implementation update
+
+The fixed scenario is now explicit: age 40, sole employer, full basic-exemption
+application and default 2% pillar II. Alternative elections and irregular
+sub-minimum months remain outside the comparator rather than becoming controls.

@@ -10,8 +10,8 @@
 | Last independently reviewed | Not recorded |
 | Calculation currency | EUR |
 | Model | Single employee; see assumptions below |
-| Employer-cost summary | Pension+unemployment 10.6% + health+care 10.55% (both capped) + accident ~1.0% (BG, on gross) + U2/insolvency 0.59% (capped) |
-| Formula fingerprint | `25c7f080cc82` |
+| Employer-cost summary | Statutory floor: pension/unemployment + health/care (capped) + 0.15% insolvency; variable U1/U2 and accident insurance excluded |
+| Formula fingerprint | `87b48cc4a8ae` |
 | Direct source links | Named in the model notes below; direct URLs have not yet been recorded. |
 
 ## Representative outputs
@@ -21,16 +21,16 @@ conversion where applicable. They are regression landmarks, not payroll quotes.
 
 | Annual gross | Employer cost | Take-home pay |
 |---:|---:|---:|
-| €60,000 | €73,644 | €37,622 |
-| €100,000 | €119,549 | €58,128 |
-| €200,000 | €220,705 | €112,788 |
+| €60,000 | €72,780 | €37,561 |
+| €100,000 | €118,109 | €58,030 |
+| €200,000 | €218,259 | €112,696 |
 
 ## Model notes and assumptions
 
 Germany salary calculation — computed from published tax rates.
 
-Rates are 2026 (single, no children, tax class I, statutory health insurance GKV).
-(§32a verified against BMF; minor Vorsorge simplification noted below.)
+Rates are 2026 for the age-40, single, childless, tax-class-I profile in Berlin,
+with statutory health insurance using the official average add-on.
 
 Social contributions (clear): four branches, each split ~50/50, with TWO ceilings:
  - Pension 9.3% + unemployment 1.3%, capped at €101,400/yr.
@@ -39,17 +39,9 @@ Social contributions (clear): four branches, each split ~50/50, with TWO ceiling
 (The research's care split looked wrong; these are the standard rates.)
 
 Income tax: Germany uses the continuous §32a polynomial tariff, not flat brackets.
-The zone 2/3 coefficients (914.51 / 1,400 / 173.10 / 2,397 / 1,034.87) are the
-official BMF 2026 values. The 42%/45% zone constants here (11,135.90 / 19,470.65)
-are derived from tariff continuity: the values quoted in the research
-(9,971.54 / 18,714.90) break continuity by ~€1,164 at €69,878 and 45% start, so
-they are transcription errors. The tax base deducts the Vorsorgeaufwendungen
-(pension + health + care; unemployment is effectively non-deductible, sitting in
-the used-up €1,900 cap) plus the €1,230 Werbungskostenpauschale — a slight
-simplification (it deducts full health rather than the ~96% basic share), so net
-may be marginally high. Solidaritätszuschlag (5.5% of income tax, above a Freigrenze
-with an 11.9% phase-in) IS modelled: €0 up to ~€100k income, then ~€1.1k at €100k,
-~€2.6k at €150k, ~€5.9k at €300k. (2026 Freigrenze €20,350 single — confirmed vs TK.)
+The BMF annual wage-tax sequence floors taxable income and wage tax to whole euros.
+Employer cost is the determinable statutory floor; fund-specific U1/U2 and
+activity-specific accident insurance are excluded rather than guessed.
 
 Sources: BMF §32a 2026 (verified coefficients + continuity); PwC Germany 2026
 deductions; DRV/BMG 2026 rates + ceilings (€101,400 / €69,750); GFB €12,348.
@@ -65,9 +57,8 @@ EMPLOYEE_PENS_UNEMP = 0.093 + 0.013
 EMPLOYEE_HEALTH_CARE = 0.0875 + 0.024
 EMPLOYER_PENS_UNEMP = 0.093 + 0.013
 EMPLOYER_HEALTH_CARE = 0.0875 + 0.018
-EMPLOYER_U2_INSOLV = 0.0044 + 0.0015
-EMPLOYER_ACCIDENT = 0.010
-DEDUCTIBLE_HEALTH_CARE = 0.0875 + 0.024
+EMPLOYER_INSOLVENCY = 0.0015
+DEDUCTIBLE_HEALTH_CARE = 0.0845 + 0.024
 LUMP_SUMS = 1230 + 36
 SOLI_FREIGRENZE = 20350
 SOLI_RATE = 0.055
@@ -91,13 +82,14 @@ def _est(zve):
         z = (zve - 17799) / 10000.0
         return (173.10 * z + 2397) * z + 1034.87
     if zve <= 277825:
-        return 0.42 * zve - 11135.9
-    return 0.45 * zve - 19470.65
+        return 0.42 * zve - 11135.63
+    return 0.45 * zve - 19470.38
 
 def _soli(income_tax):
     """Solidaritätszuschlag: 5.5% of income tax, above a Freigrenze with a phase-in."""
-    return min(SOLI_RATE * income_tax,
-               max(0.0, SOLI_PHASEIN * (income_tax - SOLI_FREIGRENZE)))
+    amount = min(SOLI_RATE * income_tax,
+                 max(0.0, SOLI_PHASEIN * (income_tax - SOLI_FREIGRENZE)))
+    return math.floor(amount * 100) / 100
 
 def compute(gross):
     """Return (employer_cost, net) for an annual gross salary, in EUR."""
@@ -107,12 +99,13 @@ def compute(gross):
     employee = pu_base * EMPLOYEE_PENS_UNEMP + hc_base * EMPLOYEE_HEALTH_CARE
 
     vorsorge = pu_base * 0.093 + hc_base * DEDUCTIBLE_HEALTH_CARE
-    zve = max(0.0, gross - vorsorge - LUMP_SUMS)
-    income_tax = _est(zve)
+    zve = int(max(0.0, gross - vorsorge - LUMP_SUMS))
+    income_tax = int(_est(zve))
 
     net = gross - employee - income_tax - _soli(income_tax)
-    employer_cost = (gross + pu_base * EMPLOYER_PENS_UNEMP + hc_base * EMPLOYER_HEALTH_CARE
-                     + pu_base * EMPLOYER_U2_INSOLV + gross * EMPLOYER_ACCIDENT)
+    employer_cost = (gross + pu_base * EMPLOYER_PENS_UNEMP
+                     + hc_base * EMPLOYER_HEALTH_CARE
+                     + pu_base * EMPLOYER_INSOLVENCY)
     return employer_cost, net
 ```
 

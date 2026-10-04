@@ -1,6 +1,6 @@
 """Hungary salary calculation — computed from published tax rates.
 
-Rates are 2026 (single, no children — the family / under-25 / mother allowances
+Rates are 2026 (age 40, single, no children — the family / under-25 / mother allowances
 don't apply). Hungary's flat system is the simplest here:
  - Employee: 18.5% social security (single combined rate, uncapped).
  - Personal income tax: flat 15%, charged on GROSS — employee contributions are
@@ -18,7 +18,7 @@ Sources: PwC Hungary 2026; NAV (13% szocho + 18.5% contribution + 15% flat PIT).
 NAME = "Hungary"
 CURRENCY = "EUR"            # real currency is HUF — see the currency note above
 YEAR = 2026
-EMPLOYER_BREAKDOWN = "Social contribution tax (szocho) 13%"
+EMPLOYER_BREAKDOWN = "Social contribution tax (szocho) 13%; conditional employer-wide rehabilitation contribution excluded"
 
 EMPLOYEE_SS = 0.185
 INCOME_TAX = 0.15          # flat, charged on gross

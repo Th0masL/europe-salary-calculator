@@ -1,6 +1,7 @@
 """Croatia salary calculation — computed from published tax rates.
 
-Rates are 2026.
+Rates are 2026 for the shared age-40, single, no-child profile. No youth PIT
+reduction applies. Zagreb is the fixed representative municipality.
 
 IMPORTANT correction vs the raw research: the employer burden is NOT ~33.7%.
 In Croatia the pension contributions (20%) are employee-side, and the old

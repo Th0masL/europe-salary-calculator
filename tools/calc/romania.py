@@ -1,6 +1,8 @@
 """Romania salary calculation — computed from published tax rates.
 
-Rates are 2026 (single, no dependents, normal working conditions). Romania's
+Rates are 2026 for the age-40, single, no-dependent, normal-conditions profile.
+The generated €20k–€600k comparison range is above the RON low-income relief
+bands. Romania's
 structure is unusual: a very HIGH employee burden but a very LOW employer cost,
 because the 2018 reform moved almost all social contributions onto the employee
 side (gross salaries were grossed up to compensate).

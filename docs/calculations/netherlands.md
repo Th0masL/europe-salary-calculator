@@ -10,8 +10,8 @@
 | Last independently reviewed | Not recorded |
 | Calculation currency | EUR |
 | Model | Single employee; see assumptions below |
-| Employer-cost summary | Statutory premiums (AOF+Awf+Whk+Zvw) ~16.7% (capped) + ~11.5% occupational pension (CBA-based) |
-| Formula fingerprint | `99196dacff0e` |
+| Employer-cost summary | Named small business-services scenario: low AWf/Aof + Wko + sector-43 Whk + Zvw = 16.77% to €79,409; pension excluded |
+| Formula fingerprint | `9f67774502a9` |
 | Direct source links | Named in the model notes below; direct URLs have not yet been recorded. |
 
 ## Representative outputs
@@ -21,16 +21,17 @@ conversion where applicable. They are regression landmarks, not payroll quotes.
 
 | Annual gross | Employer cost | Take-home pay |
 |---:|---:|---:|
-| €60,000 | €76,944 | €44,094 |
-| €100,000 | €123,637 | €62,711 |
-| €200,000 | €223,637 | €111,068 |
+| €60,000 | €70,062 | €44,094 |
+| €100,000 | €113,317 | €62,711 |
+| €200,000 | €213,317 | €111,068 |
 
 ## Model notes and assumptions
 
 Netherlands salary calculation — computed from published tax rates.
 
-Rates are 2026 (single, no 30% ruling, no occupational pension). The Dutch system
-is distinctive: the EMPLOYEE pays no separate social contributions — "national
+Rates are 2026 for the age-40, single, no-child profile, no 30% ruling and no
+occupational pension. The Dutch system is distinctive: the EMPLOYEE pays no
+separate social contributions — "national
 insurance" is baked into the first Box-1 bracket — so net = gross − wage tax + tax
 credits. The EMPLOYER pays the employee-insurance premiums (WW/WIA/AOF) and the
 income-related health contribution (Zvw), capped at the maximum premium wage.
@@ -38,11 +39,9 @@ income-related health contribution (Zvw), capped at the maximum premium wage.
  - Box 1 brackets 2026: 35.75% to €38,883, 37.56% to €78,426, 49.50% above.
  - Tax credits (reduce the tax, both phase out with income): general (algemene
    heffingskorting) and labour (arbeidskorting).
- - Employer ≈ 28%: statutory premiums AOF ~6.5% + Awf(WW) ~2.74% + Whk ~1% + Zvw
-   ~6.5% (≈16.7%, capped at the ~€78k premium wage) PLUS a representative
-   occupational-pension share ~11.5% (capped ~€92k). The pension is CBA-based, not
-   statutory, but near-universal; ~11.5% lands the total at eBook's +28%. (The
-   +42–48% EOR figures also add holiday-allowance provisioning.)
+ - Employer scenario: specified small business-services employer, written
+   indefinite non-on-call contract, low AWf/Aof, sector-43 Whk and Zvw: 16.77%
+   capped at €79,409. Occupational pension/CAO costs are excluded.
 
 Net is computed PRE-pension on the employee side too (no occupational-pension
 deduction), which matches eBook; deducting the employee pension share would lower
@@ -50,9 +49,8 @@ net ~€4–6k. Holiday allowance 8% is treated as part of the entered gross.
 
 The 2026 tax credits are the official Belastingdienst figures (general €3,115
 tapering from €29,736; labour builds up, peaks €5,685, tapers to €0 at €132,920) —
-net is validated at €20k→€19,453 and €30k→€27,754. The employer premium rates and
-especially the occupational-pension share (varies hugely by sector) remain
-representative estimates.
+net is validated at €20k→€19,453 and €30k→€27,754. The employer rate is the named
+small business-services scenario documented in the research dossier.
 
 Sources: Belastingdienst 2026 (brackets); Deloitte Belastingplan 2026 (credits);
 UWV/Belastingdienst (employer premiums, max premium wage).
@@ -63,10 +61,8 @@ These values are copied mechanically from the live calculation module.
 
 ```python
 BRACKETS = [(38883, 0.3575), (78426, 0.3756), (INF, 0.495)]
-MAX_PREMIUM_WAGE = 78000
-ER_STATUTORY = 0.065 + 0.0274 + 0.01 + 0.065
-ER_PENSION = 0.115
-PENSION_CAP = 92000
+MAX_PREMIUM_WAGE = 79409
+ER_STATUTORY = 0.1677
 ```
 
 ## Executable calculation
@@ -92,12 +88,10 @@ def _labour_credit(income):
 def compute(gross):
     """Return (employer_cost, net) for an annual gross salary, in EUR."""
     tax = progressive(gross, BRACKETS)
-    tax = max(0.0, tax - _general_credit(gross) - _labour_credit(gross))
+    tax = math.floor(max(0.0, tax - _general_credit(gross) - _labour_credit(gross)) + .5)
 
     net = gross - tax
-    employer_cost = (gross
-                     + min(gross, MAX_PREMIUM_WAGE) * ER_STATUTORY
-                     + min(gross, PENSION_CAP) * ER_PENSION)
+    employer_cost = gross + min(gross, MAX_PREMIUM_WAGE) * ER_STATUTORY
     return employer_cost, net
 ```
 

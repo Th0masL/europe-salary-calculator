@@ -10,8 +10,8 @@
 | Last independently reviewed | Not recorded |
 | Calculation currency | EUR |
 | Model | Single employee; see assumptions below |
-| Employer-cost summary | Social contribution tax (szocho) 13% |
-| Formula fingerprint | `a679365bfc7f` |
+| Employer-cost summary | Social contribution tax (szocho) 13%; conditional employer-wide rehabilitation contribution excluded |
+| Formula fingerprint | `82142f1d3c8a` |
 | Direct source links | Named in the model notes below; direct URLs have not yet been recorded. |
 
 ## Representative outputs
@@ -29,7 +29,7 @@ conversion where applicable. They are regression landmarks, not payroll quotes.
 
 Hungary salary calculation — computed from published tax rates.
 
-Rates are 2026 (single, no children — the family / under-25 / mother allowances
+Rates are 2026 (age 40, single, no children — the family / under-25 / mother allowances
 don't apply). Hungary's flat system is the simplest here:
  - Employee: 18.5% social security (single combined rate, uncapped).
  - Personal income tax: flat 15%, charged on GROSS — employee contributions are

@@ -11,7 +11,7 @@
 | Calculation currency | EUR |
 | Model | Single employee; see assumptions below |
 | Employer-cost summary | Social tax 33% + employer unemployment 0.8% |
-| Formula fingerprint | `b698f75767c4` |
+| Formula fingerprint | `a5e5b5bcedd8` |
 | Direct source links | [https://www.emta.ee/en/private-client/taxes-and-payment/declaration-income/tax-rates](https://www.emta.ee/en/private-client/taxes-and-payment/declaration-income/tax-rates)<br>[https://www.emta.ee/en/private-client/taxes-and-payment/tax-incentives/calculation-basic-exemption](https://www.emta.ee/en/private-client/taxes-and-payment/tax-incentives/calculation-basic-exemption) |
 
 ## Representative outputs
@@ -29,10 +29,12 @@ conversion where applicable. They are regression landmarks, not payroll quotes.
 
 Estonia salary calculation — computed from published tax rates.
 
-Rates are 2026, from the Estonian Tax and Customs Board (EMTA) and the KPMG 2026
+Rates are 2026 for the shared age-40, single, no-child profile, from the Estonian
+Tax and Customs Board (EMTA) and the KPMG 2026
 tax card. Confirmed against EMTA's official calculation: €60k gross → net
 €46,963.20, employer cost €80,280.00 — this module matches to the cent. The
-default funded-pension rate is 2% (4%/6% are opt-in only).
+fixed scenario uses the default 2% funded-pension rate and applies the full basic
+exemption at this sole employer (4%/6% are opt-in only).
 
 Key 2026 change vs 2025: the basic exemption is a FLAT EUR 700/mo (8,400/yr) with
 the income-based phase-out ("tax hump") removed — so it now applies at every

@@ -10,8 +10,8 @@
 | Last independently reviewed | Not recorded |
 | Calculation currency | EUR |
 | Model | Single employee; see assumptions below |
-| Employer-cost summary | Social Insurance 8.8% + Redundancy 1.2% + HRDF 0.5% (capped €68,904) + Social Cohesion 2.0% + GESY 2.9% |
-| Formula fingerprint | `24645a633c31` |
+| Employer-cost summary | Holiday-Fund-exempt employer: SI 8.8% + Redundancy 1.2% + HRDF 0.5% (capped €68,904) + Cohesion 2% + GESY 2.9% |
+| Formula fingerprint | `17ac3e50bb7d` |
 | Direct source links | Named in the model notes below; direct URLs have not yet been recorded. |
 
 ## Representative outputs
@@ -29,7 +29,8 @@ conversion where applicable. They are regression landmarks, not payroll quotes.
 
 Cyprus salary calculation — computed from published tax rates.
 
-Rates are 2026 (single private-sector employee, no special regime).
+Rates are 2026 for the shared age-40, single, no-child profile. The representative
+employer has an approved Central Holiday Fund exemption and pays leave directly.
 
 Two things shape the numbers:
  - Social Insurance (plus the Redundancy + Human Resource Development funds) is

@@ -1,6 +1,7 @@
 """Cyprus salary calculation — computed from published tax rates.
 
-Rates are 2026 (single private-sector employee, no special regime).
+Rates are 2026 for the shared age-40, single, no-child profile. The representative
+employer has an approved Central Holiday Fund exemption and pays leave directly.
 
 Two things shape the numbers:
  - Social Insurance (plus the Redundancy + Human Resource Development funds) is
@@ -25,7 +26,7 @@ from engine import progressive
 NAME = "Cyprus"
 CURRENCY = "EUR"
 YEAR = 2026
-EMPLOYER_BREAKDOWN = "Social Insurance 8.8% + Redundancy 1.2% + HRDF 0.5% (capped €68,904) + Social Cohesion 2.0% + GESY 2.9%"
+EMPLOYER_BREAKDOWN = "Holiday-Fund-exempt employer: SI 8.8% + Redundancy 1.2% + HRDF 0.5% (capped €68,904) + Cohesion 2% + GESY 2.9%"
 INF = float("inf")
 
 # Ceilings: insurable earnings (SI / Redundancy / HRDF) and the higher GESY cap.

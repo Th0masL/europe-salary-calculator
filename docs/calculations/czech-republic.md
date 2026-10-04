@@ -10,8 +10,8 @@
 | Last independently reviewed | Not recorded |
 | Calculation currency | CZK |
 | Model | Single employee; see assumptions below |
-| Employer-cost summary | Social security 24.8% (capped) + health insurance 9.0% |
-| Formula fingerprint | `b4bb0e360d03` |
+| Employer-cost summary | Statutory floor: social 24.8% (capped) + health 9%; mandatory activity-rated accident premium excluded |
+| Formula fingerprint | `1b310402e2a4` |
 | Direct source links | Named in the model notes below; direct URLs have not yet been recorded. |
 
 ## Representative outputs
@@ -21,9 +21,9 @@ conversion where applicable. They are regression landmarks, not payroll quotes.
 
 | Annual gross | Employer cost | Take-home pay |
 |---:|---:|---:|
-| €60,000 | €80,280 | €45,301 |
-| €100,000 | €132,837 | €72,704 |
-| €200,000 | €241,837 | €145,204 |
+| €60,000 | €80,280 | €45,300 |
+| €100,000 | €132,837 | €72,703 |
+| €200,000 | €241,837 | €145,203 |
 
 ## Model notes and assumptions
 
@@ -61,14 +61,21 @@ tax brackets use [`engine.progressive`](../../tools/calc/engine.py).
 
 ```python
 def compute(gross):
-    """Return (employer_cost, net) in CZK; build_formula converts to EUR."""
-    ee_social = min(gross, SOCIAL_CAP) * EE_SOCIAL
-    ee_health = gross * EE_HEALTH
+    """Return the final annual cash and employer floor for 12 regular pays."""
+    regular = math.floor(gross / 12)
+    payments = [regular] * 11 + [gross - 11 * regular]
+    remaining_social_base = SOCIAL_CAP
+    ee_social = er_social = ee_health = 0.0
+    for payment in payments:
+        social_base = min(payment, remaining_social_base)
+        remaining_social_base -= social_base
+        ee_social += math.ceil(EE_SOCIAL * social_base)
+        er_social += math.ceil(ER_SOCIAL * social_base)
+        ee_health += math.ceil(EE_HEALTH * payment)
 
-    pit = max(0.0, progressive(gross, PIT_BRACKETS) - BASIC_CREDIT)   # PIT on gross
-
+    pit = max(0.0, math.ceil(progressive(gross, PIT_BRACKETS)) - BASIC_CREDIT)
     net = gross - ee_social - ee_health - pit
-    employer_cost = gross + min(gross, SOCIAL_CAP) * ER_SOCIAL + gross * ER_HEALTH
+    employer_cost = gross + er_social + gross * ER_HEALTH
     return employer_cost, net
 ```
 

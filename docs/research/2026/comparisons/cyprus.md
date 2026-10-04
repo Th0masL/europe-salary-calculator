@@ -40,3 +40,9 @@ Retain the arithmetic and label the current outputs “CHF-exempt employer”; p
 ## Regression vectors
 
 Use all five primary dossier rows for the exempt path and all five §7 rows for the non-exempt path. EUR100k tests the interaction of the CHF, the SI ceiling and the still-open GHS base.
+
+## Implementation update
+
+The live product fixes the dossier's approved-Holiday-Fund-exemption scenario and
+now labels it in the module's employer-cost note. The non-exempt sensitivity
+remains documented without adding a country-specific control.

@@ -38,3 +38,9 @@ Implement pay-period NIC rounding. Expose Scotland as a tax-region option or rel
 ## Regression vectors
 
 Use all five monthly schedules from the dossier, allowance taper at GBP 100,000/125,140, NIC thresholds GBP 1,048/4,189/417 monthly, and at least one Scottish vector.
+
+## Implementation update
+
+Implemented monthly NIC payment splitting and penny rounding. The fixed location
+is now explicitly England/Wales/Northern Ireland; Scotland and employer-wide
+allowance/levy choices remain outside scope rather than becoming UI controls.

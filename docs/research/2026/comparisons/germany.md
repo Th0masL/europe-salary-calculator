@@ -41,3 +41,10 @@ Transcribe the final BMF 2026 PAP, including statutory rounding and precautionar
 ## Regression vectors
 
 The dossier's five employee rows were independently checked against BMF `2026Version1` and are authoritative. EUR100k tests the solidarity phase-in and health ceiling; EUR600k tests the top zone and full Soli. Employer floor rows are authoritative only before U1/U2/accident.
+
+## Implementation update
+
+Implemented the final BMF constants, whole-euro taxable-income/tax flooring and
+the payroll precautionary health share. Employer output is now the fixed statutory
+floor with only the insolvency levy; U1/U2 and accident insurance are disclosed
+as unresolved fund/activity-specific charges.

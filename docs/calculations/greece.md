@@ -11,7 +11,7 @@
 | Calculation currency | EUR |
 | Model | Single employee; see assumptions below |
 | Employer-cost summary | EFKA 21.79% with 14-payment ceilings + €20 ELPC (KPK 101 scenario) |
-| Formula fingerprint | `feaa4fc882bb` |
+| Formula fingerprint | `50891901508f` |
 | Direct source links | Named in the model notes below; direct URLs have not yet been recorded. |
 
 ## Representative outputs
@@ -21,18 +21,18 @@ conversion where applicable. They are regression landmarks, not payroll quotes.
 
 | Annual gross | Employer cost | Take-home pay |
 |---:|---:|---:|
-| €60,000 | €73,094 | €39,507 |
-| €100,000 | €121,810 | €59,313 |
-| €200,000 | €225,120 | €114,175 |
+| €60,000 | €73,094 | €38,407 |
+| €100,000 | €121,810 | €58,213 |
+| €200,000 | €225,120 | €113,075 |
 
 ## Model notes and assumptions
 
 Greece salary calculation — computed from published tax rates.
 
-Rates are 2026 for the representative age-30, single, no-child employee paid as
+Rates are 2026 for the representative age-40, single, no-child employee paid as
 12 salaries plus Christmas, Easter and holiday amounts. Each payment receives its
-own EFKA ceiling. The age-30 PIT scale uses 9% through €20,000 and the Article 16
-reduction. Employer cost includes the selected KPK 101 €20 ELPC charge.
+own EFKA ceiling. The ordinary PIT scale and Article 16 reduction apply. Employer
+cost includes the selected KPK 101 €20 ELPC charge.
 
 Sources: PwC Greece 2026 (EFKA rates + €7,761.94/mo cap; PIT brackets).
 
@@ -44,7 +44,8 @@ These values are copied mechanically from the live calculation module.
 MONTHLY_EFKA_CAP = 7761.94
 EE_EFKA = 0.1337
 ER_EFKA = 0.2179
-BRACKETS = [(20000, 0.09), (30000, 0.26), (40000, 0.34), (60000, 0.39), (INF, 0.44)]
+BRACKETS = [(10000, 0.09), (20000, 0.20), (30000, 0.26),
+            (40000, 0.34), (60000, 0.39), (INF, 0.44)]
 ELPC = 20
 ```
 

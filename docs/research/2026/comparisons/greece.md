@@ -8,9 +8,10 @@
 
 ## Implementation update — 2026-10-04
 
-The fixed representative profile is age 30, KPK 101, fourteen-payment EFKA and
-EUR20 ELPC. The age-specific scale, Article 16 reduction and payment-level ceilings
-are implemented and match all dossier vectors.
+The research dossier's age-30 scenario was implemented first. The product's later
+common-profile decision fixes age 40, so the live calculator now uses the general
+2026 scale (20% from EUR10,000 to EUR20,000) while retaining Article 16,
+payment-level EFKA ceilings, KPK 101 and the EUR20 ELPC scenario.
 
 ## Current implementation scenario
 

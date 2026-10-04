@@ -39,3 +39,9 @@ Add birth year/age eligibility or state a no-youth-relief product scope. For the
 ## Regression vectors
 
 All five dossier rows are authoritative for Zagreb and birth year 1996. EUR100k is the key vector: preliminary PIT EUR18,024, youth reduction EUR6,900, final PIT EUR11,124.
+
+## Implementation update
+
+The product profile is now explicitly age 40, so youth relief does not apply.
+The existing Zagreb arithmetic is retained and the age/location scope is named;
+no birth-year control is added.

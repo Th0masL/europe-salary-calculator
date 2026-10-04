@@ -41,3 +41,10 @@ Fix the official ceiling and floor now. Implement the annual-tax formula with th
 ## Regression vectors
 
 Use the five ordinary-payroll rows, monthly bases RSD 51,297 and 732,820, and the dossier's symbolic annual-tax formula `Q/D/B/S(A)` once `A` is official.
+
+## Implementation update
+
+Implemented the official contribution floor and ceiling. The live result is
+explicitly ordinary payroll before supplementary annual tax until the official
+2026 average salary is published. Under the common age-40 profile, no under-40
+additional annual-tax deduction will apply when that layer is completed.

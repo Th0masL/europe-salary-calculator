@@ -44,3 +44,9 @@ Keep the EUR module contract and document why this scenario is currency-invarian
 ## Regression vectors
 
 Assert `CURRENCY == "EUR"` and comparison-table vectors `(gross EUR → employer_cost, net)`: `20,000 → 22,600, 13,300`; `200,000 → 226,000, 133,000`; `600,000 → 678,000, 399,000`. Retain the dossier's HUF vectors as ratio checks.
+
+## Implementation update
+
+The arithmetic is retained for the age-40 ordinary-employment profile. The
+employer note now explicitly excludes the conditional employer-wide
+rehabilitation contribution.

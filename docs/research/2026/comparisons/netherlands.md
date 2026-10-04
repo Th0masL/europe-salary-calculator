@@ -46,3 +46,10 @@ Keep the employee calculation, apply statutory final rounding, and replace the b
 ## Regression vectors
 
 Employee net vectors: `20,000 → 19,453`; `60,000 → 44,094`; `100,000 → 62,711`; `200,000 → 111,068`; `600,000 → 313,068`. Scenario A costs: `23,354.00`, `70,062.00`, `113,316.89`, `213,316.89`, `613,316.89`; scenario B costs: `24,698.00`, `74,094.00`, `118,653.17`, `218,653.17`, `618,653.17` in the same gross order.
+
+## Implementation update
+
+The live product now uses Scenario A: a named small business-services employer
+with a stable contract and no occupational pension. Final annual employee levy is
+rounded to whole euros. The unsupported pension and blended employer proxies were
+removed.

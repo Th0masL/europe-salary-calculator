@@ -214,12 +214,12 @@ class CorrectedCountryRegressionTests(unittest.TestCase):
             with self.subTest(gross=gross):
                 self.assertAmountsAlmostEqual(finland.compute(gross), expected)
 
-    def test_greece_age30_and_payment_level_efka(self):
+    def test_greece_age40_and_payment_level_efka(self):
         greece = importlib.import_module("greece")
         vectors = {
-            20_000: (24_378.00, 16_437.14),
-            200_000: (225_120.10, 114_175.42),
-            600_000: (625_389.90, 338_082.72),
+            20_000: (24_378.00, 15_631.28),
+            200_000: (225_120.10, 113_075.42),
+            600_000: (625_389.90, 336_982.72),
         }
         for gross, expected in vectors.items():
             with self.subTest(gross=gross):
@@ -307,6 +307,63 @@ class CorrectedCountryRegressionTests(unittest.TestCase):
             for gross, expected in vectors.items():
                 with self.subTest(country=country, gross=gross):
                     self.assertAmountsAlmostEqual(module.compute(gross), expected)
+
+    def test_final_representative_scenario_corrections(self):
+        vectors_by_country = {
+            "germany": {
+                20_000: (24_260.00, 15_270.00),
+                100_000: (118_108.63, 58_030.02),
+                600_000: (618_259.13, 325_837.43),
+            },
+            "ireland": {
+                20_000: (22_107.50, 18_974.10),
+                100_000: (112_499.04, 63_320.34),
+                600_000: (668_936.54, 302_132.84),
+            },
+            "netherlands": {
+                20_000: (23_354.00, 19_453.00),
+                100_000: (113_316.89, 62_711.00),
+                600_000: (613_316.89, 313_068.00),
+            },
+        }
+        for country, vectors in vectors_by_country.items():
+            module = importlib.import_module(country)
+            for gross, expected in vectors.items():
+                with self.subTest(country=country, gross=gross):
+                    actual = module.compute(gross)
+                    self.assertAlmostEqual(actual[0], expected[0], delta=0.02)
+                    self.assertAlmostEqual(actual[1], expected[1], delta=0.02)
+
+    def test_final_local_currency_corrections(self):
+        vectors_by_country = {
+            "czechia": {
+                500_000: (669_010.00, 397_831.00),
+                2_500_000: (3_307_908.00, 1_817_479.00),
+                15_000_000: (16_932_904.00, 10_879_984.00),
+            },
+            "norway": {
+                200_000: (232_764.00, 184_800.00),
+                1_000_000: (1_163_820.00, 694_130.35),
+                6_000_000: (6_882_809.30, 3_328_802.35),
+            },
+            "serbia": {
+                2_000_000: (2_303_000.00, 1_443_065.20),
+                10_000_000: (11_332_266.76, 7_291_091.04),
+                60_000_000: (61_332_266.76, 52_291_091.04),
+            },
+            "uk": {
+                20_000: (22_249.39, 17_920.12),
+                100_000: (114_249.41, 68_557.96),
+                600_000: (689_249.40, 329_787.00),
+            },
+        }
+        for country, vectors in vectors_by_country.items():
+            module = importlib.import_module(country)
+            for gross, expected in vectors.items():
+                with self.subTest(country=country, gross=gross):
+                    actual = module.compute(gross)
+                    self.assertAlmostEqual(actual[0], expected[0], delta=0.02)
+                    self.assertAlmostEqual(actual[1], expected[1], delta=0.02)
 
 
 class GeneratedDataTests(unittest.TestCase):

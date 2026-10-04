@@ -17,17 +17,17 @@ completed country-level rebuilds.
 | Austria | [Dossier complete](austria.md) | [Compared](comparisons/austria.md) | Core fixes implemented | Pending |
 | Belgium | [Dossier complete](belgium.md) | [Compared](comparisons/belgium.md) | Core fixes implemented | Pending |
 | Bulgaria | [Dossier complete](bulgaria.md) | [Compared](comparisons/bulgaria.md) | Core fixes implemented | Pending |
-| Croatia | [Dossier complete](croatia.md) | [Compared](comparisons/croatia.md) | Pending | Pending |
-| Cyprus | [Dossier complete](cyprus.md) | [Compared](comparisons/cyprus.md) | Pending | Pending |
-| Czech Republic | [Dossier complete](czech-republic.md) | [Compared](comparisons/czech-republic.md) | Pending | Pending |
+| Croatia | [Dossier complete](croatia.md) | [Compared](comparisons/croatia.md) | Core fixes implemented | Pending |
+| Cyprus | [Dossier complete](cyprus.md) | [Compared](comparisons/cyprus.md) | Core fixes implemented | Pending |
+| Czech Republic | [Dossier complete](czech-republic.md) | [Compared](comparisons/czech-republic.md) | Core fixes implemented | Pending |
 | Denmark | [Dossier complete](denmark.md) | [Compared](comparisons/denmark.md) | Core fixes implemented | Pending |
-| Estonia | [Dossier complete](estonia.md) | [Compared](comparisons/estonia.md) | Pending | Pending |
+| Estonia | [Dossier complete](estonia.md) | [Compared](comparisons/estonia.md) | Core fixes implemented | Pending |
 | Finland | [Dossier complete](finland.md) | [Compared](comparisons/finland.md) | Core fixes implemented | Pending |
 | France | [Dossier complete](france.md) | [Compared](comparisons/france.md) | Core fixes implemented | Pending |
-| Germany | [Dossier complete](germany.md) | [Compared](comparisons/germany.md) | Pending | Pending |
+| Germany | [Dossier complete](germany.md) | [Compared](comparisons/germany.md) | Core fixes implemented | Pending |
 | Greece | [Dossier complete](greece.md) | [Compared](comparisons/greece.md) | Core fixes implemented | Pending |
-| Hungary | [Dossier complete](hungary.md) | [Compared](comparisons/hungary.md) | Pending | Pending |
-| Ireland | [Dossier complete](ireland.md) | [Compared](comparisons/ireland.md) | Pending | Pending |
+| Hungary | [Dossier complete](hungary.md) | [Compared](comparisons/hungary.md) | Core fixes implemented | Pending |
+| Ireland | [Dossier complete](ireland.md) | [Compared](comparisons/ireland.md) | Core fixes implemented | Pending |
 | Italy | [Dossier complete](italy.md) | [Compared](comparisons/italy.md) | Core fixes implemented | Pending |
 | Latvia | [Dossier complete](latvia.md) | [Compared](comparisons/latvia.md) | Core fixes implemented | Pending |
 | Lithuania | [Dossier complete](lithuania.md) | [Compared](comparisons/lithuania.md) | Core fixes implemented | Pending |
@@ -35,19 +35,19 @@ completed country-level rebuilds.
 | Malta | [Dossier complete](malta.md) | [Compared](comparisons/malta.md) | Core fixes implemented | Pending |
 | Moldova | [Dossier complete](moldova.md) | [Compared](comparisons/moldova.md) | Core fixes implemented | Pending |
 | Montenegro | [Dossier complete](montenegro.md) | [Compared](comparisons/montenegro.md) | Core fixes implemented | Pending |
-| Netherlands | [Dossier complete](netherlands.md) | [Compared](comparisons/netherlands.md) | Pending | Pending |
-| Norway | [Dossier complete](norway.md) | [Compared](comparisons/norway.md) | Pending | Pending |
+| Netherlands | [Dossier complete](netherlands.md) | [Compared](comparisons/netherlands.md) | Core fixes implemented | Pending |
+| Norway | [Dossier complete](norway.md) | [Compared](comparisons/norway.md) | Core fixes implemented | Pending |
 | Poland | [Dossier complete](poland.md) | [Compared](comparisons/poland.md) | Core fixes implemented | Pending |
 | Portugal | [Dossier complete](portugal.md) | [Compared](comparisons/portugal.md) | Core fixes implemented | Pending |
-| Romania | [Dossier complete](romania.md) | [Compared](comparisons/romania.md) | Pending | Pending |
-| Serbia | [Dossier complete](serbia.md) | [Compared](comparisons/serbia.md) | Pending | Pending |
+| Romania | [Dossier complete](romania.md) | [Compared](comparisons/romania.md) | Core fixes implemented | Pending |
+| Serbia | [Dossier complete](serbia.md) | [Compared](comparisons/serbia.md) | Core fixes implemented; annual tax pending statistic | Pending |
 | Slovakia | [Dossier complete](slovakia.md) | [Compared](comparisons/slovakia.md) | Core fixes implemented | Pending |
 | Slovenia | [Dossier complete](slovenia.md) | [Compared](comparisons/slovenia.md) | Core fixes implemented | Pending |
 | Spain | [Dossier complete](spain.md) | [Compared](comparisons/spain.md) | Core fixes implemented | Pending |
 | Sweden | [Dossier complete](sweden.md) | [Compared](comparisons/sweden.md) | Core fixes implemented | Pending |
 | Switzerland | [Dossier complete](switzerland.md) | [Compared](comparisons/switzerland.md) | Core fixes implemented | Pending |
 | Turkey | [Dossier complete](turkey.md) | [Compared](comparisons/turkey.md) | Core fixes implemented | Pending |
-| United Kingdom | [Dossier complete](united-kingdom.md) | [Compared](comparisons/uk.md) | Pending | Pending |
+| United Kingdom | [Dossier complete](united-kingdom.md) | [Compared](comparisons/uk.md) | Core fixes implemented | Pending |
 | Ukraine | [Dossier complete](ukraine.md) | [Compared](comparisons/ukraine.md) | Core fixes implemented | Pending |
 
 ## Material cautions carried into comparison
@@ -97,6 +97,6 @@ No formula should be changed merely because a scenario differs: first determine
 whether the product intentionally models the same employee, location, pay timing,
 and employer classification as the dossier.
 
-That comparison is now recorded in the linked country files. The next phase is
-reviewed implementation, beginning with isolated confirmed corrections and adding
-regression vectors before broader formula rebuilds.
+That comparison and the resulting core implementation pass are now recorded in
+the linked country files. Independent review remains pending, together with the
+explicitly provisional or research-blocked items listed above.

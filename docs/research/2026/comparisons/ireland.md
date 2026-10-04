@@ -45,3 +45,9 @@ Implement date/pay-period-aware Class A PRSI and expose MyFutureFund enrolment p
 ## Regression vectors
 
 For 52 equal Friday pays and an enrolled worker with no existing pension, assert `(gross → employer_cost, net)`: `20,000 → 22,107.50, 18,974.10`; `60,000 → 67,672.50, 44,024.68`; `100,000 → 112,499.04, 63,320.34`; `200,000 → 223,786.54, 111,082.84`; `600,000 → 668,936.54, 302,132.84`.
+
+## Implementation update
+
+Implemented the fixed 52-Friday scenario, including the 39/13 split-year PRSI
+rates, low-pay credit and MyFutureFund contributions through the weekly payroll
+that breaches EUR80,000. Age 40 remains within automatic-enrolment eligibility.

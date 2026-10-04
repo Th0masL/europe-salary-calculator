@@ -1,9 +1,9 @@
 """Greece salary calculation — computed from published tax rates.
 
-Rates are 2026 for the representative age-30, single, no-child employee paid as
+Rates are 2026 for the representative age-40, single, no-child employee paid as
 12 salaries plus Christmas, Easter and holiday amounts. Each payment receives its
-own EFKA ceiling. The age-30 PIT scale uses 9% through €20,000 and the Article 16
-reduction. Employer cost includes the selected KPK 101 €20 ELPC charge.
+own EFKA ceiling. The ordinary PIT scale and Article 16 reduction apply. Employer
+cost includes the selected KPK 101 €20 ELPC charge.
 
 Sources: PwC Greece 2026 (EFKA rates + €7,761.94/mo cap; PIT brackets).
 """
@@ -18,7 +18,8 @@ INF = float("inf")
 MONTHLY_EFKA_CAP = 7761.94
 EE_EFKA = 0.1337
 ER_EFKA = 0.2179
-BRACKETS = [(20000, 0.09), (30000, 0.26), (40000, 0.34), (60000, 0.39), (INF, 0.44)]
+BRACKETS = [(10000, 0.09), (20000, 0.20), (30000, 0.26),
+            (40000, 0.34), (60000, 0.39), (INF, 0.44)]
 ELPC = 20
 
 

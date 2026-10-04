@@ -1,6 +1,7 @@
 """United Kingdom salary calculation — computed from published tax rates.
 
-Rates are 2026/27 (single, England/NI, standard tax code). Currency GBP (FX path).
+Rates are 2026/27 for the age-40, single, no-child profile in England, Wales or
+Northern Ireland (not Scotland), paid monthly. Currency GBP (FX path).
  - Income tax (PAYE): personal allowance £12,570, tapered away £1 per £2 above
    £100,000 (gone by £125,140 — the ~60% marginal band), then 20% to £50,270,
    40% to £125,140, 45% above.
@@ -35,12 +36,21 @@ def _income_tax(gross):
             + 0.45 * max(0.0, t - add_thresh))
 
 
+def _monthly_payments(gross):
+    regular = round(gross / 12, 2)
+    return [regular] * 11 + [round(gross - 11 * regular, 2)]
+
+
 def _employee_nic(gross):
-    return 0.08 * max(0.0, min(gross, 50270) - 12570) + 0.02 * max(0.0, gross - 50270)
+    return sum(round(0.08 * max(0.0, min(pay, 4_189) - 1_048)
+                     + 0.02 * max(0.0, pay - 4_189), 2)
+               for pay in _monthly_payments(gross))
 
 
 def compute(gross):
     """Return (employer_cost, net) in GBP; build_formula converts to EUR."""
     net = gross - _income_tax(gross) - _employee_nic(gross)
-    employer_cost = gross + 0.15 * max(0.0, gross - 5000)
+    employer_nic = sum(round(0.15 * max(0.0, pay - 417), 2)
+                       for pay in _monthly_payments(gross))
+    employer_cost = gross + employer_nic
     return employer_cost, net

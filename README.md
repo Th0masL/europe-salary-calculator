@@ -67,6 +67,13 @@ does not attempt to model every municipality, industry, pension election, family
 status, payment pattern, or payroll-rounding edge case. Country-specific controls
 are added only when their comparison value justifies the extra interface complexity.
 
+The common European employee profile is **40 years old, single, with no children
+or other dependants**. It assumes ordinary resident private-sector employment and
+no youth, family, disability, newcomer, or other special personal relief. Where
+location, employer class, insurance, pension, or payroll timing still matters, the
+country module selects and names one representative scenario instead of adding a
+country-specific control.
+
 Each module was assembled from named official or secondary sources (national tax
 authorities and tax-provider summaries), with vendor outputs used as sanity checks
 during the original research. The resulting reasoning, comparisons, and caveats

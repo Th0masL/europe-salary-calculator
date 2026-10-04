@@ -14,10 +14,11 @@ The comparisons test the dossiers' stated resident/profile/location/payment scen
 
 ## Implementation progress
 
-The completed correction/rebuild tranches cover **Albania, Austria, Belgium,
-Bulgaria, Denmark, Finland, France, Greece, Italy, Latvia, Lithuania, Luxembourg,
-Malta, Moldova, Montenegro, Poland, Portugal, Slovakia, Slovenia, Spain, Sweden,
-Switzerland, Turkey, and Ukraine**.
+The core correction/rebuild pass now covers **all 36 European country modules**.
+The live product uses a fixed age-40, single, no-child profile and one documented
+representative employer/location scenario per country, without country-specific
+controls. Serbia's later supplementary annual tax, Montenegro's possible final
+PIO refund, and other explicitly listed provisional items remain unresolved.
 The country files record which historical findings are resolved and which
 scenario/product limitations remain. Finding totals below remain the audit
 baseline rather than being reduced whenever a fix lands.
@@ -106,28 +107,26 @@ The groups below are work streams, not a claim that every country belongs to onl
 
 ### 1. Deterministic corrections
 
-The completed tranches cover Albania, Bulgaria, Lithuania, Malta, Moldova,
-Montenegro, Poland, Portugal, Slovakia, Slovenia, Turkey, and Ukraine. Their
-comparison files document remaining scenario limitations. Payslip-level rounding
-for Germany, Czech Republic, Poland, and the UK is deliberately lower priority
-because it does not materially affect this comparator. Croatia's age relief and
-Ireland's MyFutureFund/pay-calendar behavior remain product decisions; they should
-not create new UI inputs without explicit approval.
+The deterministic correction pass is complete for the fixed representative
+profiles. Croatia now explicitly uses the age-40 ordinary path; Ireland uses a
+52-Friday MyFutureFund-enrolled scenario; Germany, Czechia, and the UK apply the
+documented statutory rounding/payment conventions. Narrow bonus, irregular-pay,
+and multiple-employer cases remain outside this comparator's scope.
 
 ### 2. Material employee-net formula rebuilds
 
 The material rebuild tranche is complete. Belgium, Italy, Luxembourg, Spain,
 Latvia, Sweden, Switzerland, Austria, Finland, Denmark, France, and Greece now
-use their fixed representative dossier scenarios rather than blended-rate
-shortcuts. Remaining work concerns scenario/product decisions, smaller payroll
-timing details, and the explicitly research-blocked cases below.
+use fixed representative scenarios rather than blended-rate shortcuts. Remaining
+work is limited to independent review, deeper boundary/component testing, narrow
+out-of-scope payroll cases, and the explicitly research-blocked cases below.
 
 ### 3. High-income rules and ceilings
 
 These need dedicated threshold vectors even where the lower-income formula is otherwise serviceable.
 
-1. **Serbia:** supplementary annual tax; until its final statistic is available, label output before this tax.
-2. **Norway:** OTP through 12G using the official average G.
+1. **Serbia:** supplementary annual tax; results are labelled ordinary payroll
+   before this tax until the official 2026 average-salary statistic exists.
 
 Poland's levy, Montenegro's uncapped payroll PIO, Latvia's solidarity mechanics,
 Austria's special-payment overflow, France's high-income bases/CEHR, Greece's
@@ -136,12 +135,12 @@ Montenegro's eventual after-refund result remains research-blocked.
 
 ### 4. Employer-cost scenario and product decisions
 
-Adopt a common product contract: use one documented representative scenario,
+The adopted product contract uses one documented representative scenario,
 return its deterministic statutory cost, and list material exclusions. Add named
 scenario inputs only when their comparison value justifies the UI complexity. Do
 not bury variability in a generic “extras” percentage.
 
-1. **Remove unsupported blended extras:** Netherlands remains; Belgium, Italy, France, Denmark, Switzerland and Sweden now use documented statutory/selected subtotals.
+1. **Unsupported blended extras:** removed from the corrected modules; the Netherlands now uses a named no-pension small-employer statutory scenario.
 2. **Document selected accident/risk assumptions:** Bulgaria, Czech Republic, Finland, Germany, Italy, Lithuania, Netherlands, Norway, Portugal, Spain and Switzerland.
 3. **Document selected location:** Belgium municipality, Croatia municipality, Denmark municipality, Finland municipality, France establishment/mobility zone, Italy region/municipality, Norway AGA zone, Spain autonomous community, Sweden municipality, Switzerland canton/municipality.
 4. **Document plan/election/status baseline:** Cyprus Holiday Fund exemption, Estonia pillar II/basic-exemption election, Ireland MyFutureFund, Netherlands occupational pension, Switzerland BVG/NBU plan, and UK Scotland/rUK.

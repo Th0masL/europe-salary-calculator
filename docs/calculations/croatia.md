@@ -11,7 +11,7 @@
 | Calculation currency | EUR |
 | Model | Single employee; see assumptions below |
 | Employer-cost summary | Health insurance 16.5% |
-| Formula fingerprint | `43f466b07eb6` |
+| Formula fingerprint | `686534705a00` |
 | Direct source links | Named in the model notes below; direct URLs have not yet been recorded. |
 
 ## Representative outputs
@@ -29,7 +29,8 @@ conversion where applicable. They are regression landmarks, not payroll quotes.
 
 Croatia salary calculation — computed from published tax rates.
 
-Rates are 2026.
+Rates are 2026 for the shared age-40, single, no-child profile. No youth PIT
+reduction applies. Zagreb is the fixed representative municipality.
 
 IMPORTANT correction vs the raw research: the employer burden is NOT ~33.7%.
 In Croatia the pension contributions (20%) are employee-side, and the old

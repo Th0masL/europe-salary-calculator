@@ -40,3 +40,10 @@ Implement Czech monthly/annual rounding if payroll precision is a product goal. 
 ## Regression vectors
 
 Use the five final-cash/floor rows in dossier §4. CZK2.5m is the strongest boundary vector because it crosses both the PIT threshold and annual social cap.
+
+## Implementation update
+
+Implemented the twelve-payment rounding sequence, annual PIT reconciliation and
+social-cap exhaustion. Employer output is explicitly a statutory floor; the
+mandatory activity-rated accident premium remains excluded because salary alone
+cannot determine it.
