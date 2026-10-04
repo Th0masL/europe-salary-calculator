@@ -10,8 +10,8 @@
 | Last independently reviewed | Not recorded |
 | Calculation currency | EUR |
 | Model | Single employee; see assumptions below |
-| Employer-cost summary | URSSAF ~34% (health, pension incl. AGIRC-ARRCO, unemployment, family) + ~8% typical mutuelle/prevoyance/versement mobilite/CSE |
-| Formula fingerprint | `205970d122c9` |
+| Employer-cost summary | Deterministic statutory subtotal after 2026 RGDU; excludes AT-MP, mobility, health premium and sector/company charges |
+| Formula fingerprint | `cb58c10c1c5f` |
 | Direct source links | Named in the model notes below; direct URLs have not yet been recorded. |
 
 ## Representative outputs
@@ -21,21 +21,17 @@ conversion where applicable. They are regression landmarks, not payroll quotes.
 
 | Annual gross | Employer cost | Take-home pay |
 |---:|---:|---:|
-| €60,000 | €89,985 | €41,138 |
-| €100,000 | €151,617 | €64,245 |
-| €200,000 | €302,666 | €113,955 |
+| €60,000 | €84,619 | €41,082 |
+| €100,000 | €142,696 | €64,188 |
+| €200,000 | €284,285 | €114,054 |
 
 ## Model notes and assumptions
 
 France salary calculation — computed from published tax rates.
 
-Rates are 2026 (single private-sector CADRE employee, 1 part, mainland, large
-employer). *** Most complex / most approximate module. ***
-The research data was incomplete (it omitted the AGIRC-ARRCO complementary
-pension, the CSG/CRDS rates, and the employer health/family thresholds), so this
-is RECONSTRUCTED from standard French payroll rates — a representative case to be
-sanity-checked against the cross-refs and confirmed by verification, not a precise
-transcription.
+Rates are 2026 for a single private-sector cadre employee, one tax share and a
+50+ employer. Employer output is a deterministic statutory subtotal: variable
+AT-MP, mobility, health-plan and sector/company charges are excluded.
 
 Structure:
  - Many contributions split by the PASS ceiling (€48,060 in 2026): a capped slice
@@ -72,10 +68,10 @@ These values are copied mechanically from the live calculation module.
 
 ```python
 PASS = 48060
-SMIC = 21840
+SMIC_RGDU = 21876.40
 BAREME = [(11600, 0.0), (29579, 0.11), (84577, 0.30), (181917, 0.41), (INF, 0.45)]
-ABATTEMENT_CAP = 14171
-EMPLOYER_EXTRAS = 0.08
+ABATTEMENT_CAP = 14555
+ABATTEMENT_MIN = 509
 ```
 
 ## Executable calculation
@@ -88,11 +84,12 @@ def _employee(gross):
     """Return (total employee contributions, non-deductible part)."""
     capped = min(gross, PASS)
     t2 = max(0.0, min(gross, 8 * PASS) - PASS)
-    csg_base = 0.9825 * gross
-    above_pass = 0.0014 if gross > PASS else 0.0   # CET only above the PASS
+    cadre_prev = 0.015 * capped
+    csg_base = 0.9825 * min(gross, 4 * PASS) + max(gross - 4 * PASS, 0) + cadre_prev
+    cet_base = min(gross, 8 * PASS) if gross > PASS else 0.0
     total = (
-        capped * (0.069 + 0.0315 + 0.0086)         # vieillesse plaf + AGIRC-ARRCO T1 + CEG T1
-        + gross * (0.004 + 0.00024 + above_pass)   # vieillesse déplaf + APEC + CET
+        capped * (0.069 + 0.0315 + 0.0086)
+        + gross * 0.004 + min(gross, 4 * PASS) * 0.00024 + cet_base * 0.0014
         + t2 * (0.0864 + 0.0108)                   # AGIRC-ARRCO T2 + CEG T2
         + csg_base * 0.097                          # CSG 9.2% + CRDS 0.5%
     )
@@ -102,17 +99,22 @@ def _employee(gross):
 def _employer(gross):
     capped = min(gross, PASS)
     t2 = max(0.0, min(gross, 8 * PASS) - PASS)
-    chomage_base = min(gross, 4 * PASS)
-    maladie = 0.13 if gross > 2.5 * SMIC else 0.07
-    famille = 0.0525 if gross > 3.5 * SMIC else 0.0345
-    above_pass = 0.0021 if gross > PASS else 0.0    # CET (employer) only above PASS
-    return (
-        capped * (0.0855 + 0.0472 + 0.0129 + 0.005)             # vieillesse plaf + AGIRC T1 + CEG T1 + FNAL
-        + gross * (maladie + famille + 0.0202 + 0.003 + 0.02    # +vieillesse déplaf +CSA +AT(repr.)
-                   + 0.00016 + 0.01 + 0.0068 + 0.00036 + above_pass)  # +dialogue +formation +apprentissage +APEC +CET
-        + t2 * (0.1295 + 0.0162)                                 # AGIRC T2 + CEG T2
-        + chomage_base * (0.0405 + 0.0025)                       # chômage + AGS
+    p4 = min(gross, 4 * PASS)
+    p8 = min(gross, 8 * PASS)
+    cet_base = p8 if gross > PASS else 0.0
+    cadre_prev = 0.015 * capped
+    before_reduction = (
+        gross * (0.13 + 0.003 + 0.0211 + 0.0525 + 0.00016 + 0.005 + 0.01 + 0.0068)
+        + capped * 0.0855 + p4 * (0.04 + 0.0025)
+        + capped * (0.0472 + 0.0129) + t2 * (0.1295 + 0.0162)
+        + cet_base * 0.0021 + p4 * 0.00036 + cadre_prev + 0.08 * cadre_prev
     )
+    if gross < 3 * SMIC_RGDU:
+        x = 0.5 * (3 * SMIC_RGDU / gross - 1)
+        coefficient = min(0.4021, round(0.0200 + 0.3821 * x ** 1.75, 4))
+    else:
+        coefficient = 0.0
+    return before_reduction - coefficient * gross
 
 def _cehr(rfr):
     """Contribution exceptionnelle sur les hauts revenus (1 part): 3% €250k–500k, 4% above.
@@ -124,12 +126,14 @@ def compute(gross):
     contributions, non_deductible = _employee(gross)
     deductible = contributions - non_deductible
     net_imposable = gross - deductible
-    abattement = min(0.10 * net_imposable, ABATTEMENT_CAP)
+    abattement = max(ABATTEMENT_MIN, min(0.10 * net_imposable, ABATTEMENT_CAP))
     taxable = max(0.0, net_imposable - abattement)
-    income_tax = progressive(taxable, BAREME)
+    gross_scale_tax = progressive(taxable, BAREME)
+    decote = max(0.0, 897 - 0.4525 * gross_scale_tax)
+    income_tax = max(0.0, gross_scale_tax - decote)
 
     net = gross - contributions - income_tax - _cehr(taxable)
-    employer_cost = gross + _employer(gross) + gross * EMPLOYER_EXTRAS
+    employer_cost = gross + _employer(gross)
     return employer_cost, net
 ```
 

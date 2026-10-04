@@ -11,7 +11,7 @@
 | Calculation currency | EUR |
 | Model | Single employee; see assumptions below |
 | Employer-cost summary | Social security 20.38% (capped) + DB 3.7% + Kommunalsteuer 3.0% + DZ 0.36% + MVK 1.53% |
-| Formula fingerprint | `46247ace5855` |
+| Formula fingerprint | `a6ea1aa82308` |
 | Direct source links | Named in the model notes below; direct URLs have not yet been recorded. |
 
 ## Representative outputs
@@ -21,9 +21,9 @@ conversion where applicable. They are regression landmarks, not payroll quotes.
 
 | Annual gross | Employer cost | Take-home pay |
 |---:|---:|---:|
-| €60,000 | €77,382 | €41,020 |
-| €100,000 | €127,507 | €63,039 |
-| €200,000 | €236,097 | €119,879 |
+| €60,000 | €77,934 | €41,025 |
+| €100,000 | €129,189 | €62,631 |
+| €200,000 | €237,779 | €119,355 |
 
 ## Model notes and assumptions
 
@@ -34,22 +34,10 @@ system and that's the whole game: the two extra "special payments" (13th/14th) a
 taxed at a flat favourable rate, which lifts net well above what a naive 12-month
 progressive calc would give.
 
-Model (validated against PwC's official 2026 worked examples — it reproduces their
-€54k case to the cent: SS €696.99/mo and wage tax €505.64/mo):
- - Split annual gross into 14 equal payments: 12 regular + 2 special.
- - Employee social security 18.07% (incl. the AK + housing levies — the research's
-   17.07% omitted them; the PwC examples confirm 18.07%), on each payment up to the
-   Höchstbeitragsgrundlage (~€6,630/mo regular, ~€13,260/yr special — 2026
-   estimate; only bites above ~€93k gross).
- - Regular pay: progressive 2026 brackets on (regular − SS), minus a ~€548 credit
-   (Verkehrsabsetzbetrag etc., calibrated to the PwC examples).
- - Special pay: first €620 tax-free, remainder at 6% (the 13th/14th sit within the
-   Jahressechstel and stay in the 6% band for salaries up to ~€175k).
- - Employer: SS 20.38% + DB 3.7% + DZ 0.36% + Kommunalsteuer 3.0% + MVK 1.53%
-   ≈ 29% (SS portion capped; the others on full gross).
-
-Flags: the 2026 Höchstbeitragsgrundlage is an estimate (affects only €100k+); the
-employer levies beyond SS are standard but DZ varies slightly by Land.
+Representative Vienna scenario with 14 equal payments. Employee unemployment
+rates vary with each payment; regular and special contributions use their final
+2026 rates and ceilings. Tax includes the statutory transport credit/surcharge,
+negative-tax treatment and special-payment overflow into ordinary income.
 
 Sources: PwC Austria 2026 (brackets + worked examples); ÖGK 2026 SS rates.
 
@@ -58,14 +46,16 @@ Sources: PwC Austria 2026 (brackets + worked examples); ÖGK 2026 SS rates.
 These values are copied mechanically from the live calculation module.
 
 ```python
-MONTHLY_CEIL = 6630
-SPECIAL_CEIL = 13260
-EE_SS = 0.1807
-ER_SS = 0.2038
+MONTHLY_CEIL = 6930
+SPECIAL_CEIL = 13860
+EE_REGULAR_BASE = 0.1537
+EE_SPECIAL_BASE = 0.1412
+ER_REGULAR = 0.2123
+ER_SPECIAL = 0.2048
 ER_LEVIES = 0.037 + 0.0036 + 0.03 + 0.0153
-TAX_CREDIT = 548
 SPECIAL_EXEMPT = 620
-SPECIAL_BANDS = [(25000, 0.06), (50000, 0.27), (83333, 0.3575), (INF, 0.50)]
+SPECIAL_BANDS = [(620, 0.0), (25000, 0.06), (50000, 0.27), (83333, 0.3575), (INF, 0.0)]
+VIENNA_DGA = 106
 BRACKETS = [(13539, 0.0), (21992, 0.20), (36458, 0.30), (70365, 0.40),
             (104859, 0.48), (1000000, 0.50), (INF, 0.55)]
 ```
@@ -76,22 +66,39 @@ This is the exact function used to build the salary dataset. Shared progressive
 tax brackets use [`engine.progressive`](../../tools/calc/engine.py).
 
 ```python
+def employee_unemployment_rate(payment):
+    if payment <= 2225:
+        return 0.0
+    if payment <= 2427:
+        return 0.01
+    if payment <= 2630:
+        return 0.02
+    return 0.0295
+
 def compute(gross):
     """Return (employer_cost, net) for an annual gross salary, in EUR."""
     monthly = gross / 14.0
     regular_annual = monthly * 12
     special_annual = monthly * 2
 
-    reg_ss = min(monthly, MONTHLY_CEIL) * 12 * EE_SS
-    spec_ss = min(special_annual, SPECIAL_CEIL) * EE_SS
+    av = employee_unemployment_rate(monthly)
+    reg_ss = min(monthly, MONTHLY_CEIL) * 12 * (EE_REGULAR_BASE + av)
+    spec_ss = min(special_annual, SPECIAL_CEIL) * (EE_SPECIAL_BASE + av)
 
-    reg_tax = max(0.0, progressive(regular_annual - reg_ss, BRACKETS) - TAX_CREDIT)
-    spec_tax = progressive(max(0.0, special_annual - spec_ss - SPECIAL_EXEMPT), SPECIAL_BANDS)
+    net_special = special_annual - spec_ss
+    overflow = max(0.0, net_special - 83333)
+    ordinary_base = max(0.0, regular_annual - reg_ss - 132 + overflow)
+    total_taxable_income = ordinary_base - overflow + net_special
+    surcharge = (804 if total_taxable_income <= 19761 else
+                 804 * max(0.0, (30259 - total_taxable_income) / (30259 - 19761)))
+    reg_tax = progressive(ordinary_base, BRACKETS) - 496 - surcharge
+    spec_tax = 0.0 if special_annual <= 2615 else progressive(net_special, SPECIAL_BANDS)
 
     net = gross - reg_ss - spec_ss - reg_tax - spec_tax
 
-    er_ss = (min(monthly, MONTHLY_CEIL) * 12 + min(special_annual, SPECIAL_CEIL)) * ER_SS
-    employer_cost = gross + er_ss + gross * ER_LEVIES
+    er_ss = (min(monthly, MONTHLY_CEIL) * 12 * ER_REGULAR
+             + min(special_annual, SPECIAL_CEIL) * ER_SPECIAL)
+    employer_cost = gross + er_ss + gross * ER_LEVIES + VIENNA_DGA
     return employer_cost, net
 ```
 

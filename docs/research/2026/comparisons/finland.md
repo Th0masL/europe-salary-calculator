@@ -5,6 +5,12 @@
 - Dossier: `docs/research/2026/finland.md` (official Vero/ETK sources, accessed 2026-10-04).
 - Implementation: `tools/calc/finland.py`.
 
+## Implementation update — 2026-10-04
+
+The Helsinki benchmark now follows the official state/municipal/health bases,
+basic allowance, employment-credit ordering and 2026 YLE formula. Employer
+accident and group-life assumptions use the dossier's stated averages.
+
 ## Current implementation scenario
 
 Single employee, no church tax, but the implementation uses an average 7.57% municipality and a deliberately simplified deduction/credit model. Employer cost uses representative averages.

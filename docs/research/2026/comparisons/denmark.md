@@ -5,6 +5,12 @@
 - Dossier: `docs/research/2026/denmark.md` (official SKAT/Ministry/ATP sources, accessed 2026-10-04).
 - Implementation: `tools/calc/denmark.py`.
 
+## Implementation update — 2026-10-04
+
+Bottom and municipal bases are separated, both 2026 employment deductions use
+the ATP-inclusive base, and the unsupported fund bundle was replaced by the
+dossier's DKK5,806 selected scenario. Exact accident insurance remains excluded.
+
 ## Current implementation scenario
 
 Single non-church employee, national-average municipality and full-rate ATP. Employer funds are compressed into a representative DKK9,700 annual constant.

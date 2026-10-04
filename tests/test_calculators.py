@@ -181,6 +181,96 @@ class CorrectedCountryRegressionTests(unittest.TestCase):
             with self.subTest(gross=gross):
                 self.assertAmountsAlmostEqual(albania.compute(gross), expected)
 
+    def test_latvia_solidarity_reconciliation(self):
+        latvia = importlib.import_module("latvia")
+        vectors = {
+            20_000: (24_722.32, 15_018.50),
+            200_000: (238_576.09, 134_990.65),
+            600_000: (696_576.09, 389_500.65),
+        }
+        for gross, expected in vectors.items():
+            with self.subTest(gross=gross):
+                self.assertAmountsAlmostEqual(latvia.compute(gross), expected)
+
+    def test_denmark_separate_tax_bases_and_deductions(self):
+        denmark = importlib.import_module("denmark")
+        vectors = {
+            150_000: (158_182.00, 111_086.08),
+            750_000: (758_182.00, 466_708.41),
+            4_500_000: (4_508_182.00, 2_050_037.03),
+        }
+        for gross, expected in vectors.items():
+            with self.subTest(gross=gross):
+                self.assertAmountsAlmostEqual(denmark.compute(gross), expected)
+
+    def test_finland_ordered_helsinki_tax_calculation(self):
+        finland = importlib.import_module("finland")
+        vectors = {
+            20_000: (23_978.00, 18_083.50),
+            60_000: (71_934.00, 42_379.24),
+            600_000: (719_340.00, 317_842.58),
+        }
+        for gross, expected in vectors.items():
+            with self.subTest(gross=gross):
+                self.assertAmountsAlmostEqual(finland.compute(gross), expected)
+
+    def test_greece_age30_and_payment_level_efka(self):
+        greece = importlib.import_module("greece")
+        vectors = {
+            20_000: (24_378.00, 16_437.14),
+            200_000: (225_120.10, 114_175.42),
+            600_000: (625_389.90, 338_082.72),
+        }
+        for gross, expected in vectors.items():
+            with self.subTest(gross=gross):
+                self.assertAmountsAlmostEqual(greece.compute(gross), expected)
+
+    def test_sweden_official_stockholm_tax_formulas(self):
+        sweden = importlib.import_module("sweden")
+        vectors = {
+            200_000: (262_840.00, 171_894.00),
+            1_000_000: (1_314_200.00, 680_954.00),
+            6_000_000: (7_885_200.00, 3_149_954.00),
+        }
+        for gross, expected in vectors.items():
+            with self.subTest(gross=gross):
+                self.assertAmountsAlmostEqual(sweden.compute(gross), expected)
+
+    def test_switzerland_zurich_fixed_core_benchmark(self):
+        switzerland = importlib.import_module("switzerland")
+        vectors = {
+            20_000: (21_485.00, 18_462.74),
+            100_000: (110_638.00, 78_358.83),
+            600_000: (642_793.20, 369_883.21),
+        }
+        for gross, expected in vectors.items():
+            with self.subTest(gross=gross):
+                self.assertAmountsAlmostEqual(switzerland.compute(gross), expected)
+
+    def test_austria_vienna_payment_specific_calculation(self):
+        austria = importlib.import_module("austria")
+        vectors = {
+            20_000: (26_048.57, 17_984.29),
+            100_000: (129_189.40, 62_631.05),
+            600_000: (672_139.40, 329_577.93),
+        }
+        for gross, expected in vectors.items():
+            with self.subTest(gross=gross):
+                self.assertAmountsAlmostEqual(austria.compute(gross), expected)
+
+    def test_france_deterministic_statutory_subtotal(self):
+        france = importlib.import_module("france")
+        vectors = {
+            20_000: (20_622.40, 15_798.05),
+            60_000: (84_618.97, 41_081.60),
+            600_000: (802_975.32, 290_195.27),
+        }
+        for gross, expected in vectors.items():
+            with self.subTest(gross=gross):
+                actual = france.compute(gross)
+                self.assertAlmostEqual(actual[0], expected[0], delta=0.02)
+                self.assertAlmostEqual(actual[1], expected[1], delta=0.02)
+
 
 class GeneratedDataTests(unittest.TestCase):
     def test_formula_range_and_5k_resolution(self):

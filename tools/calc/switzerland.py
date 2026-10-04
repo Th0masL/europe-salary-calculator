@@ -1,18 +1,8 @@
 """Switzerland salary calculation — computed from published tax rates.
 
-Rates are 2026 (single). Currency CHF (FX path). ANCHORED ON ZÜRICH CITY: Swiss
-income tax is federal + cantonal + communal, and the cantonal/communal part varies
-2–3× by location (Zug low, Geneva/Vaud high), so net is canton-specific — this is a
-representative Zürich estimate, not a single nationwide truth.
- - Employee social: AHV/IV/EO 5.3% (no cap) + ALV 1.1% (to CHF 148,200, then +0.5%
-   to CHF 315,000) + BVG/LPP pillar-2 pension on the coordinated salary (age-banded;
-   ~5% employee representative) + non-occupational accident ~1%.
- - Income tax: progressive federal (max 11.5%) + Zürich cantonal + communal,
-   effective on taxable income (gross − employee social − standard deductions).
- - Employer: mirrors AHV + ALV + BVG, plus occupational accident & family-allowance
-   fund (~1.5% representative).
-
-Tax table and BVG share are calibrated against the EOR cross-refs.
+Rates are 2026 for a single age-35–44 employee in Zürich City. The benchmark uses
+the equal-split minimum BVG old-age credit and zero variable accident/pension-risk
+premiums. Income tax is official federal plus Zürich simple tax × 2.14 and CHF24.
 
 Sources: PwC/ESTV 2026 (federal tariff, AHV/ALV rates); BVG 2026 coordinated-salary
 limits (entry CHF 22,680, coordination CHF 25,725, upper CHF 88,200).
@@ -22,29 +12,40 @@ from engine import progressive
 NAME = "Switzerland"
 CURRENCY = "CHF"
 YEAR = 2026
-EMPLOYER_BREAKDOWN = "AHV/IV/EO 5.3% + ALV 1.1% + BVG pension (age-banded) + accident & family-allowance funds"
+EMPLOYER_BREAKDOWN = "Zürich identifiable core: AHV 5.3% + capped ALV 1.1% + SVA FAK 1.025% + illustrative BVG 5%"
 INF = float("inf")
 
 AHV = 0.053
-ALV1, ALV2 = 0.011, 0.005
-ALV_CAP1, ALV_CAP2 = 148200, 315000
-NBU = 0.01                       # non-occupational accident (employee)
-ER_EXTRA = 0.045                 # employer occupational accident + family-allowance
-                                 # fund + pension premium (calibrated to eBook/Deel)
+ALV = 0.011
+ALV_CAP = 148200
+FAK = 0.01025
 
 BVG_ENTRY = 22680
-BVG_COORD_DED = 25725
-BVG_UPPER = 88200
-BVG_MIN_COORD = 3675
+BVG_COORD_DED = 26460
+BVG_UPPER = 90720
+BVG_MIN_COORD = 3780
 BVG_RATE = 0.05                  # representative employee/employer share (age ~35-44)
+ZH_BANDS = [(7000, 0.0), (12000, 0.02), (16800, 0.03), (24800, 0.04),
+            (34500, 0.05), (45700, 0.06), (58800, 0.07), (76400, 0.08),
+            (110400, 0.09), (144100, 0.10), (197400, 0.11),
+            (266700, 0.12), (INF, 0.13)]
 
-DEDUCTIONS = 6000                # standard professional/insurance deductions
-TAX = [(15000, 0.0), (30000, 0.08), (50000, 0.12), (80000, 0.17),
-       (120000, 0.22), (180000, 0.27), (INF, 0.30)]
 
-
-def _alv(salary):
-    return ALV1 * min(salary, ALV_CAP1) + ALV2 * max(0.0, min(salary, ALV_CAP2) - ALV_CAP1)
+def _federal_tax(taxable):
+    bands = [
+        (15200, 33200, 0.0, 0.77), (33200, 43500, 138.60, 0.88),
+        (43500, 58000, 229.20, 2.64), (58000, 76200, 612.00, 2.97),
+        (76200, 82100, 1152.50, 5.94), (82100, 108900, 1502.95, 6.60),
+        (108900, 141500, 3271.75, 8.80), (141500, 185100, 6140.55, 11.00),
+        (185100, 793900, 10936.55, 13.20), (793900, INF, 91298.15, 11.50),
+    ]
+    if taxable <= 15200:
+        return 0.0
+    for lower, upper, anchor, per_hundred in bands:
+        if taxable <= upper:
+            tax = anchor + ((taxable - lower) / 100) * per_hundred
+            tax = int(tax * 20 + 1e-9) / 20
+            return 0.0 if tax < 25 else tax
 
 
 def _bvg_coord(gross):
@@ -56,11 +57,20 @@ def _bvg_coord(gross):
 def compute(gross):
     """Return (employer_cost, net) in CHF; build_formula converts to EUR."""
     coord = _bvg_coord(gross)
-    ee_social = AHV * gross + _alv(gross) + NBU * gross + BVG_RATE * coord
-    taxable = max(0.0, gross - ee_social - DEDUCTIONS)
-    income_tax = progressive(taxable, TAX)
+    ee_social = AHV * gross + ALV * min(gross, ALV_CAP) + BVG_RATE * coord
+    wage_certificate = gross - ee_social
+    professional = min(4000, max(2000, 0.03 * wage_certificate))
+    has_bvg = coord > 0
+    zh_insurance = 2900 if has_bvg else 4350
+    federal_insurance = 1800 if has_bvg else 2700
+    zh_taxable = int(max(0.0, wage_certificate - professional - zh_insurance) // 100) * 100
+    federal_taxable = int(max(0.0, wage_certificate - professional - federal_insurance) // 100) * 100
+    zh_tax = progressive(zh_taxable, ZH_BANDS) * 2.14 + 24
+    federal_tax = _federal_tax(federal_taxable)
+    income_tax = zh_tax + federal_tax
 
     net = gross - ee_social - income_tax
-    er_social = AHV * gross + _alv(gross) + BVG_RATE * coord + ER_EXTRA * gross
+    er_social = (AHV * gross + ALV * min(gross, ALV_CAP)
+                 + FAK * gross + BVG_RATE * coord)
     employer_cost = gross + er_social
     return employer_cost, net

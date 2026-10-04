@@ -2,21 +2,19 @@
 
 Rates are 2026 (single, no church tax). Currency DKK (FX path). Denmark's
 "flexicurity" model: minimal employer payroll cost — ATP (~DKK 2,376/yr) plus the
-mandatory funds (AES occupational injury, AUB, barsel) ~DKK 9,700/yr, ≈ +2.7% at
-€60k (matches eBook/Rippling) — with the bulk of the burden on the employee's
+   selected determinable funds DKK 5,806/yr, before unresolved accident insurance,
+   with the bulk of the burden on the employee's
 income tax. The funds are roughly fixed DKK amounts (so the % falls as salary
 rises) and vary by sector/risk; the research mentioned only ATP.
 
 Employee side:
  - ATP DKK 1,188/yr (fixed) + AM-bidrag 8% of (gross − ATP).
  - "Personal income" = (gross − ATP) × 0.92.
- - Deductions before bund+municipal tax: personal allowance DKK 54,100 AND the
-   beskæftigelsesfradrag (employment deduction) 10.65% of the AM-base, capped at
-   ~DKK 45,100. *** The research OMITTED the beskæftigelsesfradrag — it's a real,
-   sizeable deduction (~€2k of net at €60k), so it's added here; its exact 2026
-   rate/cap and the smaller jobfradrag should be verified. ***
- - Bundskat 12.01% + municipal 25.049% (country average) on the post-deduction
-   base; plus mellemskat 7.5% > DKK 641,200, topskat 7.5% > DKK 777,900, and 5%
+ - Employment deduction 12.75% capped DKK63,300 and job allowance 4.5% above
+   DKK235,200 capped DKK3,100 reduce municipal taxable income only.
+ - Bundskat 12.01% uses personal income less the personal allowance; municipal
+   25.049% also deducts employment/job allowances. Plus mellemskat 7.5% above
+   DKK 641,200, topskat 7.5% above DKK 777,900, and 5%
    > DKK 2,592,700 (on personal income, no allowance). (Tax ceiling 52.07% doesn't
    bind in range.)
 
@@ -27,15 +25,18 @@ ATP private-sector rates.
 NAME = "Denmark"
 CURRENCY = "DKK"
 YEAR = 2026
-EMPLOYER_BREAKDOWN = "ATP + AES/AUB/barsel funds (~DKK 12,000/yr, roughly fixed; no percentage employer payroll tax)"
+EMPLOYER_BREAKDOWN = "Employer ATP DKK2,376 + selected AUB/AES/maternity funds DKK5,806; accident insurance excluded"
 
 ATP_EE = 99 * 12            # DKK 1,188/yr employee
 ATP_ER = 198 * 12           # DKK 2,376/yr employer
-EMPLOYER_FUNDS = 9700       # AES + AUB + barsel etc. (representative; ~fixed DKK)
+EMPLOYER_FUNDS = 5806       # selected official AUB/AES/maternity scenario
 AM_RATE = 0.08
 PERSONAL_ALLOWANCE = 54100
-EMPLOYMENT_DED_RATE = 0.1065     # beskæftigelsesfradrag
-EMPLOYMENT_DED_CAP = 45100       # 2025 cap (2026 estimate)
+EMPLOYMENT_DED_RATE = 0.1275
+EMPLOYMENT_DED_CAP = 63300
+JOB_DED_RATE = 0.045
+JOB_DED_START = 235200
+JOB_DED_CAP = 3100
 BUNDSKAT = 0.1201
 MUNICIPAL = 0.25049              # country average
 
@@ -50,10 +51,13 @@ def compute(gross):
     am_bidrag = AM_RATE * am_base
     personal_income = am_base - am_bidrag        # = (gross − ATP) × 0.92
 
-    employment_ded = min(EMPLOYMENT_DED_RATE * am_base, EMPLOYMENT_DED_CAP)
-    taxable = max(0.0, personal_income - PERSONAL_ALLOWANCE - employment_ded)
+    deduction_base = gross + ATP_ER
+    employment_ded = min(EMPLOYMENT_DED_RATE * deduction_base, EMPLOYMENT_DED_CAP)
+    job_ded = min(JOB_DED_RATE * max(0.0, deduction_base - JOB_DED_START), JOB_DED_CAP)
 
-    tax = (BUNDSKAT + MUNICIPAL) * taxable
+    bottom_base = max(0.0, personal_income - PERSONAL_ALLOWANCE)
+    municipal_base = max(0.0, personal_income - employment_ded - job_ded - PERSONAL_ALLOWANCE)
+    tax = BUNDSKAT * bottom_base + MUNICIPAL * municipal_base
     tax += MELLEM_RATE * max(0.0, personal_income - MELLEM_THRESHOLD)
     tax += TOP_RATE * max(0.0, personal_income - TOP_THRESHOLD)
     tax += ADDL_RATE * max(0.0, personal_income - ADDL_THRESHOLD)

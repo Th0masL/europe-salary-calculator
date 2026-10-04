@@ -6,6 +6,12 @@
 - Current implementation: `tools/calc/latvia.py`
 - Comparison date: 2026-10-04
 
+## Implementation update — 2026-10-04
+
+The EUR6,600 minimum, full cash VSAOI, solidarity allocation, separate 3% annual
+tax, employer reconciliation refund and risk fee are implemented. Final annual
+net and post-reconciliation employer cost match the five dossier vectors.
+
 ## Current implementation scenario
 
 The module treats the €105,300 social maximum as a cash cap for both employee and employer contributions and runs a conventional progressive tax over `gross − capped employee NSIC`. Latvian solidarity-tax accounting does not work that way.

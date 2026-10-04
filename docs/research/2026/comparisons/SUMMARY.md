@@ -14,12 +14,12 @@ The comparisons test the dossiers' stated resident/profile/location/payment scen
 
 ## Implementation progress
 
-Two deterministic correction tranches were implemented on 2026-10-04 for
-**Albania, Bulgaria, Lithuania, Malta, Moldova, Montenegro, Poland, Portugal,
-Slovakia, Slovenia, Turkey, and Ukraine**. The country files record which
-historical findings are resolved and which scenario/product limitations remain.
-Finding totals below remain the audit baseline rather than being reduced whenever
-a fix lands.
+The completed correction/rebuild tranches cover **Albania, Austria, Bulgaria,
+Denmark, Finland, France, Greece, Latvia, Lithuania, Malta, Moldova, Montenegro,
+Poland, Portugal, Slovakia, Slovenia, Sweden, Switzerland, Turkey, and Ukraine**.
+The country files record which historical findings are resolved and which
+scenario/product limitations remain. Finding totals below remain the audit
+baseline rather than being reduced whenever a fix lands.
 
 ## Verified findings totals
 
@@ -117,36 +117,28 @@ not create new UI inputs without explicit approval.
 
 These require component-level rewrites and should not be patched with another blended rate.
 
-1. **Latvia:** rebuild withholding versus solidarity reconciliation and the separate annual 3% tax.
-2. **Sweden:** replace the approximate allowance/job-credit model with official SKV formulas.
-3. **Switzerland:** replace synthetic tax with federal and Zürich tariff/multiplier calculations.
-4. **Austria:** calculate regular and special payments separately, including income-sensitive SV, credits and negative tax.
-5. **Finland:** implement separate state, municipal and health bases, deductions and credit ordering.
-6. **Denmark:** split bottom/municipal bases and implement employment/job deductions on their correct base.
-7. **France:** correct CSG/CRDS base, taxable-net construction, décote and related annual assessment logic.
-8. **Greece:** add age-sensitive PIT, Article 16 and payment-event EFKA.
-9. **Belgium:** make the 12-month/holiday-pay structure explicit and calculate work bonuses/CSSS monthly.
-10. **Italy:** implement employment relief and official regional/municipal bases for a named location.
-11. **Luxembourg:** implement contribution caps and the exact tariff, deductions, credits and rounding.
-12. **Spain:** introduce separate state/autonomous scales, minima and low-income relief.
+1. **Belgium:** make the 12-month/holiday-pay structure explicit and calculate work bonuses/CSSS monthly.
+2. **Italy:** implement employment relief and official regional/municipal bases for a named location.
+3. **Luxembourg:** implement contribution caps and the exact tariff, deductions, credits and rounding.
+4. **Spain:** introduce separate state/autonomous scales, minima and low-income relief.
+
+Latvia, Sweden, Switzerland, Austria, Finland, Denmark, France, and Greece have
+been rebuilt against their fixed representative dossier scenarios.
 
 ### 3. High-income rules and ceilings
 
 These need dedicated threshold vectors even where the lower-income formula is otherwise serviceable.
 
 1. **Serbia:** supplementary annual tax; until its final statistic is available, label output before this tax.
-2. **Latvia:** social maximum does not cap in-year withholding; reconcile solidarity separately.
-3. **Austria:** move net special payments above EUR83,333 into ordinary taxation.
-4. **France:** four-PASS CSG allowance limit, P8 retirement ceiling and CEHR.
-5. **Spain:** employee and employer solidarity tiers above the ordinary ceiling.
-6. **Luxembourg:** contribution ceiling and 9% fund addition at high tax.
-7. **Greece:** per-payment EFKA ceiling across 14 payments.
-8. **Switzerland:** remove obsolete ALV2 above CHF148,200.
-9. **Norway:** OTP through 12G using the official average G.
-10. **Italy:** extra employee INPS threshold and employer bases.
+2. **Spain:** employee and employer solidarity tiers above the ordinary ceiling.
+3. **Luxembourg:** contribution ceiling and 9% fund addition at high tax.
+4. **Norway:** OTP through 12G using the official average G.
+5. **Italy:** extra employee INPS threshold and employer bases.
 
-Poland's 4% solidarity levy and Montenegro's uncapped in-year PIO withholding are
-implemented. Montenegro's eventual after-refund result remains research-blocked.
+Poland's levy, Montenegro's uncapped payroll PIO, Latvia's solidarity mechanics,
+Austria's special-payment overflow, France's high-income bases/CEHR, Greece's
+payment ceilings, and Switzerland's current ALV treatment are implemented.
+Montenegro's eventual after-refund result remains research-blocked.
 
 ### 4. Employer-cost scenario and product decisions
 
@@ -155,7 +147,7 @@ return its deterministic statutory cost, and list material exclusions. Add named
 scenario inputs only when their comparison value justifies the UI complexity. Do
 not bury variability in a generic “extras” percentage.
 
-1. **Remove unsupported blended extras:** France, Belgium, Denmark, Netherlands, Switzerland, Sweden and Italy.
+1. **Remove unsupported blended extras:** Belgium, Netherlands and Italy remain; France, Denmark, Switzerland and Sweden now use documented statutory/selected subtotals.
 2. **Document selected accident/risk assumptions:** Bulgaria, Czech Republic, Finland, Germany, Italy, Lithuania, Netherlands, Norway, Portugal, Spain and Switzerland.
 3. **Document selected location:** Belgium municipality, Croatia municipality, Denmark municipality, Finland municipality, France establishment/mobility zone, Italy region/municipality, Norway AGA zone, Spain autonomous community, Sweden municipality, Switzerland canton/municipality.
 4. **Document plan/election/status baseline:** Cyprus Holiday Fund exemption, Estonia pillar II/basic-exemption election, Ireland MyFutureFund, Netherlands occupational pension, Switzerland BVG/NBU plan, and UK Scotland/rUK.

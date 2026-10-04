@@ -6,6 +6,12 @@
 - Current implementation: `tools/calc/greece.py`
 - Comparison date: 2026-10-04
 
+## Implementation update — 2026-10-04
+
+The fixed representative profile is age 30, KPK 101, fourteen-payment EFKA and
+EUR20 ELPC. The age-specific scale, Article 16 reduction and payment-level ceilings
+are implemented and match all dossier vectors.
+
 ## Current implementation scenario
 
 The module models an annual resident employee with ordinary KPK-style EFKA, but converts the monthly ceiling into a single `12 × €7,761.94` annual cap. It uses the general-age PIT scale, omits the Article 16 employment reduction, and excludes the dossier's conditional €20 ELPC employer charge.

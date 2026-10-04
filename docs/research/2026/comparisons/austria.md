@@ -5,6 +5,12 @@
 - Dossier: `docs/research/2026/austria.md` (official BMF/ÖGK/USP sources, accessed 2026-10-04).
 - Implementation: `tools/calc/austria.py`.
 
+## Implementation update — 2026-10-04
+
+The Vienna 14-payment benchmark now applies payment-sensitive employee SV, final
+ceilings, statutory credits/refund, special-payment bands and overflow, distinct
+employer SV rates, and the EUR106 Vienna DGA. It matches the dossier vectors.
+
 ## Current implementation scenario
 
 Vienna-style 14 equal payments, but with estimated ceilings, one blended employee/employer SV rate, a calibrated credit, and uncapped percentage employer levies.

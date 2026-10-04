@@ -6,6 +6,12 @@
 - Current implementation: `tools/calc/switzerland.py`
 - Comparison date: 2026-10-04
 
+## Implementation update — 2026-10-04
+
+The Zürich fixed-core benchmark now uses official federal and Zürich tariffs,
+current ALV/BVG limits, SVA-ZH FAK and the documented equal-split BVG illustration.
+Variable accident, pension-risk and administration premiums remain excluded.
+
 ## Current implementation scenario
 
 Both select Zürich City and an illustrative 5% employee/employer BVG old-age share. The module additionally invents flat NBU and bundled employer-extra rates and uses a synthetic tax table calibrated to third-party outputs.

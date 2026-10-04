@@ -6,6 +6,12 @@
 - Current implementation: `tools/calc/sweden.py`
 - Comparison date: 2026-10-04
 
+## Implementation update — 2026-10-04
+
+The representative location is Stockholm. Official SKV 433 basic-allowance and
+credit formulas, burial/public-service charges and the state threshold are now
+implemented. Optional occupational pension was removed from statutory employer cost.
+
 ## Current implementation scenario
 
 The module uses national-average municipal tax and an estimated basic allowance/job credit, then adds a representative 4.5% occupational pension to employer cost. The dossier uses Stockholm, no church membership, and exact 2026 formulas.

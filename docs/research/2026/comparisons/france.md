@@ -5,6 +5,12 @@
 - Dossier: `docs/research/2026/france.md` (official URSSAF/Agirc-Arrco/legislation sources, accessed 2026-10-04).
 - Implementation: `tools/calc/france.py`.
 
+## Implementation update — 2026-10-04
+
+The employee path now uses the official CSG base, 2026 expense cap, décote and
+CEHR flow. Employer output is the dossier's deterministic statutory subtotal with
+2026 RGDU; invented AT-MP/health/mobility/extras were removed and remain excluded.
+
 ## Current implementation scenario
 
 Resident single cadre, 12 regular payments and nominally a large metropolitan employer. The module describes itself as approximate and adds an 8% Île-de-France “extras” layer without employer/location inputs.

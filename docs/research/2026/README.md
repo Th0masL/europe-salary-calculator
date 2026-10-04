@@ -13,22 +13,22 @@ logic has not yet been changed from these findings.
 | Country | Research | Code comparison | Integration | Independent review |
 |---|---|---|---|---|
 | Albania | [Dossier complete](albania.md) | [Compared](comparisons/albania.md) | Core fixes implemented | Pending |
-| Austria | [Dossier complete](austria.md) | [Compared](comparisons/austria.md) | Pending | Pending |
+| Austria | [Dossier complete](austria.md) | [Compared](comparisons/austria.md) | Core fixes implemented | Pending |
 | Belgium | [Dossier complete](belgium.md) | [Compared](comparisons/belgium.md) | Pending | Pending |
 | Bulgaria | [Dossier complete](bulgaria.md) | [Compared](comparisons/bulgaria.md) | Core fixes implemented | Pending |
 | Croatia | [Dossier complete](croatia.md) | [Compared](comparisons/croatia.md) | Pending | Pending |
 | Cyprus | [Dossier complete](cyprus.md) | [Compared](comparisons/cyprus.md) | Pending | Pending |
 | Czech Republic | [Dossier complete](czech-republic.md) | [Compared](comparisons/czech-republic.md) | Pending | Pending |
-| Denmark | [Dossier complete](denmark.md) | [Compared](comparisons/denmark.md) | Pending | Pending |
+| Denmark | [Dossier complete](denmark.md) | [Compared](comparisons/denmark.md) | Core fixes implemented | Pending |
 | Estonia | [Dossier complete](estonia.md) | [Compared](comparisons/estonia.md) | Pending | Pending |
-| Finland | [Dossier complete](finland.md) | [Compared](comparisons/finland.md) | Pending | Pending |
-| France | [Dossier complete](france.md) | [Compared](comparisons/france.md) | Pending | Pending |
+| Finland | [Dossier complete](finland.md) | [Compared](comparisons/finland.md) | Core fixes implemented | Pending |
+| France | [Dossier complete](france.md) | [Compared](comparisons/france.md) | Core fixes implemented | Pending |
 | Germany | [Dossier complete](germany.md) | [Compared](comparisons/germany.md) | Pending | Pending |
-| Greece | [Dossier complete](greece.md) | [Compared](comparisons/greece.md) | Pending | Pending |
+| Greece | [Dossier complete](greece.md) | [Compared](comparisons/greece.md) | Core fixes implemented | Pending |
 | Hungary | [Dossier complete](hungary.md) | [Compared](comparisons/hungary.md) | Pending | Pending |
 | Ireland | [Dossier complete](ireland.md) | [Compared](comparisons/ireland.md) | Pending | Pending |
 | Italy | [Dossier complete](italy.md) | [Compared](comparisons/italy.md) | Pending | Pending |
-| Latvia | [Dossier complete](latvia.md) | [Compared](comparisons/latvia.md) | Pending | Pending |
+| Latvia | [Dossier complete](latvia.md) | [Compared](comparisons/latvia.md) | Core fixes implemented | Pending |
 | Lithuania | [Dossier complete](lithuania.md) | [Compared](comparisons/lithuania.md) | Core fixes implemented | Pending |
 | Luxembourg | [Dossier complete](luxembourg.md) | [Compared](comparisons/luxembourg.md) | Pending | Pending |
 | Malta | [Dossier complete](malta.md) | [Compared](comparisons/malta.md) | Core fixes implemented | Pending |
@@ -43,8 +43,8 @@ logic has not yet been changed from these findings.
 | Slovakia | [Dossier complete](slovakia.md) | [Compared](comparisons/slovakia.md) | Core fixes implemented | Pending |
 | Slovenia | [Dossier complete](slovenia.md) | [Compared](comparisons/slovenia.md) | Core fixes implemented | Pending |
 | Spain | [Dossier complete](spain.md) | [Compared](comparisons/spain.md) | Pending | Pending |
-| Sweden | [Dossier complete](sweden.md) | [Compared](comparisons/sweden.md) | Pending | Pending |
-| Switzerland | [Dossier complete](switzerland.md) | [Compared](comparisons/switzerland.md) | Pending | Pending |
+| Sweden | [Dossier complete](sweden.md) | [Compared](comparisons/sweden.md) | Core fixes implemented | Pending |
+| Switzerland | [Dossier complete](switzerland.md) | [Compared](comparisons/switzerland.md) | Core fixes implemented | Pending |
 | Turkey | [Dossier complete](turkey.md) | [Compared](comparisons/turkey.md) | Core fixes implemented | Pending |
 | United Kingdom | [Dossier complete](united-kingdom.md) | [Compared](comparisons/uk.md) | Pending | Pending |
 | Ukraine | [Dossier complete](ukraine.md) | [Compared](comparisons/ukraine.md) | Core fixes implemented | Pending |

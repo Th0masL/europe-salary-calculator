@@ -10,8 +10,8 @@
 | Last independently reviewed | Not recorded |
 | Calculation currency | EUR |
 | Model | Single employee; see assumptions below |
-| Employer-cost summary | Social insurance (NSIC) 23.59% (capped €105,300) |
-| Formula fingerprint | `fa6aa8723b61` |
+| Employer-cost summary | VSAOI/solidarity 23.59% cash rate with 9.09%-of-excess refund + €4.32 risk fee |
+| Formula fingerprint | `9d1fee243609` |
 | Direct source links | Named in the model notes below; direct URLs have not yet been recorded. |
 
 ## Representative outputs
@@ -21,23 +21,18 @@ conversion where applicable. They are regression landmarks, not payroll quotes.
 
 | Annual gross | Employer cost | Take-home pay |
 |---:|---:|---:|
-| €60,000 | €74,154 | €40,006 |
-| €100,000 | €123,590 | €66,678 |
-| €200,000 | €224,840 | €134,490 |
+| €60,000 | €74,158 | €41,690 |
+| €100,000 | €123,594 | €68,360 |
+| €200,000 | €238,576 | €134,991 |
 
 ## Model notes and assumptions
 
 Latvia salary calculation — computed from published tax rates.
 
-Rates are 2026 (single, no children).
- - Employee: NSIC (VSAOI) 10.50%, capped at €105,300/yr.
- - Income tax (IIN): 25.5% up to €105,300, 33% above, +3% over €200,000, on
-   (gross − employee NSIC). NSIC IS deductible from the PIT base here (unlike
-   Lithuania). The non-taxable minimum tapers to €0 above €3,600/mo, so it's €0 in
-   this app's salary range.
- - Employer: NSIC 23.59%, capped at €105,300/yr.
- - Above the €105,300 cap a solidarity-tax mechanism replaces NSIC (only bites
-   above the cap — i.e. €150k slightly).
+Rates are 2026 (single, no children). Cash VSAOI continues above the €105,300
+social maximum; the excess is reallocated through solidarity-tax reconciliation.
+The universal annual non-taxable minimum is €6,600. Final employer cost reflects
+the statutory 9.09%-of-excess refund and the €4.32 business-risk fee.
 
 Sources: VID 2026 (PIT rates); PwC/KPMG Latvia 2026 (NSIC split, €105,300 cap).
 
@@ -49,7 +44,8 @@ These values are copied mechanically from the live calculation module.
 NSIC_CAP = 105300
 EE_NSIC = 0.105
 ER_NSIC = 0.2359
-PIT_BRACKETS = [(105300, 0.255), (200000, 0.33), (INF, 0.36)]
+NON_TAXABLE_MINIMUM = 6600
+RISK_FEE = 4.32
 ```
 
 ## Executable calculation
@@ -60,12 +56,21 @@ tax brackets use [`engine.progressive`](../../tools/calc/engine.py).
 ```python
 def compute(gross):
     """Return (employer_cost, net) for an annual gross salary, in EUR."""
-    ee_nsic = min(gross, NSIC_CAP) * EE_NSIC
-    taxable = max(0.0, gross - ee_nsic)        # NPM is €0 in range
-    pit = progressive(taxable, PIT_BRACKETS)
+    employee_cash = gross * EE_NSIC
+    excess = max(0.0, gross - NSIC_CAP)
+    solidarity_pit_advance = 0.10 * excess
+    deductible_social = employee_cash - solidarity_pit_advance
+    deductions = deductible_social + NON_TAXABLE_MINIMUM
+    lower_gross = min(gross, NSIC_CAP)
+    lower_base = max(0.0, lower_gross - deductions)
+    remaining_deductions = max(0.0, deductions - lower_gross)
+    upper_base = max(0.0, excess - remaining_deductions)
+    ordinary_pit = 0.255 * lower_base + 0.33 * upper_base
+    additional_tax = 0.03 * max(0.0, gross - 200000)
 
-    net = gross - ee_nsic - pit
-    employer_cost = gross + min(gross, NSIC_CAP) * ER_NSIC
+    net = gross - employee_cash - ordinary_pit - additional_tax + solidarity_pit_advance
+    employer_refund = 0.0909 * excess
+    employer_cost = gross + gross * ER_NSIC - employer_refund + RISK_FEE
     return employer_cost, net
 ```
 
