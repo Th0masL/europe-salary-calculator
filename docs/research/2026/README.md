@@ -6,7 +6,7 @@ or certified.
 
 All **36 country dossiers and code comparisons are complete** as of 2026-10-04.
 Each dossier was reconstructed without reading that country's existing
-implementation or generated outputs. The comparison pass found 129 review items;
+implementation or generated outputs. The comparison pass found 128 review items;
 see the [consolidated comparison summary](comparisons/SUMMARY.md). Calculator
 logic has not yet been changed from these findings.
 

@@ -14,40 +14,40 @@ The comparisons test the dossiers' stated resident/profile/location/payment scen
 
 ## Verified findings totals
 
-There are **129 findings-table rows** across exactly **36 country files**.
+There are **128 findings-table rows** across exactly **36 country files**.
 
 ### By severity
 
 | Severity | Count |
 |---|---:|
-| Critical | 23 |
+| Critical | 22 |
 | High | 53 |
 | Medium | 28 |
 | Low | 25 |
-| **Total** | **129** |
+| **Total** | **128** |
 
-Country-level maximum severity is Critical for 18 countries, High for 15, and Medium for 3; no country tops out at Low.
+Country-level maximum severity is Critical for 17 countries, High for 15, Medium for 3, and Low for 1.
 
 ### By classification
 
 | Classification | Count |
 |---|---:|
-| Confirmed mismatch | 82 |
+| Confirmed mismatch | 81 |
 | Unsupported assumption | 16 |
 | Scenario difference | 20 |
 | Product decision | 10 |
 | Match | 1 |
-| **Total** | **129** |
+| **Total** | **128** |
 
 ### Severity × classification reconciliation
 
 | Severity | Confirmed mismatch | Unsupported assumption | Scenario difference | Product decision | Match | Total |
 |---|---:|---:|---:|---:|---:|---:|
-| Critical | 20 | 3 | 0 | 0 | 0 | 23 |
+| Critical | 19 | 3 | 0 | 0 | 0 | 22 |
 | High | 40 | 9 | 4 | 0 | 0 | 53 |
 | Medium | 14 | 1 | 8 | 5 | 0 | 28 |
 | Low | 8 | 3 | 8 | 5 | 1 | 25 |
-| **Total** | **82** | **16** | **20** | **10** | **1** | **129** |
+| **Total** | **81** | **16** | **20** | **10** | **1** | **128** |
 
 ## Country matrix
 
@@ -66,7 +66,7 @@ Country-level maximum severity is Critical for 18 countries, High for 15, and Me
 | France | Critical | CSG base and 2026 RGDU are wrong; employer cost includes invented extras. | Implement official bases/reduction/tax details and return deterministic employer subtotal plus explicit variable inputs. |
 | Germany | High | Employee differences are bounded, but employer accident/U2 rates are unsupported universal assumptions. | Transcribe final BMF rounding/PAP and separate the fixed employer floor from fund/BG variables. |
 | Greece | Critical | Age-sensitive PIT, Article 16 relief and 14-payment EFKA ceilings are wrong or absent. | Rebuild PIT/relief and compute EFKA by payment; expose age, KPK and payment pattern. |
-| Hungary | Critical | Currency metadata says EUR for a HUF statutory calculation. | Change the module contract to HUF; retain the simple ordinary baseline and disclose employer-wide rehabilitation rules. |
+| Hungary | Low | The ordinary baseline matches; only the conditional employer-wide rehabilitation contribution needs clearer scope. | Keep the currency-invariant EUR calculation and disclose the excluded rehabilitation rule. |
 | Ireland | High | MyFutureFund is omitted and October PRSI rate changes are not modeled. | Add enrolment and pay-calendar-aware PRSI; label any annual approximation. |
 | Italy | Critical | Low-income relief is omitted and employer INPS/TFR/extras use incorrect blended bases. | Rebuild statutory credits and component-level employer calculation for an explicit region/sector scenario. |
 | Latvia | Critical | Non-taxable minimum and solidarity cash/reconciliation mechanics are fundamentally wrong. | Model ordinary withholding, solidarity allocation/refund, NPM and separate 3% assessment explicitly. |
@@ -79,7 +79,7 @@ Country-level maximum severity is Critical for 18 countries, High for 15, and Me
 | Norway | High | Income deductions and OTP base/G are stale; AGA on OTP is omitted. | Update official values, implement NI taper, and calculate minimum OTP plus AGA correctly. |
 | Poland | Critical | The 4% solidarity levy above PLN1 million is absent. | Add the annual solidarity assessment and statutory monthly/annual rounding. |
 | Portugal | High | Specific deduction is stale and FGS is double-counted outside the global rate. | Update the deduction, remove separate FGS, and parameterize municipality/credit/accident premium. |
-| Romania | Medium | Current EUR/high-income linear scope cannot represent authoritative RON low-income rules. | Keep a clearly labeled high-income scenario; change currency and add low-income coverage before claiming generality. |
+| Romania | Medium | The high-income linear scope cannot represent authoritative RON low-income thresholds. | Keep EUR presentation and the labeled high-income scenario; add a local-currency calculation path before claiming low-income coverage. |
 | Serbia | Critical | Supplementary annual tax is omitted and the contribution ceiling is estimated. | Fix known floor/ceiling now; version the annual-tax statistic or label output before annual tax. |
 | Slovakia | High | The income-dependent NČZD allowance is omitted. | Implement NČZD and payroll rounding; leave DFT as an employer-level variable. |
 | Slovenia | High | LTC/OZP are missing from the PIT deduction base and statutory regresses are absent from employer cost. | Fix deductibility/OZP and expose salary-only versus all-mandatory employer cash cost. |
@@ -98,18 +98,17 @@ The groups below are work streams, not a claim that every country belongs to onl
 
 These should land first because they are tightly bounded and have authoritative expected values.
 
-1. **Hungary:** change currency metadata from EUR to HUF.
-2. **Turkey:** change unincentivized employer SGK from 20.75% to 21.75%.
-3. **Ukraine:** change the 2026 USC cap to 20 minimum wages and apply it monthly.
-4. **Bulgaria:** implement the August ceiling step.
-5. **Portugal:** update the specific deduction and remove the separately double-counted FGS.
-6. **Moldova:** remove the 6% employee BASS and correct the exemption boundary/base.
-7. **Malta:** stop deducting employee SSC from PIT; separate basic wage from statutory bonuses.
-8. **Croatia:** add the age-30 youth reduction behind an explicit eligibility input.
-9. **Slovakia and Lithuania:** add the sourced NČZD/NPD formulas.
-10. **Ireland:** add MyFutureFund and the October PRSI rate step under an explicit pay calendar.
-11. **Slovenia:** correct split-year OZP and PIT deductibility before adding employer regresses.
-12. **Germany, Czech Republic, Poland and UK:** implement authoritative rounding/period sequencing after substantive formulas are fixed.
+1. **Turkey:** change unincentivized employer SGK from 20.75% to 21.75%.
+2. **Ukraine:** change the 2026 USC cap to 20 minimum wages and apply it monthly.
+3. **Bulgaria:** implement the August ceiling step.
+4. **Portugal:** update the specific deduction and remove the separately double-counted FGS.
+5. **Moldova:** remove the 6% employee BASS and correct the exemption boundary/base.
+6. **Malta:** stop deducting employee SSC from PIT; separate basic wage from statutory bonuses.
+7. **Croatia:** add the age-30 youth reduction behind an explicit eligibility input.
+8. **Slovakia and Lithuania:** add the sourced NČZD/NPD formulas.
+9. **Ireland:** add MyFutureFund and the October PRSI rate step under an explicit pay calendar.
+10. **Slovenia:** correct split-year OZP and PIT deductibility before adding employer regresses.
+11. **Germany, Czech Republic, Poland and UK:** implement authoritative rounding/period sequencing after substantive formulas are fixed.
 
 ### 2. Material employee-net formula rebuilds
 
@@ -175,19 +174,19 @@ Employer-specific premiums, fund rates and sector charges are **input-blocked**,
 5. **Rounding contracts.** Assert the legally required unit and stage—cent, whole currency unit, taxable-base floor or final-tax floor. Use exact decimal arithmetic in tests and zero tolerance where the dossier supplies exact results; use an explicitly documented one-minor-unit tolerance only where the dossier itself flags unresolved payroll sequencing.
 6. **Scenario matrix tests.** For configurable rules, include at least two materially different named scenarios: Scotland/rUK, CHF exempt/non-exempt, Estonia pillar 0/2/4/6%, two municipalities where supported, low/high employer premium scenarios, and statutory floor versus supplied accident/pension rates.
 7. **Employer-output contract tests.** Assert that variable charges are excluded from a field named `statutory_floor` or supplied as inputs. Prevent regression to invented bundled percentages by requiring component provenance and rejecting an unlabeled “total” when unresolved mandatory inputs remain.
-8. **Currency and unit tests.** Call every module in its declared local currency before any FX conversion. Add metadata tests that catch Hungary-style wrong currency labels and ensure converted presentation never feeds back into tax computation.
+8. **Currency and unit tests.** Assert that every generated table value is EUR. For modules with nominal local-currency rules, test the EUR→local calculation→EUR path around statutory boundaries. For homogeneous percentage-only modules such as Hungary, assert that direct-EUR and local-unit ratios are equivalent.
 9. **Research-blocked markers.** Fixtures for Serbia annual tax, Montenegro refund and provisional France assessment parameters should carry an `as_of` date and unresolved flag. Tests should fail visibly when a placeholder is treated as final, rather than freezing guessed amounts.
 10. **Rollout gates.** Land isolated corrections first; then enable rebuilt countries only when all five golden vectors, boundary tests and scenario labels pass. Track employee-net and employer-cost changes separately so product review can approve scenario semantics independently of arithmetic.
 
 ## Batch-summary reconciliation
 
-The counts above are authoritative because they were regenerated from the 129 findings-table rows. All three reported batch summaries reconcile to their current files:
+The counts above are authoritative because they were regenerated from the 128 findings-table rows. All three reported batch summaries reconcile to their current files:
 
 | Batch | Findings | Critical | High | Medium | Low | Confirmed mismatch | Unsupported assumption | Scenario difference | Product decision | Match |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | A | 46 | 9 | 19 | 11 | 7 | 23 | 9 | 10 | 4 | 0 |
-| B | 46 | 9 | 18 | 8 | 11 | 34 | 3 | 6 | 2 | 1 |
+| B | 45 | 8 | 18 | 8 | 11 | 33 | 3 | 6 | 2 | 1 |
 | C | 37 | 5 | 16 | 9 | 7 | 25 | 4 | 4 | 4 | 0 |
-| **Total** | **129** | **23** | **53** | **28** | **25** | **82** | **16** | **20** | **10** | **1** |
+| **Total** | **128** | **22** | **53** | **28** | **25** | **81** | **16** | **20** | **10** | **1** |
 
 There is **no count inconsistency** between the reported batches and the actual findings tables. The lone table-classified Match is Montenegro's “Europe Now rates” row; descriptive Match bullets elsewhere were not counted.

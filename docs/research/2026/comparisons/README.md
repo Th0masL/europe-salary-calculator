@@ -25,5 +25,10 @@ Severity is assessed against the website's €20,000–€600,000 gross range:
 - **Medium:** meaningful but bounded difference, or affects a limited range.
 - **Low:** labelling, minor threshold, rounding, or small fixed-amount difference.
 
+The product's comparison table is intentionally denominated in EUR. A non-euro
+module may calculate directly in EUR when every applicable rule is homogeneous
+and currency-invariant. It only needs a local-currency round trip when a statutory
+amount, threshold, cap, rounding rule, or other nominal value affects the result.
+
 No formula should be changed from these notes until its scenario choice and test
 vectors have been reviewed.

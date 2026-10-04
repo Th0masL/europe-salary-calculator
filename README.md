@@ -84,9 +84,12 @@ wrong) is **whether employee social contributions are deductible from the
 income-tax base** — it varies by country (e.g. Lithuania / Czechia *no*, Latvia /
 Greece / Slovenia *yes*), so neighbours can't be assumed to match.
 
-Non-euro countries (Poland, Denmark, Sweden, Czechia) compute in their local
-currency and convert to EUR at FX rates fetched at build time (the FX date is shown
-in the app); eurozone countries compute directly in EUR. Build with
+The comparison table's input and output contract is always EUR. Non-euro formulas
+with currency-denominated thresholds or caps (such as Poland, Denmark, Sweden and
+Czechia) convert the EUR input to local currency for the calculation, then convert
+the result back using FX rates fetched at build time (the FX date is shown in the
+app). Currency-invariant percentage-only formulas may calculate directly in EUR;
+eurozone countries also compute directly in EUR. Build with
 `python3 tools/build_formula.py` → `data/formula.json` + `.js`; drop a new
 `tools/calc/<country>.py` and it's picked up automatically.
 
