@@ -4,48 +4,50 @@ This ledger tracks clean-room primary-source dossiers. “Dossier complete” me
 the research has been written; it does not mean the calculator has been corrected
 or certified.
 
-All **36 country dossiers are complete** as of 2026-10-04. Each was reconstructed
-without reading that country's existing implementation or generated outputs. A
-separate comparison pass is still required before changing calculator logic.
+All **36 country dossiers and code comparisons are complete** as of 2026-10-04.
+Each dossier was reconstructed without reading that country's existing
+implementation or generated outputs. The comparison pass found 129 review items;
+see the [consolidated comparison summary](comparisons/SUMMARY.md). Calculator
+logic has not yet been changed from these findings.
 
 | Country | Research | Code comparison | Integration | Independent review |
 |---|---|---|---|---|
-| Albania | [Dossier complete](albania.md) | Pending | Pending | Pending |
-| Austria | [Dossier complete](austria.md) | Pending | Pending | Pending |
-| Belgium | [Dossier complete](belgium.md) | Pending | Pending | Pending |
-| Bulgaria | [Dossier complete](bulgaria.md) | Pending | Pending | Pending |
-| Croatia | [Dossier complete](croatia.md) | Pending | Pending | Pending |
-| Cyprus | [Dossier complete](cyprus.md) | Pending | Pending | Pending |
-| Czech Republic | [Dossier complete](czech-republic.md) | Pending | Pending | Pending |
-| Denmark | [Dossier complete](denmark.md) | Pending | Pending | Pending |
-| Estonia | [Dossier complete](estonia.md) | Pending | Pending | Pending |
-| Finland | [Dossier complete](finland.md) | Pending | Pending | Pending |
-| France | [Dossier complete](france.md) | Pending | Pending | Pending |
-| Germany | [Dossier complete](germany.md) | Pending | Pending | Pending |
-| Greece | [Dossier complete](greece.md) | Pending | Pending | Pending |
-| Hungary | [Dossier complete](hungary.md) | Pending | Pending | Pending |
-| Ireland | [Dossier complete](ireland.md) | Pending | Pending | Pending |
-| Italy | [Dossier complete](italy.md) | Pending | Pending | Pending |
-| Latvia | [Dossier complete](latvia.md) | Pending | Pending | Pending |
-| Lithuania | [Dossier complete](lithuania.md) | Pending | Pending | Pending |
-| Luxembourg | [Dossier complete](luxembourg.md) | Pending | Pending | Pending |
-| Malta | [Dossier complete](malta.md) | Pending | Pending | Pending |
-| Moldova | [Dossier complete](moldova.md) | Pending | Pending | Pending |
-| Montenegro | [Dossier complete](montenegro.md) | Pending | Pending | Pending |
-| Netherlands | [Dossier complete](netherlands.md) | Pending | Pending | Pending |
-| Norway | [Dossier complete](norway.md) | Pending | Pending | Pending |
-| Poland | [Dossier complete](poland.md) | Pending | Pending | Pending |
-| Portugal | [Dossier complete](portugal.md) | Pending | Pending | Pending |
-| Romania | [Dossier complete](romania.md) | Pending | Pending | Pending |
-| Serbia | [Dossier complete](serbia.md) | Pending | Pending | Pending |
-| Slovakia | [Dossier complete](slovakia.md) | Pending | Pending | Pending |
-| Slovenia | [Dossier complete](slovenia.md) | Pending | Pending | Pending |
-| Spain | [Dossier complete](spain.md) | Pending | Pending | Pending |
-| Sweden | [Dossier complete](sweden.md) | Pending | Pending | Pending |
-| Switzerland | [Dossier complete](switzerland.md) | Pending | Pending | Pending |
-| Turkey | [Dossier complete](turkey.md) | Pending | Pending | Pending |
-| United Kingdom | [Dossier complete](united-kingdom.md) | Pending | Pending | Pending |
-| Ukraine | [Dossier complete](ukraine.md) | Pending | Pending | Pending |
+| Albania | [Dossier complete](albania.md) | [Compared](comparisons/albania.md) | Pending | Pending |
+| Austria | [Dossier complete](austria.md) | [Compared](comparisons/austria.md) | Pending | Pending |
+| Belgium | [Dossier complete](belgium.md) | [Compared](comparisons/belgium.md) | Pending | Pending |
+| Bulgaria | [Dossier complete](bulgaria.md) | [Compared](comparisons/bulgaria.md) | Pending | Pending |
+| Croatia | [Dossier complete](croatia.md) | [Compared](comparisons/croatia.md) | Pending | Pending |
+| Cyprus | [Dossier complete](cyprus.md) | [Compared](comparisons/cyprus.md) | Pending | Pending |
+| Czech Republic | [Dossier complete](czech-republic.md) | [Compared](comparisons/czech-republic.md) | Pending | Pending |
+| Denmark | [Dossier complete](denmark.md) | [Compared](comparisons/denmark.md) | Pending | Pending |
+| Estonia | [Dossier complete](estonia.md) | [Compared](comparisons/estonia.md) | Pending | Pending |
+| Finland | [Dossier complete](finland.md) | [Compared](comparisons/finland.md) | Pending | Pending |
+| France | [Dossier complete](france.md) | [Compared](comparisons/france.md) | Pending | Pending |
+| Germany | [Dossier complete](germany.md) | [Compared](comparisons/germany.md) | Pending | Pending |
+| Greece | [Dossier complete](greece.md) | [Compared](comparisons/greece.md) | Pending | Pending |
+| Hungary | [Dossier complete](hungary.md) | [Compared](comparisons/hungary.md) | Pending | Pending |
+| Ireland | [Dossier complete](ireland.md) | [Compared](comparisons/ireland.md) | Pending | Pending |
+| Italy | [Dossier complete](italy.md) | [Compared](comparisons/italy.md) | Pending | Pending |
+| Latvia | [Dossier complete](latvia.md) | [Compared](comparisons/latvia.md) | Pending | Pending |
+| Lithuania | [Dossier complete](lithuania.md) | [Compared](comparisons/lithuania.md) | Pending | Pending |
+| Luxembourg | [Dossier complete](luxembourg.md) | [Compared](comparisons/luxembourg.md) | Pending | Pending |
+| Malta | [Dossier complete](malta.md) | [Compared](comparisons/malta.md) | Pending | Pending |
+| Moldova | [Dossier complete](moldova.md) | [Compared](comparisons/moldova.md) | Pending | Pending |
+| Montenegro | [Dossier complete](montenegro.md) | [Compared](comparisons/montenegro.md) | Pending | Pending |
+| Netherlands | [Dossier complete](netherlands.md) | [Compared](comparisons/netherlands.md) | Pending | Pending |
+| Norway | [Dossier complete](norway.md) | [Compared](comparisons/norway.md) | Pending | Pending |
+| Poland | [Dossier complete](poland.md) | [Compared](comparisons/poland.md) | Pending | Pending |
+| Portugal | [Dossier complete](portugal.md) | [Compared](comparisons/portugal.md) | Pending | Pending |
+| Romania | [Dossier complete](romania.md) | [Compared](comparisons/romania.md) | Pending | Pending |
+| Serbia | [Dossier complete](serbia.md) | [Compared](comparisons/serbia.md) | Pending | Pending |
+| Slovakia | [Dossier complete](slovakia.md) | [Compared](comparisons/slovakia.md) | Pending | Pending |
+| Slovenia | [Dossier complete](slovenia.md) | [Compared](comparisons/slovenia.md) | Pending | Pending |
+| Spain | [Dossier complete](spain.md) | [Compared](comparisons/spain.md) | Pending | Pending |
+| Sweden | [Dossier complete](sweden.md) | [Compared](comparisons/sweden.md) | Pending | Pending |
+| Switzerland | [Dossier complete](switzerland.md) | [Compared](comparisons/switzerland.md) | Pending | Pending |
+| Turkey | [Dossier complete](turkey.md) | [Compared](comparisons/turkey.md) | Pending | Pending |
+| United Kingdom | [Dossier complete](united-kingdom.md) | [Compared](comparisons/uk.md) | Pending | Pending |
+| Ukraine | [Dossier complete](ukraine.md) | [Compared](comparisons/ukraine.md) | Pending | Pending |
 
 ## Material cautions carried into comparison
 
@@ -79,7 +81,7 @@ Other dossiers carry narrower rounding, payment-timing, employer-classification,
 or source-publication caveats in their evidence sections. These must remain visible
 during comparison rather than being collapsed into unsupported universal rates.
 
-## Next phase
+## Comparison method
 
 For each country, a separate integrator should compare the dossier with the current
 module and record:
@@ -93,3 +95,7 @@ module and record:
 No formula should be changed merely because a scenario differs: first determine
 whether the product intentionally models the same employee, location, pay timing,
 and employer classification as the dossier.
+
+That comparison is now recorded in the linked country files. The next phase is
+reviewed implementation, beginning with isolated confirmed corrections and adding
+regression vectors before broader formula rebuilds.
