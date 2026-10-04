@@ -9,17 +9,17 @@ or certified.
 | Albania | Pending | Pending | Pending | Pending |
 | Austria | [Dossier complete](austria.md) | Pending | Pending | Pending |
 | Belgium | [Dossier complete](belgium.md) | Pending | Pending | Pending |
-| Bulgaria | Pending | Pending | Pending | Pending |
+| Bulgaria | Researching | Pending | Pending | Pending |
 | Croatia | Pending | Pending | Pending | Pending |
 | Cyprus | Pending | Pending | Pending | Pending |
 | Czech Republic | [Dossier complete](czech-republic.md) | Pending | Pending | Pending |
 | Denmark | [Dossier complete](denmark.md) | Pending | Pending | Pending |
-| Estonia | Researching | Pending | Pending | Pending |
+| Estonia | [Dossier complete](estonia.md) | Pending | Pending | Pending |
 | Finland | [Dossier complete](finland.md) | Pending | Pending | Pending |
 | France | [Dossier complete](france.md) | Pending | Pending | Pending |
 | Germany | [Dossier complete](germany.md) | Pending | Pending | Pending |
-| Greece | Pending | Pending | Pending | Pending |
-| Hungary | Researching | Pending | Pending | Pending |
+| Greece | Researching | Pending | Pending | Pending |
+| Hungary | [Dossier complete](hungary.md) | Pending | Pending | Pending |
 | Ireland | [Dossier complete](ireland.md) | Pending | Pending | Pending |
 | Italy | [Dossier complete](italy.md) | Pending | Pending | Pending |
 | Latvia | [Dossier complete](latvia.md) | Pending | Pending | Pending |
@@ -31,8 +31,8 @@ or certified.
 | Netherlands | [Dossier complete](netherlands.md) | Pending | Pending | Pending |
 | Norway | [Dossier complete](norway.md) | Pending | Pending | Pending |
 | Poland | [Dossier complete](poland.md) | Pending | Pending | Pending |
-| Portugal | Researching | Pending | Pending | Pending |
-| Romania | Pending | Pending | Pending | Pending |
+| Portugal | [Dossier complete](portugal.md) | Pending | Pending | Pending |
+| Romania | Researching | Pending | Pending | Pending |
 | Serbia | Pending | Pending | Pending | Pending |
 | Slovakia | Pending | Pending | Pending | Pending |
 | Slovenia | Pending | Pending | Pending | Pending |
