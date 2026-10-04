@@ -12,25 +12,25 @@ or certified.
 | Bulgaria | Pending | Pending | Pending | Pending |
 | Croatia | Pending | Pending | Pending | Pending |
 | Cyprus | Pending | Pending | Pending | Pending |
-| Czech Republic | Pending | Pending | Pending | Pending |
+| Czech Republic | [Dossier complete](czech-republic.md) | Pending | Pending | Pending |
 | Denmark | [Dossier complete](denmark.md) | Pending | Pending | Pending |
-| Estonia | Pending | Pending | Pending | Pending |
+| Estonia | Researching | Pending | Pending | Pending |
 | Finland | [Dossier complete](finland.md) | Pending | Pending | Pending |
 | France | [Dossier complete](france.md) | Pending | Pending | Pending |
 | Germany | [Dossier complete](germany.md) | Pending | Pending | Pending |
 | Greece | Pending | Pending | Pending | Pending |
-| Hungary | Pending | Pending | Pending | Pending |
-| Ireland | Researching | Pending | Pending | Pending |
+| Hungary | Researching | Pending | Pending | Pending |
+| Ireland | [Dossier complete](ireland.md) | Pending | Pending | Pending |
 | Italy | [Dossier complete](italy.md) | Pending | Pending | Pending |
 | Latvia | [Dossier complete](latvia.md) | Pending | Pending | Pending |
-| Lithuania | Pending | Pending | Pending | Pending |
+| Lithuania | [Dossier complete](lithuania.md) | Pending | Pending | Pending |
 | Luxembourg | Pending | Pending | Pending | Pending |
 | Malta | Pending | Pending | Pending | Pending |
 | Moldova | Pending | Pending | Pending | Pending |
 | Montenegro | Pending | Pending | Pending | Pending |
 | Netherlands | [Dossier complete](netherlands.md) | Pending | Pending | Pending |
 | Norway | [Dossier complete](norway.md) | Pending | Pending | Pending |
-| Poland | Researching | Pending | Pending | Pending |
+| Poland | [Dossier complete](poland.md) | Pending | Pending | Pending |
 | Portugal | Researching | Pending | Pending | Pending |
 | Romania | Pending | Pending | Pending | Pending |
 | Serbia | Pending | Pending | Pending | Pending |
